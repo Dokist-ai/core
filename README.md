@@ -28,23 +28,12 @@ Four systems, each proving a different core capability, each built so the underl
 
 ## Projects
 
-> **Note:** these are the technical/engineering names used in this repo. [documentlab.ai](https://documentlab.ai) describes the same four systems with client-facing names — see the mapping table below the project table if you're cross-referencing the two.
-
 | # | Project | Vertical | What it does | Key metric | Status |
 |---|---------|----------|--------------|------------|--------|
-| 1 | **Legal & Financial Due Diligence Agent** — *Flagship* | ⚖️ 🏦 Both | 3-agent orchestration. Agent 1 ingests documents. Agent 2 retrieves context + searches the web — including calling the MCP server from Project 4 as a composable tool. Agent 3 writes a structured risk assessment memo. Works for law firms and banks. 3 ADRs documented. | Hallucination rate 31% → 12% · avg €0.023/document · 4.2s end-to-end | 🧢 Live |
-| 2 | **Legal Document RAG Pipeline & Evaluation Framework** | ⚖️ Legal | Q&A over NDAs and commercial contracts (CUAD dataset) with source attribution on every answer, stress-tested with a RAGAS harness across 4 configurations on a 40-question golden dataset, plus red-team and prompt injection testing and a RAG vs LoRA fine-tuning comparison on the same test set. Architecture is corpus-agnostic — the same pipeline runs equally well over financial filings. | Faithfulness 0.84 (RAG) vs 0.81 (LoRA rank 8) at 4x lower cost | 🧢 Live |
-| 3 | **Financial Research Agent** | 🏦 Finance | Two-agent LangGraph system: Agent 1 searches financial news, Agent 2 synthesises a structured briefing. Wrapped in FastAPI, Dockerised, CI/CD, LangSmith traced. Same architecture repurposes directly for legal/compliance monitoring — swap the search domain, keep the pipeline. | 94% tool call success · p95 1.8s · 14 pytest tests, 100% pass | 🧢 Live |
-| 4 | **Legal Intelligence Engine** | ⚖️ Legal | LoRA ablation study on Mistral 7B (3 rank configs, CUAD + EDGAR + EUR-Lex — legal *and* financial corpora). Domain-adapted sentence transformer with hard negative mining. MCP server exposing the RAG pipeline as a composable tool — integrated into Project 1, tested with Claude Desktop. | Rank 8: 0.81 faithfulness at €0.002/query · Recall@3 0.71 → 0.83 vs OpenAI baseline · 2 models on HuggingFace Hub | 🧢 Live |
-
-**Naming key — repo name → documentlab.ai name:**
-
-| This repo | documentlab.ai |
-|---|---|
-| Legal & Financial Due Diligence Agent | Due diligence agent for legal & financial teams |
-| Legal Document RAG Pipeline & Evaluation Framework | Contract Q&A assistant |
-| Financial Research Agent | Research briefing agent |
-| Legal Intelligence Engine | Contract risk flagging |
+| 1 | **Due Diligence Agent for Legal & Financial Teams** — *Flagship* | ⚖️ 🏦 Both | 3-agent orchestration. Agent 1 ingests documents. Agent 2 retrieves context + searches the web — including calling the MCP server from the Legal Intelligence Engine below as a composable tool. Agent 3 writes a structured risk assessment memo. Works for law firms and banks. 3 ADRs documented. | Hallucination rate 31% → 12% · avg €0.023/document · 4.2s end-to-end | 🧢 Live |
+| 2 | **Contract Q&A Assistant** | ⚖️ Legal | Q&A over NDAs and commercial contracts (CUAD dataset) with source attribution on every answer, stress-tested with a RAGAS harness across 4 configurations on a 40-question golden dataset, plus red-team and prompt injection testing and a RAG vs LoRA fine-tuning comparison on the same test set. Architecture is corpus-agnostic — the same pipeline runs equally well over financial filings. | Faithfulness 0.84 (RAG) vs 0.81 (LoRA rank 8) at 4x lower cost | 🧢 Live |
+| 3 | **Research Briefing Agent** | 🏦 Finance | Two-agent LangGraph system: Agent 1 searches financial news, Agent 2 synthesises a structured briefing. Wrapped in FastAPI, Dockerised, CI/CD, LangSmith traced. Same architecture repurposes directly for legal/compliance monitoring — swap the search domain, keep the pipeline. | 94% tool call success · p95 1.8s · 14 pytest tests, 100% pass | 🧢 Live |
+| 4 | **Legal Intelligence Engine** | ⚖️ Legal | LoRA ablation study on Mistral 7B (3 rank configs, CUAD + EDGAR + EUR-Lex — legal *and* financial corpora). Domain-adapted sentence transformer with hard negative mining flags unusual or risky clauses automatically. MCP server exposes the pipeline as a composable tool — integrated into the Due Diligence Agent above, tested with Claude Desktop. | Rank 8: 0.81 faithfulness at €0.002/query · Recall@3 0.71 → 0.83 vs OpenAI baseline · 2 models on HuggingFace Hub | 🧢 Live |
 
 ---
 
@@ -85,12 +74,12 @@ Four systems, each proving a different core capability, each built so the underl
 
 ```
 ai-engineer-portfolio/
-├── README.md                        ← You are here
-├── due-diligence-agent/             ← Project 1 · Legal & Finance · 3-agent · FLAGSHIP
-├── legal-rag-pipeline-evaluation/   ← Project 2 · Legal · RAGAS + LoRA comparison
-├── financial-research-agent/        ← Project 3 · Finance · LangGraph + FastAPI + Docker
-├── legal-intelligence-engine/       ← Project 4 · Fine-tuning · Embeddings · MCP server
-└── demos/                           ← Loom video links
+├── README.md
+├── due-diligence-agent/          ← Flagship · Legal & Finance
+├── contract-qa-assistant/        ← Legal
+├── research-briefing-agent/      ← Finance
+├── legal-intelligence-engine/    ← Legal
+└── demos/                        ← Video walkthroughs
 ```
 
 ---
