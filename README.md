@@ -18,7 +18,7 @@ Building RAG systems, LLM agents, and production pipelines for legal and financi
 
 ## About
 
-I care about AI that is robust, interpretable, and genuinely useful — with a focus on RAG systems, LLM agents, and production pipelines that help organisations in legal and financial services unlock answers from their own documents.
+I care about AI that is robust, interpretable, and genuinely useful.
 
 **DocumentLab.ai** is my AI engineering studio, specialized in LLM-based document intelligence across research, analytics, automation, and customer service — not a horizontal generalist tool, but systems built and tuned for legal and financial documents specifically, including French- and Arabic-speaking, civil-law markets that most enterprise players don't serve.
 
