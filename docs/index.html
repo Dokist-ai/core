@@ -1,0 +1,1893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DocumentLab.ai — Legal & Financial Document Intelligence</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Font payload trimmed to weights actually used: Sora 700/800 (headings, brand),
+     Inter 400/500/600/700 (UI + body), IBM Plex Mono 500/600 (labels, exhibit tags).
+     Dropped Sora 400/600 and Mono 400 — four fewer files, ~60KB less over the wire,
+     and four fewer render-blocking round trips before first paint. -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"></noscript>
+<style>
+  :root{
+    --navy-0:#060e1a;
+    --navy-1:#0a1525;
+    --navy-2:#0f1f38;
+    --navy-3:#15294a;
+    --navy-4:#1d3357;
+    --line:#26385C;
+    --white:#F4F6FA;
+    --mist:#93A0B8;
+    --mist-dim:#5E6C88;
+    --gold:#D8B25C;
+    --gold-hi:#F1D693;
+    --gold-dim:#B8943F;
+    --coral:#FF9B5C;
+    --coral-hi:#FFB183;
+    --azure:#8ECAE6;
+    --azure-soft:rgba(142,202,230,0.10);
+    --radius:2px;
+    --ink:#070E1A;
+
+    /* Refined motion system — tighter, more expensive curves */
+    --e-out:cubic-bezier(.16,1,.3,1);
+    --e-inout:cubic-bezier(.65,0,.35,1);
+    --e-soft:cubic-bezier(.33,.9,.28,1);
+    --e-spring:cubic-bezier(.34,1.56,.64,1);
+    --e-dramatic:cubic-bezier(.87,0,.13,1);
+    --t-1:.14s;
+    --t-2:.28s;
+    --t-3:.52s;
+    --t-4:.85s;
+    --t-5:1.4s;
+    --stagger:60ms;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{
+    scroll-behavior:smooth;
+    scroll-padding-top:88px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(38,56,92,0.4) transparent;
+    font-size:16px;
+  }
+  body{
+    margin:0;
+    background:var(--navy-1);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* Premium film-grain — finer, more subtle */
+  body::after{
+    content:'';
+    position:fixed; inset:0; z-index:999; pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity:.028;
+    mix-blend-mode:overlay;
+  }
+
+  /* Vignette — draws eye to center */
+  body::before{
+    content:'';
+    position:fixed; inset:0; z-index:998; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(6,14,26,0.4) 100%);
+    opacity:.6;
+  }
+
+  /* Premium scrollbar */
+  ::-webkit-scrollbar{width:4px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  ::-webkit-scrollbar-thumb{background:rgba(38,56,92,0.45); border-radius:10px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+  @media(prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+  h1,h2,h3,h4{
+    font-family:'Sora',sans-serif;
+    font-weight:700;
+    margin:0;
+    color:var(--white);
+    letter-spacing:-0.02em;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 36px;}
+  ::selection{
+    background:var(--gold-hi);
+    color:var(--navy-0);
+    text-shadow: 0 1px 0 rgba(0,0,0,0.05);
+  }
+  :focus-visible{
+    outline:2px solid var(--gold-hi);
+    outline-offset:3px;
+    box-shadow: 0 0 0 4px rgba(241,214,147,0.12);
+  }
+
+  /* ==========================================================================
+     FOLD CARD — Premium document silhouette signature
+     ========================================================================== */
+  .fold-card{
+    position:relative;
+    background:var(--navy-3);
+    border:1px solid var(--line);
+    clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+    box-shadow: 0 1px 0 rgba(255,255,255,.025) inset, 0 28px 56px -32px rgba(0,0,0,.6);
+    transition:transform var(--t-3) var(--e-out), box-shadow var(--t-3) var(--e-out), border-color var(--t-3) var(--e-out);
+    overflow:hidden;
+  }
+  .fold-card::after{
+    content:'';
+    position:absolute; top:0; right:0; width:24px; height:24px;
+    background:linear-gradient(135deg, var(--gold-hi), var(--gold));
+    clip-path:polygon(0 0, 100% 0, 100% 100%);
+    z-index:2;
+    box-shadow: -2px 2px 8px rgba(216,178,92,0.2);
+  }
+  .fold-card:hover{
+    transform:translateY(-4px);
+    border-color:rgba(147,160,184,.4);
+    box-shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 40px 80px -36px rgba(0,0,0,.7);
+  }
+
+  /* Light sheen on hover — premium surface interaction */
+  .fold-card::before{
+    content:'';
+    position:absolute; inset:-40%;
+    background:linear-gradient(112deg,
+      transparent 38%,
+      rgba(244,246,250,.06) 47%,
+      rgba(241,214,147,.05) 52%,
+      transparent 62%);
+    transform:translateX(-65%);
+    transition:transform 1.2s var(--e-out), opacity var(--t-3) var(--e-out);
+    opacity:0;
+    pointer-events:none;
+    z-index:0;
+  }
+  .fold-card:hover::before{ transform:translateX(65%); opacity:1; }
+
+  /* ==========================================================================
+     HEADER — Condenses on scroll, glass morphism
+     ========================================================================== */
+  header{
+    position:sticky; top:0; z-index:90;
+    background:rgba(6,14,26,0.82);
+    backdrop-filter:blur(16px) saturate(1.3);
+    -webkit-backdrop-filter:blur(16px) saturate(1.3);
+    border-bottom:1px solid rgba(38,56,92,0.5);
+    transition:background var(--t-3) var(--e-out), box-shadow var(--t-3) var(--e-out), border-color var(--t-3) var(--e-out);
+  }
+  header.is-condensed{
+    background:rgba(4,11,22,0.94);
+    backdrop-filter:blur(22px) saturate(1.45);
+    -webkit-backdrop-filter:blur(22px) saturate(1.45);
+    box-shadow:0 20px 50px -32px rgba(0,0,0,.95);
+    border-color:rgba(38,56,92,0.35);
+  }
+  .nav{display:flex; align-items:center; justify-content:space-between; padding:16px 36px; max-width:1180px; margin:0 auto; transition:padding var(--t-3) var(--e-out);}
+  header.is-condensed .nav{padding:10px 36px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{width:32px; height:32px; border-radius:6px; display:block; object-fit:contain;}
+  .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.01em;}
+  .brand-mark-fallback{
+    width:32px; height:32px; border-radius:6px; flex-shrink:0;
+    background:linear-gradient(135deg, var(--navy-4), var(--navy-2));
+    border:1px solid var(--gold);
+    color:var(--gold-hi); font-family:'Sora',sans-serif; font-weight:800; font-size:12.5px;
+    display:flex; align-items:center; justify-content:center; letter-spacing:-0.02em;
+  }
+  .nav-links{display:flex; gap:32px; align-items:center;}
+  .nav-links a{font-size:14px; text-decoration:none; color:var(--mist); transition:color var(--t-1) var(--e-out), text-shadow var(--t-2) var(--e-out); position:relative;}
+  .nav-links a:hover{color:var(--gold-hi); text-shadow:0 0 16px rgba(241,214,147,0.3);}
+
+  /* Underline grow from origin */
+  .nav-links a:not(.btn-gold)::after{
+    content:''; position:absolute; left:0; right:0; bottom:-5px; height:1px;
+    background:var(--gold-hi); transform:scaleX(0); transform-origin:0 50%;
+    transition:transform var(--t-2) var(--e-out);
+  }
+  .nav-links a:not(.btn-gold):hover::after{ transform:scaleX(1); }
+
+  /* Gold CTA */
+  .btn-gold{
+    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
+    padding:12px 24px; border:1px solid var(--gold); background:var(--gold); color:var(--navy-0);
+    text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
+    transition:background var(--t-2) var(--e-out), color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+    position:relative; overflow:hidden;
+  }
+  .btn-gold::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.25) 45%, rgba(255,255,255,.35) 50%, rgba(255,255,255,.25) 55%, transparent 80%);
+    transform:translateX(-120%);
+    transition:transform .7s var(--e-out);
+  }
+  .btn-gold:hover{
+    background:var(--gold-hi); border-color:var(--gold-hi); transform:translateY(-2px);
+    box-shadow: 0 10px 30px -8px rgba(216,178,92,0.35), 0 0 0 1px rgba(241,214,147,0.15);
+  }
+  .btn-gold:hover::before{transform:translateX(120%);}
+  .btn-gold:active{transform:translateY(1px) scale(.985); transition-duration:var(--t-1);}
+
+  /* Coral CTA */
+  .btn-coral{
+    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
+    padding:12px 24px; border:1px solid var(--coral); background:var(--coral); color:var(--navy-0);
+    text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
+    transition:background var(--t-2) var(--e-out), color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+    position:relative; overflow:hidden;
+  }
+  .btn-coral::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.2) 45%, rgba(255,255,255,.3) 50%, rgba(255,255,255,.2) 55%, transparent 80%);
+    transform:translateX(-120%);
+    transition:transform .7s var(--e-out);
+  }
+  .btn-coral:hover{
+    background:var(--coral-hi); border-color:var(--coral-hi); transform:translateY(-2px);
+    box-shadow: 0 10px 30px -8px rgba(255,155,92,0.35), 0 0 0 1px rgba(255,177,131,0.15);
+  }
+  .btn-coral:hover::before{transform:translateX(120%);}
+  .btn-coral:active{transform:translateY(1px) scale(.985); transition-duration:var(--t-1);}
+
+  /* Ghost button */
+  .btn-ghost{
+    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
+    padding:12px 24px; border:1px solid var(--line); background:transparent; color:var(--white);
+    text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
+    transition:background var(--t-2) var(--e-out), color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+  }
+  .btn-ghost:hover{
+    border-color:var(--azure); background:rgba(142,202,230,0.07); color:var(--azure);
+    box-shadow: 0 0 24px rgba(142,202,230,0.12);
+    transform:translateY(-1px);
+  }
+  .btn-ghost:active{transform:translateY(1px) scale(.985); transition-duration:var(--t-1);}
+
+  @media(max-width:760px){ .nav-links a:not(.btn-gold){display:none;} }
+
+  /* ==========================================================================
+     HERO — Dramatic lighting, enhanced dossier
+     ========================================================================== */
+  .hero{ content-visibility:visible; contain-intrinsic-size:none;
+    position:relative; overflow:hidden;
+    padding:52px 0 96px;
+    border-bottom:1px solid var(--line);
+    --mx:50%; --my:20%;
+    background:
+      radial-gradient(720px 480px at 78% 15%, rgba(216,178,92,0.14), transparent 55%),
+      radial-gradient(580px 480px at 100% 55%, rgba(255,155,92,0.09), transparent 55%),
+      radial-gradient(900px 600px at 20% 80%, rgba(142,202,230,0.04), transparent 50%),
+      var(--navy-1);
+  }
+  .hero::before{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(500px 500px at var(--mx) var(--my), rgba(241,214,147,0.06), transparent 70%);
+    opacity:0; transition:opacity var(--t-4) var(--e-soft);
+  }
+  @media(hover:hover) and (pointer:fine){ .hero:hover::before{opacity:1;} }
+
+  /* Atmospheric scan lines — occasional horizontal sweep */
+  .hero::after{
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
+    background:repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(142,202,230,0.015) 2px, rgba(142,202,230,0.015) 3px);
+    opacity:.5;
+  }
+
+  .hero-grid{position:relative; display:grid; grid-template-columns:1fr 1.08fr; gap:60px; align-items:center; z-index:2;}
+  @media(max-width:920px){ .hero-grid{grid-template-columns:1fr; gap:48px;} }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:24px;
+    font-weight:500;
+  }
+  .eyebrow::before{content:''; width:20px; height:1px; background:var(--gold);}
+  .hero .eyebrow::before{
+    width:0;
+    animation:eyebrowDraw .7s ease forwards .3s, goldPulse 3.5s ease-in-out 3.5s infinite;
+  }
+  @keyframes eyebrowDraw{to{width:20px;}}
+  @keyframes goldPulse{
+    0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(216,178,92,0);}
+    50%{opacity:0.8; box-shadow:0 0 10px 2px rgba(216,178,92,0.25);}
+  }
+
+  .hero h1{font-size:clamp(40px,5.8vw,72px); line-height:1.02; margin-bottom:26px; letter-spacing:-0.03em; font-weight:800;}
+  .hero h1 .hl{
+    color:var(--gold-hi);
+    text-shadow:0 0 30px rgba(241,214,147,.4), 0 0 60px rgba(241,214,147,.15);
+    position:relative;
+  }
+
+
+  .hero p.lede{font-size:17.5px; color:var(--mist); max-width:38ch; margin-bottom:32px; line-height:1.65; font-weight:400;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:32px;}
+  .hero-stats{display:flex; gap:32px; flex-wrap:wrap; border-top:1px solid var(--line); padding-top:22px;}
+  .hero-stats div{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mist); font-variant-numeric:tabular-nums;}
+  .hero-stats b{color:var(--white); font-weight:600;}
+
+  /* ==========================================================================
+     DOSSIER STACK — Premium document fan with corpus sheets
+     ========================================================================== */
+  .dossier-stack{
+    position:relative;
+    padding: 10px 38px 38px 0;
+    perspective:1200px;
+  }
+  .dossier{
+    padding:28px 28px 24px;
+    opacity:0;
+    transform:translateY(16px) rotateX(2deg);
+    animation:docIn .9s var(--e-out) forwards .2s, float 7s ease-in-out 3s infinite;
+    position:relative;
+    z-index:3;
+    overflow:visible !important;
+  }
+
+  /* Corpus sheets — richer document silhouettes */
+  .corpus-sheet{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    background:var(--navy-3);
+    border:1px solid var(--line);
+    clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+    box-shadow:0 16px 40px rgba(3,7,15,.5);
+    transition:transform var(--t-3) var(--e-out), opacity var(--t-3) var(--e-out);
+    opacity:0;
+  }
+  .corpus-sheet .sheet-label{
+    position:absolute; top:18px; left:22px; right:22px;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.07em;
+    color:var(--mist-dim); text-transform:uppercase;
+    display:flex; justify-content:space-between;
+    opacity:.85;
+    padding-bottom:10px;
+    border-bottom:1px solid rgba(147,160,184,.16);
+  }
+  .corpus-sheet .sheet-lines{position:absolute; left:22px; right:36px; top:50px; bottom:44px; display:flex; flex-direction:column; gap:10px;}
+  .corpus-sheet .sheet-lines span{
+    display:block; height:6px; border-radius:1px;
+    background:linear-gradient(90deg, rgba(147,160,184,.22), rgba(147,160,184,.06));
+  }
+  .corpus-sheet .sheet-lines span.redact{
+    background:rgba(216,178,92,.18);
+    border:1px solid rgba(216,178,92,.25);
+    height:8px;
+  }
+  .corpus-sheet .sheet-lines span:nth-child(1){width:96%;}
+  .corpus-sheet .sheet-lines span:nth-child(2){width:88%;}
+  .corpus-sheet .sheet-lines span:nth-child(3){width:38%; margin-bottom:5px;}
+  .corpus-sheet .sheet-lines span:nth-child(4){width:92%;}
+  .corpus-sheet .sheet-lines span:nth-child(5){width:71%;}
+  .corpus-sheet .sheet-lines span:nth-child(6){width:83%;}
+
+  /* Document stamp marks */
+  .corpus-sheet .sheet-stamp{
+    position:absolute; bottom:52px; right:28px;
+    font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.12em;
+    color:rgba(216,178,92,.35); text-transform:uppercase;
+    border:1px solid rgba(216,178,92,.2); padding:3px 8px;
+    transform:rotate(-8deg);
+    pointer-events:none;
+  }
+
+  .corpus-sheet .sheet-foot{
+    position:absolute; left:22px; right:22px; bottom:18px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.06em;
+    color:var(--mist-dim); opacity:.65;
+  }
+  .corpus-sheet .sheet-foot::before{
+    content:''; width:12px; height:12px; border-radius:50%;
+    border:1px solid rgba(147,160,184,.35);
+  }
+
+  /* Fan out animation */
+  .dossier-stack.in .corpus-sheet{opacity:1;}
+  .dossier-stack.in .corpus-sheet:nth-of-type(1){transform:translate(16px,12px) rotate(-2.4deg);}
+  .dossier-stack.in .corpus-sheet:nth-of-type(2){transform:translate(32px,24px) rotate(-4.8deg); opacity:.88;}
+  .dossier-stack.in .corpus-sheet:nth-of-type(3){transform:translate(48px,38px) rotate(-7.2deg); opacity:.72;}
+  .dossier-stack.in .corpus-sheet:nth-of-type(4){transform:translate(64px,52px) rotate(-9.6deg); opacity:.55;}
+
+  .dossier-stack:hover .corpus-sheet:nth-of-type(1){transform:translate(22px,6px) rotate(-3.8deg);}
+  .dossier-stack:hover .corpus-sheet:nth-of-type(2){transform:translate(44px,16px) rotate(-7.6deg);}
+  .dossier-stack:hover .corpus-sheet:nth-of-type(3){transform:translate(66px,28px) rotate(-11.4deg);}
+  .dossier-stack:hover .corpus-sheet:nth-of-type(4){transform:translate(88px,42px) rotate(-15.2deg);}
+
+  .corpus-count{
+    position:absolute;
+    bottom:-14px; right:16px;
+    z-index:4;
+    display:flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--mist);
+    background:var(--navy-0);
+    border:1px solid var(--line);
+    padding:7px 14px;
+    border-radius:1px;
+    opacity:0; transform:translateY(8px);
+    animation:corpusTagIn .6s var(--e-out) forwards 1.1s;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  .corpus-count::before{
+    content:'';
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 8px 2px rgba(216,178,92,0.5);
+    flex-shrink:0;
+    animation:goldPulse 2.5s ease-in-out infinite;
+  }
+  .corpus-count b{color:var(--gold-hi); font-weight:600; letter-spacing:.02em;}
+  @keyframes corpusTagIn{to{opacity:1; transform:translateY(0);}}
+
+  @media(max-width:920px){
+    .dossier-stack{padding:16px 28px 28px 0;}
+    .dossier-stack.in .corpus-sheet:nth-of-type(1){transform:translate(12px,10px) rotate(-1.8deg);}
+    .dossier-stack.in .corpus-sheet:nth-of-type(2){transform:translate(24px,18px) rotate(-3.6deg); opacity:.85;}
+    .dossier-stack.in .corpus-sheet:nth-of-type(3){transform:translate(36px,28px) rotate(-5.4deg); opacity:.68;}
+    .dossier-stack.in .corpus-sheet:nth-of-type(4){transform:translate(48px,38px) rotate(-7.2deg); opacity:.5;}
+  }
+  @keyframes docIn{to{opacity:1; transform:translateY(0) rotateX(0);}}
+  @keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-6px);}
+  }
+
+  .dossier .doc-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--mist-dim);
+    text-transform:uppercase; letter-spacing:.08em;
+    border-bottom:1px solid var(--line); padding-bottom:14px; margin-bottom:20px;
+  }
+  .dossier .doc-tag{color:var(--gold); font-weight:600;}
+  .dossier p.clause{font-family:'Inter',sans-serif; font-size:14.5px; line-height:1.75; color:#D6DCE8; margin:0 0 16px;}
+  .clause-num{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); margin-right:6px;}
+
+  /* Scan line — enhanced with bloom */
+  .scan-line{
+    position:absolute; inset:0;
+    pointer-events:none; overflow:visible;
+  }
+  .scan-line::before{
+    content:'';
+    position:absolute; left:-10px; right:-10px; top:0; height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold-hi) 15%, var(--gold-hi) 85%, transparent);
+    box-shadow:0 0 20px 3px rgba(241,214,147,.6), 0 0 50px 12px rgba(241,214,147,.18), 0 0 80px 24px rgba(241,214,147,.06);
+    opacity:0;
+    animation:scanSweep 5s var(--e-soft) 1.3s infinite;
+  }
+  @keyframes scanSweep{
+    0%   { top:0;    opacity:0; }
+    8%   { opacity:1; }
+    48%  { top:100%; opacity:1; }
+    58%  { top:100%; opacity:0; }
+    100% { top:0;    opacity:0; }
+  }
+
+  /* Highlight marks */
+  .hlmark{
+    background:rgba(216,178,92,0.18);
+    border-bottom:2px solid var(--gold);
+    color:var(--white); padding:0 2px;
+    opacity:0;
+    animation:hlActivate .5s var(--e-out) forwards, hlBreathe 4s ease-in-out 3.5s infinite;
+  }
+  .hlmark.h1{animation-delay:0s, 3.5s; animation-fill-mode:forwards, none;}
+  .hlmark.h2{animation-delay:1s, 4.5s; animation-fill-mode:forwards, none;}
+  @keyframes hlActivate{to{opacity:1;}}
+  @keyframes hlBreathe{
+    0%,100%{background:rgba(216,178,92,0.18); border-bottom-color:var(--gold);}
+    50%{background:rgba(216,178,92,0.32); border-bottom-color:var(--gold-hi); box-shadow:0 2px 16px rgba(241,214,147,0.15);}
+  }
+
+  .chip{
+    display:inline-flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    padding:7px 12px; border-radius:var(--radius); margin:4px 6px 0 0; opacity:0; animation:chipIn .5s var(--e-out) forwards;
+  }
+  @keyframes chipIn{to{opacity:1;}}
+  .chip.verify{
+    background:rgba(142,202,230,0.18);
+    color:var(--azure);
+    border-left:2px solid var(--azure);
+    box-shadow: 0 0 20px rgba(142,202,230,0.1);
+    animation:chipIn .5s var(--e-out) forwards 3s, verifyPulse 3s ease-in-out 4s infinite;
+  }
+  .chip.risk{
+    background:rgba(255,155,92,0.12);
+    color:var(--coral-hi);
+    border-left:2px solid var(--coral);
+    animation:chipIn .5s var(--e-out) forwards 3.4s;
+  }
+  @keyframes verifyPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(142,202,230,.5), 0 0 20px rgba(142,202,230,0.1);}
+    50%{box-shadow:0 0 0 10px rgba(142,202,230,0), 0 0 32px rgba(142,202,230,0.2);}
+  }
+
+  /* ============================================================================
+     PAPER FIELD — THE DOCUMENTLAB IMPRINT
+     Five stacks, richer detail, physics-based motion, section-graded atmosphere.
+     ========================================================================== */
+  .paper-field{
+    position:fixed; inset:0;
+    z-index:3;
+    pointer-events:none;
+    overflow:hidden;
+    transition:opacity 1.8s var(--e-soft);
+    opacity:var(--field-op, 1);
+    --field-op:1;
+    --field-blur:0px;
+    --field-scale:1;
+    --tint:rgba(241,214,147,.055);
+    /* No filter here. A blur on a fixed, full-viewport container that holds moving
+       children forces the whole field to re-raster continuously. Per-section blur
+       is applied through --field-blur on the cached .p-lens layers instead, which
+       looks the same and costs nothing to animate. */
+    contain:strict;
+  }
+  @media(max-width:1100px){ .paper-field{display:none;} }
+  @media (prefers-reduced-motion: reduce){ .paper-field{display:none;} }
+
+  /* ---- PERFORMANCE: filter is deliberately NOT on this element ----
+     A blur/saturate filter on an element that also animates forces the GPU to
+     re-rasterize the entire blurred surface on every single frame. With five
+     stacks of thirty sheets that was the single most expensive thing on the page.
+     The filter now lives on .p-lens, a child that never transforms: its raster is
+     computed once and cached, and the animated ancestors simply move that cached
+     texture around. Identical visual result, a fraction of the cost. */
+  .p-stack{
+    position:absolute;
+    left:var(--left, auto);
+    right:var(--right, auto);
+    top:0;
+    width:var(--sw, 540px);
+    height:var(--sh, 480px);
+    opacity:var(--op, .32);
+    will-change:transform;
+    animation:var(--travel, pDriftA) linear both;
+    animation-timeline:scroll(root block);
+    animation-duration:1s;
+    animation-delay:var(--sd, 0s);
+    transform-origin:center center;
+    contain:layout style paint;
+  }
+  /* static raster surface — carries every filter, never animates */
+  .p-lens{
+    position:absolute; inset:0;
+    filter:blur(calc(var(--blur,.5px) + var(--field-blur,0px)))
+           saturate(var(--sat,1)) brightness(var(--bri,1));
+  }
+
+  /* Enhanced drift paths — more majestic, weighted motion */
+  @keyframes pDriftA{
+    0%   { transform:translate(-60px, -120vh) rotate(-1.5deg) scale(0.98); animation-timing-function:cubic-bezier(.4,0,.6,1); }
+    25%  { transform:translate(80px,  18vh)  rotate(2.2deg) scale(1);   animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    50%  { transform:translate(-40px, 140vh) rotate(-0.5deg) scale(1.01); }
+    50.1%{ transform:translate(70px,  -120vh) rotate(-1deg) scale(0.98);  animation-timing-function:cubic-bezier(.4,0,.6,1); }
+    75%  { transform:translate(-70px, 24vh)  rotate(1.8deg) scale(1);    animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    100% { transform:translate(50px,  140vh) rotate(0.5deg) scale(1.01); }
+  }
+  @keyframes pDriftB{
+    0%   { transform:translate(60px,  -120vh) rotate(1.2deg) scale(0.97); animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    28%  { transform:translate(-80px, 16vh)  rotate(-2deg) scale(1);    animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    52%  { transform:translate(50px,  140vh) rotate(0.8deg) scale(1.02); }
+    52.1%{ transform:translate(-60px, -120vh) rotate(0.4deg) scale(0.97); animation-timing-function:cubic-bezier(.42,0,.58,1); }
+    80%  { transform:translate(90px,  22vh)  rotate(-1.6deg) scale(1);   animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    100% { transform:translate(-40px, 140vh) rotate(-0.3deg) scale(1.02); }
+  }
+  @keyframes pDriftC{
+    0%   { transform:translate(-40px, -120vh) rotate(-1deg) scale(0.99);  animation-timing-function:cubic-bezier(.38,0,.62,1); }
+    22%  { transform:translate(60px,  28vh)  rotate(1.6deg) scale(1);     animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    46%  { transform:translate(-50px, 140vh) rotate(-0.6deg) scale(1.01); }
+    46.1%{ transform:translate(50px,  -120vh) rotate(-0.2deg) scale(0.99); animation-timing-function:cubic-bezier(.38,0,.62,1); }
+    72%  { transform:translate(-60px, 18vh)  rotate(1.2deg) scale(1);     animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    100% { transform:translate(70px,  140vh) rotate(0.4deg) scale(1.01); }
+  }
+  @keyframes pDriftD{
+    0%   { transform:translate(30px,  -120vh) rotate(0.8deg) scale(1);    animation-timing-function:cubic-bezier(.44,0,.56,1); }
+    30%  { transform:translate(-50px, 20vh)  rotate(-1.4deg) scale(1.01); animation-timing-function:cubic-bezier(.46,0,.54,1); }
+    54%  { transform:translate(40px,  140vh) rotate(0.2deg) scale(1); }
+    54.1%{ transform:translate(-40px, -120vh) rotate(1deg) scale(1);     animation-timing-function:cubic-bezier(.44,0,.56,1); }
+    78%  { transform:translate(70px,  26vh)  rotate(-0.8deg) scale(1.01); animation-timing-function:cubic-bezier(.46,0,.54,1); }
+    100% { transform:translate(-30px, 140vh) rotate(0.6deg) scale(1); }
+  }
+  @keyframes pDriftE{
+    0%   { transform:translate(-20px, -120vh) rotate(-0.6deg) scale(0.98); animation-timing-function:cubic-bezier(.4,0,.6,1); }
+    26%  { transform:translate(40px,  22vh)  rotate(1deg) scale(1);      animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    48%  { transform:translate(-30px, 140vh) rotate(-0.4deg) scale(1.01); }
+    48.1%{ transform:translate(30px,  -120vh) rotate(0.6deg) scale(0.98);  animation-timing-function:cubic-bezier(.4,0,.6,1); }
+    74%  { transform:translate(-50px, 20vh)  rotate(-0.8deg) scale(1);    animation-timing-function:cubic-bezier(.45,0,.55,1); }
+    100% { transform:translate(40px,  140vh) rotate(0.3deg) scale(1.01); }
+  }
+
+  /* Sheet: richer document silhouette */
+  .p-sheet{
+    position:absolute; inset:0;
+    background:var(--navy-3);
+    border:1px solid var(--line);
+    clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+    box-shadow:0 16px 40px rgba(3,7,15,.5), 0 0 0 1px rgba(255,255,255,.015) inset;
+    /* no transition: these never change state, and 30 idle transitions is pure
+       style-recalculation weight for zero visual benefit */
+  }
+
+  /* Organic fan — more natural, varied */
+  /* Left stacks */
+  .p-stack.s1 .p-sheet.s-e, .p-stack.s3 .p-sheet.s-e, .p-stack.s5 .p-sheet.s-e{
+    transform:translate(68px, 52px) rotate(-9deg); opacity:.48;
+  }
+  .p-stack.s1 .p-sheet.s-d, .p-stack.s3 .p-sheet.s-d, .p-stack.s5 .p-sheet.s-d{
+    transform:translate(52px, 40px) rotate(-7deg); opacity:.62;
+  }
+  .p-stack.s1 .p-sheet.s-c, .p-stack.s3 .p-sheet.s-c, .p-stack.s5 .p-sheet.s-c{
+    transform:translate(36px, 28px) rotate(-5deg); opacity:.76;
+  }
+  .p-stack.s1 .p-sheet.s-b, .p-stack.s3 .p-sheet.s-b, .p-stack.s5 .p-sheet.s-b{
+    transform:translate(18px, 14px) rotate(-2.5deg); opacity:.9;
+  }
+  .p-stack.s1 .p-sheet.s-a, .p-stack.s3 .p-sheet.s-a, .p-stack.s5 .p-sheet.s-a{
+    transform:translate(6px, 5px) rotate(-0.8deg); opacity:.96;
+  }
+  /* Right stacks */
+  .p-stack.s2 .p-sheet.s-e, .p-stack.s4 .p-sheet.s-e{
+    transform:translate(-68px, 52px) rotate(9deg); opacity:.48;
+  }
+  .p-stack.s2 .p-sheet.s-d, .p-stack.s4 .p-sheet.s-d{
+    transform:translate(-52px, 40px) rotate(7deg); opacity:.62;
+  }
+  .p-stack.s2 .p-sheet.s-c, .p-stack.s4 .p-sheet.s-c{
+    transform:translate(-36px, 28px) rotate(5deg); opacity:.76;
+  }
+  .p-stack.s2 .p-sheet.s-b, .p-stack.s4 .p-sheet.s-b{
+    transform:translate(-18px, 14px) rotate(2.5deg); opacity:.9;
+  }
+  .p-stack.s2 .p-sheet.s-a, .p-stack.s4 .p-sheet.s-a{
+    transform:translate(-6px, 5px) rotate(0.8deg); opacity:.96;
+  }
+  .p-sheet.p-front{ transform:none; opacity:1; }
+
+  /* Sheet anatomy: more detailed */
+  .p-head{
+    position:absolute; top:3.4%; left:4%; right:4%;
+    display:flex; justify-content:space-between; align-items:center;
+    padding-bottom:1.8%;
+    border-bottom:1px solid rgba(147,160,184,.14);
+  }
+  .p-head span{
+    display:block; height:6px; border-radius:1.5px;
+    background:rgba(147,160,184,.26);
+  }
+  .p-head span:first-child{ width:38%; }
+  .p-head span:last-child{ width:14%; opacity:.5; }
+
+  .p-lines{
+    position:absolute; left:4%; right:6.5%; top:10%; bottom:9%;
+    display:flex; flex-direction:column; gap:2.4%;
+  }
+  .p-lines i{
+    display:block; height:6px; border-radius:1.5px;
+    background:linear-gradient(90deg, rgba(147,160,184,.18), rgba(147,160,184,.04));
+  }
+  .p-lines i:nth-child(1){width:96%;}
+  .p-lines i:nth-child(2){width:88%;}
+  .p-lines i:nth-child(3){
+    width:40%;
+    background:rgba(147,160,184,.12);
+    border:1px solid rgba(147,160,184,.16);
+    height:8px;
+    margin-bottom:1%;
+  }
+  .p-lines i:nth-child(4){width:92%;}
+  .p-lines i:nth-child(5){width:73%;}
+  .p-lines i:nth-child(6){width:85%;}
+
+  .p-foot{
+    position:absolute; left:4%; right:4%; bottom:3.4%;
+    display:flex; align-items:center; gap:8px;
+    opacity:.55;
+  }
+  .p-foot::before{
+    content:'';
+    width:10px; height:10px; border-radius:50%; flex:0 0 auto;
+    border:1.5px solid rgba(147,160,184,.25);
+  }
+  .p-foot span{
+    display:block; height:4px; border-radius:1px;
+    background:rgba(147,160,184,.2);
+    width:28%;
+  }
+  .p-foot span:last-child{ margin-left:auto; width:12%; }
+
+  /* Stamp on background documents */
+  .p-stamp{
+    position:absolute; right:6%; top:45%;
+    transform:rotate(-14deg);
+    font-family:'IBM Plex Mono',monospace; font-size:7.5px; letter-spacing:.18em;
+    color:rgba(216,178,92,.3);
+    border:1.5px solid rgba(216,178,92,.25);
+    padding:3px 7px;
+    text-transform:uppercase;
+  }
+
+  /* Depth planes — more nuanced */
+  /* far plane retuned: was 3.2px blur at .08 opacity, which is below the
+     threshold where a document reads as a document at all */
+  .p-stack.far{
+    --sw:440px; --sh:392px; --op:.15; --blur:1.5px;
+    --sat:.78; --bri:.9;
+  }
+
+
+  .p-stack.near{
+    --sw:480px; --sh:428px; --op:.24; --blur:.35px;
+    --sat:1; --bri:1;
+  }
+  .p-stack.front{
+    --sw:500px; --sh:446px; --op:.30; --blur:0px;
+    --sat:1.06; --bri:1.05;
+  }
+
+  /* Anchors: pushed further to edges */
+  .p-stack.s1{ --left:-46px;  --travel:pDriftA; }
+  .p-stack.s2{ --right:-52px; --travel:pDriftB; }
+  .p-stack.s3{ --left:-70px;  --travel:pDriftC; }
+
+  /* Stagger */
+  .p-stack.s1{ --sd:0s; }
+  .p-stack.s2{ --sd:-0.42s; }
+  /* solved offset: keeps the two left-hand stacks on screen together
+     only ~9% of the scroll, so they read as separate documents passing,
+     never as one stacked mass */
+  .p-stack.s3{ --sd:-0.235s; }
+
+  /* Fallback ambient drift */
+  @supports not (animation-timeline: scroll(root block)){
+    .p-stack.s1{ animation:pDriftA 80s linear infinite; }
+    .p-stack.s2{ animation:pDriftB 96s linear infinite; animation-delay:-42s; }
+    .p-stack.s3{ animation:pDriftC 72s linear infinite; animation-delay:-28s; }
+  }
+
+  /* Cursor parallax on paper field */
+  .p-drift{
+    transform:translate3d(
+      calc((var(--pmx) * var(--depth, 16px) * -1) + (var(--surge, 0) * var(--surge-reach, 28px))),
+      calc(var(--pmy) * var(--depth, 16px) * -1),
+      0);
+  }
+  .p-stack.front{ --surge-reach:42px; --depth:22px; }
+  .p-stack.near{ --surge-reach:32px; --depth:16px; }
+  .p-stack.far { --surge-reach:14px; --depth:8px; }
+
+  /* ==========================================================================
+     SECTION SYSTEM
+     ========================================================================== */
+  section{padding:clamp(80px, 8vw, 130px) 0; position:relative; border-bottom:none;
+    /* Sections below the fold skip layout, paint and style work entirely until
+       they approach the viewport. contain-intrinsic-size supplies a placeholder
+       height so the scrollbar never jumps as they resolve. */
+    content-visibility:auto;
+    contain-intrinsic-size:auto 900px;
+  }
+  section::after{
+    content:'';
+    position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:linear-gradient(90deg,
+      transparent 0%,
+      rgba(38,56,92,.4) 15%,
+      var(--line) 50%,
+      rgba(38,56,92,.4) 85%,
+      transparent 100%);
+  }
+  .section-head{max-width:640px; margin-bottom:clamp(44px, 4.6vw, 68px);}
+  .section-head h2{font-size:clamp(28px,3.4vw,44px); margin-bottom:16px; line-height:1.1; letter-spacing:-0.02em; font-weight:800;}
+  .section-head p{color:var(--mist); font-size:16.5px; line-height:1.65;}
+  .exhibit-index{
+    position:absolute; top:4px; right:36px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em;
+    color:var(--mist-dim); text-align:right; display:none;
+  }
+  @media(min-width:900px){ .exhibit-index{display:block;} }
+
+  /* Reveal system */
+  .reveal{opacity:0; transform:translateY(20px); transition:opacity var(--t-3) var(--e-out), transform var(--t-3) var(--e-out);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .build-grid.reveal, .results-grid.reveal, .pricing-grid.reveal, .compare.reveal{
+    opacity:1; transform:none; transition:none;
+  }
+  .build-grid .build-card, .results-grid .result-card, .pricing-grid .price-card, .compare .compare-col{
+    opacity:0; transform:translateY(20px);
+    transition:opacity var(--t-3) var(--e-out), transform var(--t-3) var(--e-out);
+  }
+  .build-grid.in .build-card, .results-grid.in .result-card, .pricing-grid.in .price-card, .compare.in .compare-col{
+    opacity:1; transform:translateY(0);
+  }
+  .build-grid.in .build-card:nth-child(2), .results-grid.in .result-card:nth-child(2),
+  .pricing-grid.in .price-card:nth-child(2), .compare.in .compare-col:nth-child(2){ transition-delay:.08s; }
+  .build-grid.in .build-card:nth-child(3), .results-grid.in .result-card:nth-child(3),
+  .pricing-grid.in .price-card:nth-child(3){ transition-delay:.16s; }
+  .results-grid.in .result-card:nth-child(4){ transition-delay:.24s; }
+
+  @supports (animation-timeline: view()){
+    .reveal{
+      opacity:0;
+      transform:translateY(24px);
+      transition:none;
+      animation:revealRise linear both;
+      animation-timeline:view();
+      animation-range:entry 3% cover 22%;
+    }
+    .reveal.in{ opacity:0; }
+    @keyframes revealRise{
+      to{ opacity:1; transform:translateY(0); }
+    }
+    .build-grid.reveal, .results-grid.reveal, .pricing-grid.reveal, .compare.reveal{
+      opacity:1; transform:none; animation:none;
+    }
+    .build-grid .build-card, .results-grid .result-card,
+    .pricing-grid .price-card, .compare .compare-col{
+      opacity:0; transform:translateY(28px);
+      transition:none;
+      animation:revealRise linear both;
+      animation-timeline:view();
+      animation-range:entry 2% cover 20%;
+    }
+    .build-grid .build-card:nth-child(2), .results-grid .result-card:nth-child(2),
+    .pricing-grid .price-card:nth-child(2), .compare .compare-col:nth-child(2){
+      animation-range:entry 5% cover 23%;
+    }
+    .build-grid .build-card:nth-child(3), .results-grid .result-card:nth-child(3),
+    .pricing-grid .price-card:nth-child(3){
+      animation-range:entry 8% cover 26%;
+    }
+    .results-grid .result-card:nth-child(4){
+      animation-range:entry 11% cover 29%;
+    }
+    .section-head.reveal{ animation-range:entry 2% cover 18%; }
+  }
+
+  /* Watermark drift */
+  @keyframes watermarkDrift {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100px 100px; }
+  }
+  .alt-bg{
+    background:
+      repeating-linear-gradient(180deg, rgba(147,160,184,.04) 0px, rgba(147,160,184,.04) 1px, transparent 1px, transparent 28px),
+      var(--navy-0);
+    position: relative;
+    overflow: hidden;
+  }
+  .alt-bg::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    background-image:
+      repeating-linear-gradient(45deg, transparent, transparent 180px, rgba(216,178,92,0.015) 180px, rgba(216,178,92,0.015) 181px),
+      repeating-linear-gradient(-45deg, transparent, transparent 240px, rgba(142,202,230,0.012) 240px, rgba(142,202,230,0.012) 241px);
+    background-size: 300px 300px, 400px 400px;
+    animation: watermarkDrift 60s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .alt-bg > * { position: relative; z-index: 1; }
+
+  /* ==========================================================================
+     WHAT WE BUILD
+     ========================================================================== */
+  .build-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media(max-width:860px){ .build-grid{grid-template-columns:1fr;} }
+  .build-card{padding:28px 26px 26px;}
+  .build-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--gold);
+    display:inline-block; margin-bottom:16px;
+  }
+  .build-tag.azure{color:var(--azure);}
+  .build-card .build-tag{position:relative; overflow:hidden;}
+  .build-card .build-tag::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 15%, rgba(241,214,147,.22) 42%, rgba(255,255,255,.32) 50%, rgba(241,214,147,.22) 58%, transparent 85%);
+    transform:translateX(-115%);
+    transition:transform var(--t-4) var(--e-out);
+  }
+  .build-card:hover .build-tag::after{transform:translateX(115%);}
+  .build-card h3{font-size:19px; margin-bottom:12px; line-height:1.3; font-weight:700;}
+  .build-card p{font-size:14.5px; color:var(--mist); margin:0; line-height:1.65;}
+
+  .built-for{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+  .built-for span{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mist);
+    border:1px solid var(--line); padding:7px 14px; border-radius:20px;
+    transition:color var(--t-2) var(--e-out), background var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+  }
+  .built-for span:hover{
+    border-color: var(--azure);
+    color: var(--azure);
+    background: rgba(142,202,230,0.07);
+    box-shadow: 0 0 16px rgba(142,202,230,0.1);
+    cursor: default;
+    transform:translateY(-1px);
+  }
+
+  /* ==========================================================================
+     RESULTS
+     ========================================================================== */
+  .results-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
+  @media(max-width:820px){ .results-grid{grid-template-columns:1fr;} }
+  .result-card{padding:28px 28px 26px;}
+  .result-card.flagship{background:var(--navy-4); border-color:var(--gold);}
+  .result-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px;}
+  .result-vert{font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:20px; white-space:nowrap; font-weight:500;}
+  .result-vert.legal{background:rgba(142,202,230,0.12); color:var(--azure); border:1px solid rgba(142,202,230,0.22);}
+  .result-vert.fin{background:rgba(216,178,92,0.15); color:var(--gold-hi); border:1px solid rgba(216,178,92,0.22);}
+  .result-vert.both{background:rgba(255,155,92,0.15); color:var(--coral-hi); border:1px solid rgba(255,155,92,0.22);}
+  .result-card .result-vert{position:relative; overflow:hidden;}
+  .result-card .result-vert::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 15%, rgba(255,255,255,.16) 42%, rgba(255,255,255,.26) 50%, rgba(255,255,255,.16) 58%, transparent 85%);
+    transform:translateX(-115%);
+    transition:transform var(--t-4) var(--e-out) .05s;
+  }
+  .result-card:hover .result-vert::after{transform:translateX(115%);}
+  .result-card h3{font-size:17px; margin-bottom:10px; line-height:1.35; font-weight:700;}
+  .result-card p{font-size:14px; color:var(--mist); margin:0; line-height:1.65;}
+  .result-flag{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--coral-hi); margin-bottom:10px; display:block; font-weight:500;
+  }
+  .results-note{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    margin-top:32px; padding-top:28px; border-top:1px solid var(--line);
+  }
+  .results-note p{margin:0; font-size:14.5px; color:var(--mist);}
+  .results-note p b{color:var(--white);}
+  .results-note .coral-accent{color:var(--coral-hi);}
+
+  /* ==========================================================================
+     WHY / COMPARISON
+     ========================================================================== */
+  .compare{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
+  @media(max-width:760px){ .compare{grid-template-columns:1fr;} }
+  .compare-col{background:var(--navy-1); padding:32px 30px;}
+  .compare-col h4{font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--mist-dim); margin-bottom:20px; font-weight:600;}
+  .compare-col.win h4{color:var(--gold);}
+  .compare-list{list-style:none; margin:0; padding:0;}
+  .compare-list li{padding:11px 0; border-top:1px solid var(--line); font-size:14.5px; display:flex; gap:10px; line-height:1.55;}
+  .compare-list li:first-child{border-top:none;}
+  .compare-col:not(.win) .compare-list li{color:var(--mist-dim); text-decoration:line-through; text-decoration-color:var(--coral); text-decoration-thickness:1.5px;}
+  .compare-col:not(.win) .compare-list li::before{content:'✗'; color:var(--coral); text-decoration:none; flex-shrink:0; font-weight:600;}
+  .compare-col.win .compare-list li::before{content:'✓'; color:var(--gold); flex-shrink:0; font-weight:600;}
+
+  /* ==========================================================================
+     PRICING
+     ========================================================================== */
+  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media(max-width:900px){ .pricing-grid{grid-template-columns:1fr;} }
+  .price-card{padding:30px 28px; display:flex; flex-direction:column;}
+  .price-card.feat{background:var(--navy-4); border-color:var(--gold);}
+  .price-tier{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.07em; color:var(--mist); text-transform:uppercase; margin-bottom:14px; font-weight:500;}
+  .price-card.feat .price-tier{color:var(--gold-hi);}
+  .price-amount{font-family:'Sora',sans-serif; font-weight:700; font-size:30px; margin-bottom:4px; font-variant-numeric:tabular-nums; letter-spacing:-0.02em;}
+  .price-unit{font-size:12px; color:var(--mist-dim); margin-bottom:22px;}
+  .price-list{list-style:none; margin:0 0 26px; padding:0; flex-grow:1;}
+  .price-list li{font-size:13.5px; padding:9px 0; border-top:1px solid var(--line); display:flex; gap:8px; color:var(--mist); line-height:1.5;}
+  .price-list li:first-child{border-top:none;}
+  .price-list li::before{content:'✓'; color:var(--gold); flex-shrink:0; font-weight:600;}
+
+  /* ==========================================================================
+     CARD HOVER — Premium light-catching sheen
+     ========================================================================== */
+  .build-card, .result-card, .price-card{
+    transition:transform var(--t-3) var(--e-out), box-shadow var(--t-3) var(--e-out), border-color var(--t-3) var(--e-out);
+  }
+  .build-card::before, .result-card::before, .price-card::before{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(115deg, transparent 32%, rgba(255,255,255,.06) 46%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.06) 54%, transparent 68%);
+    transform:translateX(-130%);
+    transition:transform var(--t-4) var(--e-out);
+    pointer-events:none;
+  }
+  .build-card:hover, .result-card:hover, .price-card:hover{
+    transform:translateY(-5px);
+    border-color:var(--gold);
+    box-shadow:
+      0 20px 48px -16px rgba(0,0,0,.55),
+      0 0 0 1px rgba(216,178,92,.2),
+      0 0 32px rgba(216,178,92,.1);
+  }
+  .build-card:hover::before, .result-card:hover::before, .price-card:hover::before{
+    transform:translateX(130%);
+  }
+  .result-card.flagship:hover, .price-card.feat:hover{
+    border-color:var(--gold-hi);
+    box-shadow:
+      0 20px 48px -16px rgba(0,0,0,.55),
+      0 0 0 1px rgba(241,214,147,.3),
+      0 0 32px rgba(241,214,147,.12);
+  }
+
+  /* ==========================================================================
+     FINAL CTA
+     ========================================================================== */
+  .final-cta{
+    border-bottom:none; text-align:center; padding:110px 0 80px;
+    background:
+      radial-gradient(650px 350px at 50% 0%, rgba(216,178,92,0.12), transparent 55%),
+      var(--navy-1);
+    position:relative;
+  }
+  .final-cta::before{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(142,202,230,0.01) 3px, rgba(142,202,230,0.01) 4px);
+  }
+  .final-cta h2{font-size:clamp(30px,4.6vw,52px); max-width:16ch; margin:0 auto 20px; line-height:1.08; letter-spacing:-0.02em; font-weight:800;}
+  .final-cta p{color:var(--mist); font-size:17px; max-width:50ch; margin:0 auto 36px; line-height:1.65;}
+  .final-ctas{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+
+  /* ==========================================================================
+     FOOTER
+     ========================================================================== */
+  footer{padding:44px 0 48px;}
+  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:24px;}
+  .foot-links{display:flex; gap:24px;}
+  .foot-links a{font-size:13px; color:var(--mist); text-decoration:none; transition:color var(--t-1) var(--e-out);}
+  .foot-links a:hover{color:var(--gold-hi);}
+  .foot-note{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--mist-dim); border-top:1px solid var(--line); padding-top:22px; letter-spacing:.01em; line-height:1.6;}
+  .foot-note b{color:var(--mist); letter-spacing:.02em;}
+
+  /* ==========================================================================
+     CURSOR LIGHT — Multi-layer atmospheric spotlight
+     ========================================================================== */
+  .cursor-light{
+    position:fixed; inset:0; pointer-events:none; z-index:80;
+    --x:50vw; --y:50vh; --glow:1;
+    opacity:0; transition:opacity var(--t-4) var(--e-soft);
+  }
+  .cursor-light.is-active{opacity:1;}
+  .cursor-light::before,
+  .cursor-light::after{
+    content:''; position:absolute; inset:0; transition:background var(--t-3) var(--e-soft);
+  }
+  /* Glass sheen */
+  .cursor-light::before{
+    background:radial-gradient(620px circle at var(--x) var(--y),
+      rgba(244,246,250,calc(0.045 * var(--glow))),
+      rgba(244,246,250,calc(0.014 * var(--glow))) 34%,
+      transparent 68%);
+    mix-blend-mode:overlay;
+  }
+  /* Gold core */
+  .cursor-light::after{
+    background:radial-gradient(400px circle at var(--x) var(--y),
+      rgba(216,178,92,calc(0.075 * var(--glow))),
+      rgba(216,178,92,calc(0.026 * var(--glow))) 38%,
+      transparent 70%);
+    mix-blend-mode:soft-light;
+  }
+  /* Surface catch */
+  .surface-catch{
+    position:fixed; inset:0; pointer-events:none; z-index:81;
+    --x:50vw; --y:50vh;
+    opacity:0; transition:opacity var(--t-2) var(--e-out);
+    background:radial-gradient(140px circle at var(--x) var(--y),
+      rgba(255,255,255,0.16),
+      rgba(241,214,147,0.1) 40%,
+      transparent 75%);
+    mix-blend-mode:overlay;
+  }
+  .surface-catch.is-lit{opacity:1;}
+  .cursor-light{--glow:1;}
+  body.is-reading .cursor-light{--glow:0.45;}
+  body.is-hot-zone .cursor-light{--glow:1.5;}
+
+  /* SCROLL PROGRESS — removed.
+     Previously flagged as reading cheap: a saturated gold bar with a glow is a
+     consumer-app pattern, and chrome that announces itself undercuts the register
+     this brand is working in. To restore, re-add
+     <div class="scroll-progress"></div> and this rule; the frame scheduler still
+     detects and drives the element if it is present. */
+
+  /* ==========================================================================
+     SECTION GRADING — one dial, not two
+
+     The previous grading multiplied a field opacity (.18–.40) by a per-stack
+     opacity (.04–.18). Compounded, that put the paper at an effective 1.4%–7%:
+     433 DOM nodes, five scroll-driven animations and thirty box-shadows, all
+     rendering something essentially invisible. Paying full cost for no image.
+
+     Now the depth planes own their relative weight (ultra behind front, as
+     designed) and the section grade is a single multiplier on the field. One
+     animated property per section change instead of five, and the values are
+     tuned to land where they were always meant to: present, subordinate, never
+     competing with type.
+
+     The curve is a bookend. The hero and the closing CTA carry the material;
+     the argument in between runs quiet, with Pricing quietest of all — a reader
+     deciding to spend money deserves a still page.
+     ========================================================================== */
+  .paper-field{
+    --field-op:1;
+    --field-blur:0px;
+    --tint:rgba(241,214,147,.055);
+    transition:opacity 1.4s var(--e-soft);
+    opacity:var(--field-op);
+  }
+
+  /* HERO — the real dossier owns this frame; paper sits well behind it. */
+  body.sec-hero    .paper-field{ --field-op:.42; --field-blur:.4px; }
+  /* PRODUCT — the most open section, and the most air to fill. Azure tint picks
+     up the accent chips in the cards. */
+  body.sec-build   .paper-field{ --field-op:.78; --field-blur:0px;
+                                 --tint:rgba(142,202,230,.07); }
+  /* RESULTS — figures must be read and believed. Step back, soften. */
+  body.sec-proof   .paper-field{ --field-op:.40; --field-blur:.7px;
+                                 --tint:rgba(241,214,147,.05); }
+  /* COMPARISON — a two-column argument needs a clear middle. */
+  body.sec-why     .paper-field{ --field-op:.46; --field-blur:.8px;
+                                 --tint:rgba(147,160,184,.045); }
+  /* PRICING — decision moment. Quietest point on the page. */
+  body.sec-pricing .paper-field{ --field-op:.32; --field-blur:.9px;
+                                 --tint:rgba(255,155,92,.045); }
+  /* CONTACT — the close returns to the material the page opened with. */
+  body.sec-contact .paper-field{ --field-op:.88; --field-blur:0px;
+                                 --tint:rgba(241,214,147,.085); }
+
+  /* ==========================================================================
+     HEADER CONDENSE — Scroll-linked via CSS where supported
+     ========================================================================== */
+  @supports (animation-timeline: scroll(root block)){
+    header{
+      animation:headerCondense linear both;
+      animation-timeline:scroll(root block);
+      animation-range:0 340px;
+    }
+    @keyframes headerCondense{
+      to{
+        background:rgba(4,11,22,0.94);
+        backdrop-filter:blur(22px) saturate(1.45);
+        -webkit-backdrop-filter:blur(22px) saturate(1.45);
+        box-shadow:0 20px 50px -32px rgba(0,0,0,.95);
+        border-color:rgba(38,56,92,0.35);
+      }
+    }
+    .nav{
+      animation:navCondense linear both;
+      animation-timeline:scroll(root block);
+      animation-range:0 340px;
+    }
+    @keyframes navCondense{ to{ padding-top:10px; padding-bottom:10px; } }
+  }
+
+  /* ==========================================================================
+     TYPOGRAPHY ENHANCEMENTS
+     ========================================================================== */
+  .hero h1{ letter-spacing:-0.03em; }
+  .section-head h2, .final-cta h2{ letter-spacing:-0.025em; text-wrap:balance; }
+  .hero p.lede, .section-head p{ text-wrap:pretty; }
+  .price-amount{ letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
+
+  /* ==========================================================================
+     SECTION JOINS — Soft bleed between surfaces
+     ========================================================================== */
+  .alt-bg::after{
+    content:'';
+    position:absolute; left:0; right:0; top:0; height:140px;
+    pointer-events:none; z-index:0;
+    background:linear-gradient(180deg, var(--navy-1), transparent);
+  }
+  .alt-bg > .wrap{ position:relative; z-index:1; }
+  section:not(.alt-bg):not(.hero){ position:relative; }
+  section:not(.alt-bg):not(.hero)::before{
+    content:'';
+    position:absolute; left:0; right:0; top:0; height:140px;
+    pointer-events:none; z-index:0;
+    background:linear-gradient(180deg, var(--navy-0), transparent);
+  }
+  section > .wrap{ position:relative; z-index:1; }
+
+  /* ==========================================================================
+     CORPUS COUNTER — Flash animation
+     ========================================================================== */
+  .corpus-num{
+    display:inline-block;
+    min-width:2.2em;
+    text-align:right;
+    transition:opacity var(--t-1) var(--e-out), text-shadow var(--t-2) var(--e-out);
+  }
+  .corpus-num.flash{
+    opacity:0.25;
+    text-shadow:0 0 18px rgba(241,214,147,0.6);
+  }
+
+  /* ==========================================================================
+     AMBIENT SCAN LINES — Occasional horizontal sweep (very subtle)
+     ========================================================================== */
+  .ambient-scan{
+    position:fixed; inset:0; pointer-events:none; z-index:4;
+    overflow:hidden;
+    opacity:0.04;
+  }
+  .ambient-scan::before{
+    content:'';
+    position:absolute; left:0; right:0; top:0; height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold-hi), transparent);
+    box-shadow:0 0 20px 2px rgba(241,214,147,.3);
+    animation:ambientSweep 12s ease-in-out 5s infinite;
+  }
+  @keyframes ambientSweep{
+    0%,100%{ top:-10%; opacity:0; }
+    5%{ opacity:1; }
+    45%{ top:110%; opacity:1; }
+    50%{ opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fold-card::before{ display:none; }
+    .ambient-scan{ display:none; }
+  }
+
+  /* ==========================================================================
+     RESPONSIVE
+     ========================================================================== */
+  @media(max-width:920px){
+    .hero-grid{grid-template-columns:1fr; gap:48px;}
+    .dossier-stack{padding:16px 28px 28px 0;}
+  }
+  @media(max-width:900px){
+    .pricing-grid{grid-template-columns:1fr;}
+    .exhibit-index{display:none;}
+  }
+  @media(max-width:860px){
+    .build-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:820px){
+    .results-grid{grid-template-columns:1fr;}
+  }
+  @media(max-width:760px){
+    .compare{grid-template-columns:1fr;}
+    .nav-links a:not(.btn-gold){display:none;}
+  }
+
+/* ==========================================================================
+   RENDERING HYGIENE
+   Containment tells the browser which parts of the page can never affect each
+   other, so a change inside one card cannot trigger layout of the whole document.
+   These are the cheapest wins available and they are invisible by definition.
+   ========================================================================== */
+
+/* Cards and stacks are self-contained: their internals never reflow siblings. */
+.fold-card, .build-card, .result-card, .price-card, .compare-col{
+  contain:layout style;
+}
+
+/* The grain and vignette are static full-screen overlays. Promoting them to
+   their own layers stops them being repainted every time anything beneath
+   them moves — which, on this page, is constantly. */
+body::after, body::before{
+  will-change:opacity;
+  transform:translateZ(0);
+}
+
+/* will-change is a promise, not a decoration: it costs memory for every element
+   that carries it. It belongs only on the handful of things that genuinely
+   animate every frame, and is dropped the moment they are not moving. */
+.cursor-light, .surface-catch{ will-change:transform; }
+@media (prefers-reduced-motion: reduce){
+  .p-stack, .cursor-light, .surface-catch, body::after, body::before{
+    will-change:auto;
+  }
+}
+
+/* Images: never let a late-loading logo shift the header. */
+.brand img{ aspect-ratio:1/1; }
+
+/* Long-form copy renders faster when the browser is allowed to optimise for
+   throughput rather than per-glyph precision. */
+.section-head p, .hero p.lede, .build-card p, .price-card li{
+  text-rendering:optimizeSpeed;
+}
+h1, h2, h3, .price-amount, .stat-num{
+  text-rendering:optimizeLegibility;
+}
+
+</style>
+<base target="_blank">
+</head>
+
+<body>
+<!-- Atmospheric layers -->
+<div class="cursor-light"></div>
+<div class="surface-catch"></div>
+<div class="ambient-scan" aria-hidden="true"></div>
+
+<!-- Paper Field — 5 document stacks with richer detail -->
+<div class="paper-field" id="paperField" aria-hidden="true">
+  <!-- Three stacks, not five. Five put three documents in the same 300px
+       band on the left and two on the right; blurred semi-transparent
+       objects stacked on each other composite into a smear rather than
+       reading as paper. Fewer and separated is both clearer and more
+       expensive-looking. -->
+  <div class="p-stack front s1">
+    <div class="p-drift">
+      <div class="p-lens">
+      <div class="p-sheet s-e"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-d"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-c"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-b"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-a"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet p-front"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div><div class="p-stamp">VERIFIED</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="p-stack near s2">
+    <div class="p-drift">
+      <div class="p-lens">
+      <div class="p-sheet s-e"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-d"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-c"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-b"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div><div class="p-stamp">APPROVED</div></div>
+      <div class="p-sheet s-a"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet p-front"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="p-stack far s3">
+    <div class="p-drift">
+      <div class="p-lens">
+      <div class="p-sheet s-e"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div><div class="p-stamp">CONFIDENTIAL</div></div>
+      <div class="p-sheet s-d"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div><div class="p-stamp">REDACTED</div></div>
+      <div class="p-sheet s-c"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-b"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet s-a"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div></div>
+      <div class="p-sheet p-front"><div class="p-head"><span></span><span></span></div><div class="p-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="p-foot"><span></span><span></span></div><div class="p-stamp">CLASSIFIED</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="nav">
+    <div class="brand"><img src="logo.png" alt="DocumentLab.ai" width="28" height="28" decoding="async" fetchpriority="high"><span>DocumentLab.ai</span></div>
+    <nav class="nav-links">
+      <a href="#build">Product</a>
+      <a href="#proof">Results</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact" class="btn-gold">Book a call</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Legal &amp; Financial Document Intelligence</div>
+      <h1>Turn document backlogs into <span class="hl">cited, defensible</span> answers.</h1>
+      <p class="lede">DocumentLab.ai builds AI systems that read your contracts and filings — and answer questions instantly, with the exact source attached.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-gold">Book a call</a>
+        <a href="#proof" class="btn-ghost">See the results</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>Half</b> as many wrong answers, on our flagship system</div>
+        <div><b class="count" data-target="10">0</b> systems shipped for law firms &amp; financial teams</div>
+        <div><b>FR / AR / EN</b> · civil &amp; common law</div>
+      </div>
+    </div>
+    <div class="dossier-stack" id="dossierStack">
+      <div class="corpus-sheet" aria-hidden="true">
+        <div class="sheet-label"><span>NDA_v3.docx</span><span>p.4 / 11</span></div>
+        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
+        <div class="sheet-foot"><span>Matter 0412-A</span><span>EN</span></div>
+        <div class="sheet-stamp">CONFIDENTIAL</div>
+      </div>
+      <div class="corpus-sheet" aria-hidden="true">
+        <div class="sheet-label"><span>CreditAgmt_2023.pdf</span><span>p.31 / 58</span></div>
+        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
+        <div class="sheet-foot"><span>Matter 0388-C</span><span>FR</span></div>
+        <div class="sheet-stamp">REDACTED</div>
+      </div>
+      <div class="corpus-sheet" aria-hidden="true">
+        <div class="sheet-label"><span>10-K_Filing.pdf</span><span>p.88 / 214</span></div>
+        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
+        <div class="sheet-foot"><span>Matter 0501-B</span><span>EN</span></div>
+        <div class="sheet-stamp">REVIEWED</div>
+      </div>
+      <div class="corpus-sheet" aria-hidden="true">
+        <div class="sheet-label"><span>Lease_Amend.docx</span><span>p.2 / 6</span></div>
+        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
+        <div class="sheet-foot"><span>Matter 0299-A</span><span>AR</span></div>
+        <div class="sheet-stamp">APPROVED</div>
+      </div>
+      <div class="fold-card dossier">
+        <div class="scan-line" aria-hidden="true"></div>
+        <div class="doc-head"><span class="doc-tag">CASE FILE</span><span>MSA_2024.pdf — p.12</span></div>
+        <p class="clause"><span class="clause-num">§4.2</span>Either party may terminate this Agreement upon <span class="hlmark h1">thirty (30) days written notice</span> if the other party materially breaches any provision and fails to cure such breach within the notice period.</p>
+        <p class="clause">Confidential Information shall remain protected for <span class="hlmark h2">five (5) years</span> following termination.</p>
+        <span class="chip verify">✓ Verified — MSA_2024.pdf, p.12</span>
+        <span class="chip risk">⚠ Cure period shorter than your standard term</span>
+      </div>
+      <span class="corpus-count">Corpus index — <b class="corpus-num" data-target="2438">0</b> docs · <b class="corpus-num" data-target="19">0</b> matters</span>
+    </div>
+  </div>
+</section>
+
+<section id="build" class="alt-bg">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="exhibit-index">EXHIBIT A<br>PRODUCT SCOPE</span>
+      <div class="eyebrow">What We Build</div>
+      <h2>Three ways we put your documents to work.</h2>
+    </div>
+    <div class="build-grid reveal">
+      <div class="fold-card build-card">
+        <span class="build-tag">01</span>
+        <h3>Ask your documents anything</h3>
+        <p>A search assistant trained on your contracts and filings. Ask a question in plain language, get an answer with the exact source cited — no more digging through hundreds of pages.</p>
+      </div>
+      <div class="fold-card build-card">
+        <span class="build-tag azure">02</span>
+        <h3>Automate the busywork</h3>
+        <p>AI that reads a document, researches the context, and drafts the risk memo or due diligence report your team would otherwise spend hours writing by hand.</p>
+      </div>
+      <div class="fold-card build-card">
+        <span class="build-tag">03</span>
+        <h3>Tuned to your documents</h3>
+        <p>Every system is tested and tuned on your specific contracts and language — not a generic template — so it understands your documents, not just documents in general.</p>
+      </div>
+    </div>
+    <div class="built-for reveal">
+      <span>Law firms</span><span>Legaltech startups</span><span>In-house legal</span><span>Banks</span><span>Fintech</span><span>Investment firms</span><span>Compliance teams</span>
+    </div>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="exhibit-index">EXHIBIT B<br>TRACK RECORD</span>
+      <div class="eyebrow">Results</div>
+      <h2>Four systems shipped. Here's an overview of what they do.</h2>
+      <p>Real projects, in plain terms — not a spec sheet.</p>
+    </div>
+    <div class="results-grid reveal">
+      <div class="fold-card result-card flagship">
+        <div class="result-top"><span class="result-vert both">Legal &amp; Finance</span></div>
+        <span class="result-flag">★ Flagship project</span>
+        <h3>Due diligence agent for legal &amp; financial teams</h3>
+        <p>Reviews a full document set and drafts the due diligence report. Cut incorrect or misleading answers by more than half compared to the first version, and turns a document around in about 4 seconds.</p>
+      </div>
+      <div class="fold-card result-card">
+        <div class="result-top"><span class="result-vert legal">Legal</span></div>
+        <h3>Contract Q&amp;A assistant</h3>
+        <p>Live tool that answers questions across a full contract library, with every answer linked back to the exact clause and page it came from.</p>
+      </div>
+      <div class="fold-card result-card">
+        <div class="result-top"><span class="result-vert fin">Finance</span></div>
+        <h3>Research briefing agent</h3>
+        <p>Pulls together a full research briefing from raw documents in under 10 seconds, reliably enough to hand straight to an analyst.</p>
+      </div>
+      <div class="fold-card result-card">
+        <div class="result-top"><span class="result-vert legal">Legal</span></div>
+        <h3>Contract risk flagging</h3>
+        <p>Reads incoming contracts and flags unusual or risky clauses automatically, so reviewers spend time only on what actually needs a second look.</p>
+      </div>
+    </div>
+    <div class="results-note reveal">
+      <p><b class="coral-accent">4 systems</b> shipped and tested across legal and financial documents — every one measured before it went live.</p>
+      <a href="https://github.com/pseudobarbie/DocumentLab.ai-Portfolio/tree/main" class="btn-ghost">Ask for the full portfolio</a>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="alt-bg">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="exhibit-index">EXHIBIT C<br>COMPARISON</span>
+      <div class="eyebrow">Why DocumentLab.ai</div>
+      <h2>Not a generalist. A specialist.</h2>
+      <p>Enterprise players build horizontal tools for Fortune 500 budgets. This studio builds only for legal and financial documents — including the French- and Arabic-speaking, civil-law markets they don't serve.</p>
+    </div>
+    <div class="compare reveal">
+      <div class="compare-col">
+        <h4>Harvey · Spellbook · Clio · Ocrolus</h4>
+        <ul class="compare-list">
+          <li>Generic AI, not built for your documents</li>
+          <li>No way to check if an answer is actually correct</li>
+          <li>Off-the-shelf only — never learns your documents specifically</li>
+          <li>$50k–$500k contracts, year-long rollout</li>
+          <li>Built for US and UK English only</li>
+        </ul>
+      </div>
+      <div class="compare-col win">
+        <h4>DocumentLab.ai</h4>
+        <ul class="compare-list">
+          <li>Built specifically for legal and financial documents</li>
+          <li>Every answer checked and measured before it goes live</li>
+          <li>Tuned to your documents, not a generic template</li>
+          <li>Freelance-scale pricing, enterprise-level reliability</li>
+          <li>French, Arabic, English — civil and common law</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="exhibit-index">EXHIBIT D<br>ENGAGEMENT TERMS</span>
+      <div class="eyebrow">Services &amp; Pricing</div>
+      <h2>Three ways to work together</h2>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="fold-card price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount">€1,500–3,000</div>
+        <div class="price-unit">per project · one-off</div>
+        <ul class="price-list">
+          <li>An assistant that answers questions from your documents</li>
+          <li>Every answer shows where it came from</li>
+          <li>Live and ready to use, with a link you can share</li>
+          <li>A short guide and walkthrough video</li>
+        </ul>
+        <a href="#contact" class="btn-ghost">Start here</a>
+      </div>
+      <div class="fold-card price-card feat">
+        <div class="price-tier">Professional</div>
+        <div class="price-amount">€3,000–8,000</div>
+        <div class="price-unit">per project · full production build</div>
+        <ul class="price-list">
+          <li>Everything in Starter</li>
+          <li>Built to run reliably day to day, not just as a demo</li>
+          <li>We watch performance and catch problems early</li>
+          <li>Multi-step automation — research, drafting, review</li>
+          <li>Tuned specifically to your documents</li>
+        </ul>
+        <a href="#contact" class="btn-coral">Most common</a>
+      </div>
+      <div class="fold-card price-card">
+        <div class="price-tier">Retainer</div>
+        <div class="price-amount">€2,000–4,500<span style="font-size:14px;">/mo</span></div>
+        <div class="price-unit">ongoing engineering partner</div>
+        <ul class="price-list">
+          <li>Everything in Professional</li>
+          <li>A monthly report on how the system is performing</li>
+          <li>Ongoing fixes and improvements as your documents change</li>
+          <li>A quarterly check-in on strategy</li>
+        </ul>
+        <a href="#contact" class="btn-ghost">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="contact">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">Let's Talk</div>
+    <h2>Get answers out of your documents, with a source attached.</h2>
+    <p>Tell us about your documents and what you need to find in them. We'll suggest the right starting point — no jargon required.</p>
+    <div class="final-ctas">
+      <a href="mailto:hello@documentlab.ai" class="btn-gold">hello@documentlab.ai</a>
+      <a href="#pricing" class="btn-ghost">View pricing</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div class="brand"><img src="logo.png" alt="DocumentLab.ai" width="28" height="28" decoding="async" fetchpriority="high"><span>DocumentLab.ai</span></div>
+      <div class="foot-links">
+        <a href="#build">Product</a>
+        <a href="#proof">Results</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="foot-note"><b>Built with Intention. Shipped with Evidence.</b> — AI engineer, published research on AI reliability, certified by DeepLearning.AI and IBM.</div>
+  </div>
+</footer>
+
+<script>
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Intersection Observer for reveals ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  /* ---------- Fan the corpus stack ---------- */
+  const dossierStack = document.getElementById('dossierStack');
+  if(dossierStack){
+    if(reducedMotion){ dossierStack.classList.add('in'); }
+    else { setTimeout(()=>dossierStack.classList.add('in'), 250); }
+  }
+
+  /* ---------- Hero cursor-reactive glow ---------- */
+  const heroEl = document.querySelector('.hero');
+  if(heroEl && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    heroEl.addEventListener('mousemove', (e)=>{
+      const r = heroEl.getBoundingClientRect();
+      heroEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+      heroEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+    });
+  }
+
+  /* ---------- Logo fallback ---------- */
+  document.querySelectorAll('.brand img').forEach(img=>{
+    img.addEventListener('error', ()=>{
+      const mark = document.createElement('span');
+      mark.className = 'brand-mark-fallback';
+      mark.textContent = 'DL';
+      img.replaceWith(mark);
+    }, {once:true});
+  });
+
+  /* ---------- Count up stats ---------- */
+  document.querySelectorAll('.count').forEach(el=>{
+    const target = parseInt(el.dataset.target, 10);
+    if(reducedMotion){ el.textContent = target; return; }
+    const duration = 1000;
+    const start = performance.now() + 300;
+    function step(now){
+      const p = Math.min(Math.max((now - start) / duration, 0), 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(eased * target);
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+
+  /* ---------- Looping corpus counter ---------- */
+  (function(){
+    const counters = document.querySelectorAll('.corpus-num');
+    if(!counters.length) return;
+
+    function loopCounter(el, target, duration){
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(eased * target).toLocaleString();
+        if(p < 1){
+          requestAnimationFrame(tick);
+        } else {
+          setTimeout(() => {
+            el.classList.add('flash');
+            setTimeout(() => {
+              el.classList.remove('flash');
+              loopCounter(el, target, duration);
+            }, 250);
+          }, 3000);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    if(reducedMotion){
+      counters.forEach(el => { el.textContent = parseInt(el.dataset.target, 10).toLocaleString(); });
+      return;
+    }
+
+    setTimeout(() => {
+      counters.forEach(el => {
+        const target = parseInt(el.dataset.target, 10);
+        loopCounter(el, target, 1800);
+      });
+    }, 1000);
+  })();
+
+  /* ==========================================================================
+     UNIFIED FRAME SCHEDULER
+     Every cursor- and scroll-reactive effect on this page used to own a private
+     requestAnimationFrame loop — five of them, each running forever at 60fps,
+     each writing CSS variables whether or not anything had changed. That is five
+     independent style-recalculation passes per frame, burning battery on a static
+     page and competing for the same 16ms budget.
+
+     They are now one loop with three properties that matter:
+       · It reads scroll position ONCE per frame and hands the value to every
+         consumer, instead of each effect querying layout independently.
+       · All writes are batched at the end of the frame, so the browser never has
+         to interleave reads and writes (no forced synchronous layout).
+       · It SLEEPS. When every value has settled within epsilon and there has been
+         no input, the loop stops entirely and costs literally nothing until the
+         next scroll or pointer move wakes it.
+
+     No effect is reduced — the sheen, the surge, the spotlight, the parallax and
+     the progress bar all behave exactly as before. They simply share a heartbeat.
+     ========================================================================== */
+  (function(){
+    const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+    const field = document.getElementById('paperField');
+    const cl    = document.querySelector('.cursor-light');
+    const sc    = document.querySelector('.surface-catch');
+    const bar   = document.querySelector('.scroll-progress span, .scroll-progress');
+    const hdr   = document.querySelector('header');
+    const noScrollTimeline = !(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll(root block)'));
+
+    /* ---- state ---- */
+    let running = false, idleFrames = 0;
+    let sy = window.scrollY || 0, lastSy = sy;
+    let surge = 0;
+    let ptx = innerWidth / 2, pty = innerHeight / 2;   // raw pointer
+    let plx = ptx, ply = pty;                          // eased spotlight
+    let pmxT = 0, pmyT = 0, pmx = 0, pmy = 0;          // normalised parallax
+    let started = false, condensed = null, lastBar = -1;
+
+    const EPS = 0.0004;
+
+    function wake(){
+      idleFrames = 0;
+      if(!running){ running = true; requestAnimationFrame(frame); }
+    }
+
+    function frame(){
+      /* ---------- READ (once) ---------- */
+      sy = window.scrollY || window.pageYOffset;
+      const dy = sy - lastSy;
+      lastSy = sy;
+
+      /* ---------- COMPUTE ---------- */
+      let moved = false;
+
+      if(!reducedMotion){
+        const target = Math.max(-1, Math.min(1, dy / 38));
+        const nSurge = surge + (target - surge) * 0.12;
+        surge = nSurge * 0.94;
+        if(Math.abs(surge) > EPS) moved = true;
+      }
+
+      if(fine){
+        const nx = plx + (ptx - plx) * 0.08;
+        const ny = ply + (pty - ply) * 0.08;
+        if(Math.abs(nx - plx) > 0.05 || Math.abs(ny - ply) > 0.05) moved = true;
+        plx = nx; ply = ny;
+
+        const mx = pmx + (pmxT - pmx) * 0.04;
+        const my = pmy + (pmyT - pmy) * 0.04;
+        if(Math.abs(mx - pmx) > EPS || Math.abs(my - pmy) > EPS) moved = true;
+        pmx = mx; pmy = my;
+      }
+
+      /* ---------- WRITE (batched) ---------- */
+      if(field){
+        if(!reducedMotion) field.style.setProperty('--surge', surge.toFixed(4));
+        if(fine){
+          field.style.setProperty('--pmx', pmx.toFixed(4));
+          field.style.setProperty('--pmy', pmy.toFixed(4));
+        }
+      }
+      if(fine && cl){
+        cl.style.setProperty('--x', plx.toFixed(1) + 'px');
+        cl.style.setProperty('--y', ply.toFixed(1) + 'px');
+        if(sc){
+          sc.style.setProperty('--x', ptx.toFixed(1) + 'px');
+          sc.style.setProperty('--y', pty.toFixed(1) + 'px');
+        }
+      }
+      if(bar){
+        const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+        const v = Math.min(1, sy / max);
+        if(Math.abs(v - lastBar) > 0.0008){
+          bar.style.transform = 'scaleX(' + v.toFixed(4) + ')';
+          lastBar = v; moved = true;
+        }
+      }
+      if(noScrollTimeline && hdr){
+        const c = sy > 340;
+        if(c !== condensed){ hdr.classList.toggle('is-condensed', c); condensed = c; }
+      }
+
+      /* ---------- SLEEP WHEN SETTLED ---------- */
+      idleFrames = moved ? 0 : idleFrames + 1;
+      if(idleFrames > 12){ running = false; return; }
+      requestAnimationFrame(frame);
+    }
+
+    addEventListener('scroll', wake, {passive:true});
+    addEventListener('resize', wake, {passive:true});
+    if(fine){
+      addEventListener('mousemove', e => {
+        ptx = e.clientX; pty = e.clientY;
+        pmxT = (e.clientX / innerWidth  - 0.5) * 2;
+        pmyT = (e.clientY / innerHeight - 0.5) * 2;
+        if(!started && cl){ started = true; cl.classList.add('is-active'); }
+        wake();
+      }, {passive:true});
+    }
+    /* a backgrounded tab should cost nothing at all */
+    document.addEventListener('visibilitychange', () => { if(!document.hidden) wake(); });
+    wake();
+  })();
+
+  /* ---------- Section grading ----------
+     Unchanged in behaviour. Kept on IntersectionObserver, which is the right tool:
+     it reports off the compositor rather than forcing layout reads on scroll. */
+  (function(){
+    const SECTIONS = [
+      ['.hero','sec-hero'], ['#build','sec-build'], ['#proof','sec-proof'],
+      ['#why','sec-why'],   ['#pricing','sec-pricing'], ['#contact','sec-contact']
+    ];
+    const classes = SECTIONS.map(s => s[1]);
+    const nodes = SECTIONS
+      .map(([sel, cls]) => { const el = document.querySelector(sel); return el ? {el, cls} : null; })
+      .filter(Boolean);
+    if(!nodes.length) return;
+
+    const seen = new Map();
+    let pending = false, best = null;
+    const io2 = new IntersectionObserver(entries => {
+      entries.forEach(e => seen.set(e.target, e.intersectionRatio));
+      if(pending) return;
+      pending = true;
+      // collapse bursts of entries into a single class write per frame
+      requestAnimationFrame(() => {
+        pending = false;
+        let pick = null, bestRatio = 0;
+        nodes.forEach(n => {
+          const r = seen.get(n.el) || 0;
+          if(r > bestRatio){ bestRatio = r; pick = n; }
+        });
+        if(pick && pick !== best){
+          best = pick;
+          classes.forEach(c => { if(c !== pick.cls) document.body.classList.remove(c); });
+          document.body.classList.add(pick.cls);
+        }
+      });
+    }, {threshold:[0, .12, .25, .4, .55, .7, .85, 1]});
+    nodes.forEach(n => io2.observe(n.el));
+  })();
+
+  /* ---------- Spotlight zone states ----------
+     Previously this bound mouseenter/mouseleave to every <p> and <li> on the page
+     — often 60+ listener pairs, all fighting for the same events. Replaced with
+     two delegated listeners on the document that resolve the zone with closest().
+     Same behaviour, constant memory, no per-element cost. */
+  (function(){
+    if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    const sc = document.querySelector('.surface-catch');
+    const READ = 'section p, section li';
+    const GLASS = 'header, .fold-card, .btn-gold, .btn-coral, .btn-ghost';
+    let zone = '';
+
+    function setZone(z){
+      if(z === zone) return;
+      zone = z;
+      document.body.classList.toggle('is-reading',  z === 'read');
+      document.body.classList.toggle('is-hot-zone', z === 'glass');
+      if(sc) sc.classList.toggle('is-lit', z === 'glass');
+    }
+
+    document.addEventListener('mouseover', e => {
+      const t = e.target;
+      if(t.closest && t.closest(GLASS)) return setZone('glass');
+      if(t.closest && t.closest(READ))  return setZone('read');
+      setZone('');
+    }, {passive:true});
+
+    document.addEventListener('mouseleave', () => setZone(''), {passive:true});
+  })();
+
+</script>
+</body>
+</html>
