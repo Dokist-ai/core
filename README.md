@@ -91,11 +91,61 @@ For any client engagement: storage location, which models process the documents,
 
 ---
 
-## Roadmap
+## Scope 2 — Arabic and French (Sessions 25–36)
 
-**A French/Arabic legal-document retrieval benchmark, released publicly.** Every metric in this repository is measured on English corpora, which means the French/Arabic civil-law positioning above is currently a claim rather than a demonstration. Closing that gap is the priority: a few hundred question–answer pairs over French civil-law and Moroccan/OHADA texts, with gold answers, published openly. Nobody owns this benchmark. It is the thing that would make this portfolio non-substitutable.
+Every metric above is measured on English corpora. The French/Arabic civil-law positioning is therefore a **claim, not a demonstration** — and it stays labelled as roadmap until it has numbers attached. Scope 2 is the twelve-session programme that closes that gap. Full session plan, sources, costs and traps are in `docs/playbook/part-11-arabic-french-scope.pdf`.
 
-**Arabic and French legal PDF parsing.** The unglamorous, durable problem. LLM APIs commoditise every few months; a clean extraction layer for civil-law documents does not.
+### Who was here first
+
+The Moroccan legal-AI market is not empty, and pretending otherwise would be the same error as overclaiming a metric.
+
+| Player | Since | What they built |
+|---|---|---|
+| [Juridia](https://juridia.ma) | 2023 · Rabat | Assistant over Moroccan regulation and jurisprudence — reportedly ~16,000 regulatory texts. Custom scrapers, human validation on every update. |
+| [Adala](https://adala.ai) | Active 2026 | Legal assistant for Moroccan law with semantic search over jurisprudence and the Bulletin Officiel. |
+| [9anon AI](https://9anonai.com) | Active 2026 | Consumer and SME legal guidance grounded in Moroccan statutes. |
+
+All three build **public-law search products**. None publishes an evaluation harness, a benchmark, or a failure analysis. None works on a firm's own private corpus — contracts, pleadings, client files, due diligence sets.
+
+That defines the scope precisely. I am not building a competing search product. I am building the two things a product company structurally does not publish: **the measurement layer, and private-corpus engineering.**
+
+### What Scope 2 actually produces
+
+**A public Arabic/French legal retrieval benchmark.** 300–500 question–answer pairs over Bulletin Officiel articles and Cour de Cassation decisions, each with a verified source passage, drafted by model and **verified by a jurist**. Four tasks: monolingual Arabic retrieval, cross-lingual FR→AR retrieval, OCR character error rate by legal page type, and answer faithfulness. No such benchmark currently exists.
+
+**A published Arabic legal OCR comparison.** Five systems on 200 hand-verified pages, reported by page type rather than averaged. Context for why this matters: on the KITAB-Bench Arabic benchmark, vision-language models beat traditional OCR by roughly 60% in character error rate, and the best model reached only ~65% accuracy on Arabic PDF-to-Markdown. **Arabic document OCR is not a solved problem** — which is the risk and the reason it is worth doing.
+
+**A text-layer inventory of the Bulletin Officiel archive.** The BO runs from 1912 to present, free, and is published in both an Arabic general edition and an official French translation edition — a state-aligned bilingual legal corpus nobody has mined for alignment. Archive issues are image-mode facsimiles; recent issues are digitally authored. Establishing where that boundary falls is Session 26 and it sets the entire OCR budget.
+
+**Cross-lingual retrieval, French query to Arabic source.** The Arabic edition is legally authoritative; much Moroccan commercial practice runs in French. A retriever that takes a French question and returns the governing Arabic text, cited, serves that directly. Nobody is measuring it.
+
+### Sources
+
+| Source | Contents | Language |
+|---|---|---|
+| [sgg.gov.ma](https://www.sgg.gov.ma/BulletinOfficiel.aspx) | Bulletin Officiel, complete from 1912 · codes · circulars | AR + FR |
+| [jurisprudence.ma](https://www.jurisprudence.ma/) | Cour de Cassation decisions (~7,789 as of Aug 2022) | Mostly AR |
+| [juricaf.org](https://juricaf.org/recherche/+/facet_pays:Maroc) | Moroccan cassation decisions in French (AHJUCAF) | FR |
+| [data.gov.ma](https://data.gov.ma) | National open-data portal | AR / FR |
+
+There is **no legal API in Morocco** — Juridia's founder has said so publicly, which is why everyone in this market maintains their own scrapers. Ingestion is the moat precisely because nobody has solved it in the open.
+
+### Prior art worth reading
+
+- **KITAB-Bench** — Arabic OCR and document understanding benchmark, 8,809 samples across 9 domains · [github.com/mbzuai-oryx/KITAB-Bench](https://github.com/mbzuai-oryx/KITAB-Bench) · [arXiv:2502.14949](https://arxiv.org/abs/2502.14949)
+- **Baseer** — Arabic document-to-markdown VLM, WER 0.25 on Misraj-DocOCR (400 expert-verified images)
+- **ArabicMTEB / Swan** — Arabic-centric, cross-lingual embedding benchmark · [arXiv:2411.01192](https://arxiv.org/pdf/2411.01192)
+- **CAMeL Tools** — the standard Arabic normalisation and morphology toolkit
+
+### Honest risk
+
+Scope 2 depends on a government site with no API, an OCR problem the field has not solved, and one human verifier I do not employ. Any of the three can slip. What protects the programme is that every phase publishes independently: the text-layer inventory stands alone, the OCR comparison stands alone, the alignment corpus stands alone.
+
+**If Arabic OCR turns out to be too poor for citation-grade retrieval, that is the finding and it gets published as one.** A negative result with character error rates attached is worth more than a demo, and nobody in this market has published either.
+
+---
+
+## Also on the roadmap
 
 **Hybrid retrieval and reranking**, with a before/after measurement on the existing golden set.
 
