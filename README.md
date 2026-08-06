@@ -1,175 +1,88 @@
-<p align="center">  <img src="assets/logo.png" alt="DocumentLab.ai" width="80"/></p><p align="center">  <img src="https://img.shields.io/github/last-commit/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Last commit"/>  <img src="https://img.shields.io/github/repo-size/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Repo size"/>  <img src="https://img.shields.io/github/languages/top/SaraDHimdi/ai-engineer-portfolio?color=C8960C&style=flat-square" alt="Top language"/>  <img src="https://img.shields.io/github/issues/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Issues"/></p><p align="center">  
-<p align="center"> <em>Document intelligence for legal and financial text.</em> </p>
+<p align="center">
+  <img src="assets/logo.png" alt="DocumentLab.ai" width="80"/>
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-0c1a2e?style=flat-square" alt="License: MIT"/>
+  <img src="https://img.shields.io/badge/python-3.11+-0c1a2e?style=flat-square" alt="Python 3.11+"/>
+  <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
+</p>
 
 # Sara Dhimdi — AI Engineer
 
-**DocumentLab.ai** — RAG systems, LLM agents, and evaluation harnesses for legal and financial documents, with a focus on French- and Arabic-speaking civil-law markets.
+**RAG systems, LLM agents, and evaluation harnesses for legal and financial documents.**
+Four systems, one niche, every claim traced to a raw run in `evidence/`.
 
----
-
-## Read this first
-
-These are **four reference systems**, built on public legal and financial corpora (CUAD, EDGAR, EUR-Lex) and benchmarked before and after tuning. They are not client deployments — no law firm or bank has shipped any of this. When that changes, this line changes.
-
-Every number below comes from my own harness. The harness, the golden datasets, and the raw results are in the repositories, so you can disagree with my methodology rather than take my word for it. Where a sample is too small to support a strong claim, I say so instead of rounding it into one.
-
----
-
-## How to read the numbers
-
-Three things that matter more than the headline figures:
-
-**Sample sizes are small.** The main golden dataset is 40 questions. At n = 40, the 95% interval around a score of 0.84 is roughly ±0.11. That means 0.84 and 0.81 are *not* distinguishable — anyone who presents that gap as one system beating another is overreading their own data. I've stated the comparisons accordingly.
-
-**"Faithfulness" is a specific thing.** It measures whether an answer is supported by the chunks that were actually retrieved. It does **not** measure whether the answer is legally correct, whether retrieval found the right clause in the first place, or whether the source document was parsed correctly. A system can score well on faithfulness and still be wrong in ways that matter.
-
-**Retrieval and generation are measured separately** where noted. When end-to-end quality drops, that split is the only way to know which half broke.
-
-> `[n = TK]` marks a figure whose sample size I have not yet documented publicly. Those are being backfilled; treat them as unverified until they aren't.
+> **These are reference systems, not client deployments.** Built on public corpora (CUAD, EDGAR, EUR-Lex) and benchmarked before and after tuning. Sample sizes, definitions and caveats: **[docs/METHODOLOGY.md](docs/METHODOLOGY.md)**
 
 ---
 
 ## The four systems
 
-They are one architecture told in four parts, not four unrelated demos.
-
-| # | System | Corpus | What it proves | Headline measurement |
-|---|--------|--------|----------------|----------------------|
-| 1 | **Due Diligence Agent** — *flagship* | CUAD + EDGAR | Multi-agent orchestration and tool composition | Unsupported answers 31% → 12% `[n = TK]` · ~€0.023/doc · ~4.2s end to end |
-| 2 | **Contract Q&A Assistant** | CUAD | RAG baseline with a real evaluation harness | Faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — **no measurable difference**; RAG chosen at ~4× lower cost |
-| 3 | **Research Briefing Agent** | Financial news | Production engineering, not notebooks | 94% tool-call success `[n = TK]` · p95 1.8s · 14 tests passing |
-| 4 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Retrieval quality and interoperability | Recall@3 0.71 → 0.83 vs OpenAI baseline `[n = TK]` · rank-8 LoRA at ~€0.002/query |
+| # | System | Corpus | Headline measurement | Live |
+|---|--------|--------|----------------------|------|
+| 1 | **Due Diligence Agent** — *flagship* | CUAD + EDGAR | Unsupported answers 31% → 12% · ~€0.023/doc · ~4.2s end to end | [demo](#) · [code](due-diligence-agent/) |
+| 2 | **Contract Q&A Assistant** | CUAD | Faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — no measurable difference; RAG chosen at ~4× lower cost | [demo](#) · [code](contract-qa-assistant/) |
+| 3 | **Research Briefing Agent** | Financial news | 94% tool-call success · p95 1.8s · 14 tests passing | [demo](#) · [code](research-briefing-agent/) |
+| 4 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Recall@3 0.71 → 0.83 vs baseline · rank-8 LoRA at ~€0.002/query | [models](#) · [code](legal-intelligence-engine/) |
 
 ### How they connect
 
-System 2 is the base RAG pipeline with evaluation attached. System 4 improves the retrieval half — a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding — and exposes the whole pipeline as an MCP server. System 3 proves the agent layer survives contact with production: FastAPI, Docker, CI/CD, LangSmith tracing. System 1 composes all of it, calling System 4's MCP server as a tool.
+System 2 is the base RAG pipeline with evaluation attached. System 4 improves the retrieval half — a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding — and exposes the pipeline as an MCP server. System 3 proves the agent layer survives production: FastAPI, Docker, CI/CD, tracing. System 1 composes all of it, calling System 4's MCP server as a tool.
 
-That composition is the point. Four demos would be four demos. One system that calls another through a standard protocol is an architecture.
-
----
-
-## What these systems get wrong
-
-The section most portfolios don't have. These are known, current, and unfixed.
-
-**Document parsing is the weakest link, and it sits upstream of everything measured above.** All four systems assume clean text extraction. Real legal documents arrive as scans, as multi-column layouts, as tables that flatten into nonsense, and — for Arabic — as OCR output that is frequently unusable. Every benchmark here runs on corpora that were already clean text. That is a significant caveat on all of it.
-
-**Cross-document reasoning is shallow.** Retrieval returns the top-k chunks for a query. A question like "does the indemnity in the MSA conflict with the cap in the side letter?" requires holding two documents in tension, and top-k similarity search doesn't do that reliably.
-
-**Evaluation sets are too small to be decisive.** 40 questions catches obvious regressions. It does not catch rare failure modes, and it cannot support fine-grained comparisons between configurations.
-
-**The 12% that still fails is not random.** [TK — replace this with a real breakdown of the remaining failures on the flagship: how many are retrieval misses vs. generation errors vs. ambiguous ground truth. This is the single most credible paragraph you can add to this file.]
-
-**Faithfulness is not correctness.** See above. A confidently-cited answer drawn from the wrong clause scores well and is still wrong.
+Four demos would be four demos. One system that calls another through a standard protocol is an architecture.
 
 ---
 
-## Where the retrieval stack actually stands
+## Run it yourself
 
-Being explicit about what is built versus what is planned, because "RAG system" covers a very wide range of rigour.
+```bash
+git clone https://github.com/SaraDHimdi/ai-engineer-portfolio
+cd ai-engineer-portfolio/contract-qa-assistant
 
-| Component | Status |
-|-----------|--------|
-| Chunking strategy | TK — document the actual strategy and why |
-| Dense retrieval (embeddings) | Built · domain-adapted with hard negative mining (System 4) |
-| Hybrid retrieval (BM25 + dense) | Not implemented — matters for legal text where exact terms carry weight |
-| Reranking | Not implemented |
-| Query rewriting / decomposition | Not implemented |
-| Retrieval evaluated separately from generation | Partial — Recall@3 on System 4 only |
-| Long-document handling (100+ pages) | Untested at scale |
-| Document parsing / OCR | Not addressed — see limitations above |
-| Prompt injection & red-team testing | Built (System 2) |
-| Tracing and cost monitoring | Built (LangSmith, Helicone) |
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 
----
+cp .env.example .env          # add your API key
+python -m src.ingest          # builds the index from the sample corpus
+python -m src.ask "What is the termination notice period?"
+```
 
-## Data handling
+Reproduce the published numbers:
 
-For any client engagement: storage location, which models process the documents, and access are agreed in writing before work begins. NDA as standard. Self-hosted deployment available where documents cannot leave the client's infrastructure. GDPR and Moroccan Law 09-08 considerations are addressed per engagement rather than assumed.
-
-*(TK — replace with your actual position once you've decided it. A law firm's first question is never your faithfulness score; it's where their client's document goes.)*
+```bash
+pytest                                    # 14 tests, all external calls mocked
+python -m src.evaluate --config all       # writes to evidence/eval_runs/<date>/
+```
 
 ---
 
-## Scope 2 — Arabic and French (Sessions 25–36)
+## Known limitations
 
-Every metric above is measured on English corpora. The French/Arabic civil-law positioning is therefore a **claim, not a demonstration** — and it stays labelled as roadmap until it has numbers attached. Scope 2 is the twelve-session programme that closes that gap. Full session plan, sources, costs and traps are in `docs/playbook/part-11-arabic-french-scope.pdf`.
+Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)**, per-system detail in each `evidence/failure_analysis.md`.
 
-### Who was here first
-
-The Moroccan legal-AI market is not empty, and pretending otherwise would be the same error as overclaiming a metric.
-
-| Player | Since | What they built |
-|---|---|---|
-| [Juridia](https://juridia.ma) | 2023 · Rabat | Assistant over Moroccan regulation and jurisprudence — reportedly ~16,000 regulatory texts. Custom scrapers, human validation on every update. |
-| [Adala](https://adala.ai) | Active 2026 | Legal assistant for Moroccan law with semantic search over jurisprudence and the Bulletin Officiel. |
-| [9anon AI](https://9anonai.com) | Active 2026 | Consumer and SME legal guidance grounded in Moroccan statutes. |
-
-All three build **public-law search products**. None publishes an evaluation harness, a benchmark, or a failure analysis. None works on a firm's own private corpus — contracts, pleadings, client files, due diligence sets.
-
-That defines the scope precisely. I am not building a competing search product. I am building the two things a product company structurally does not publish: **the measurement layer, and private-corpus engineering.**
-
-### What Scope 2 actually produces
-
-**A public Arabic/French legal retrieval benchmark.** 300–500 question–answer pairs over Bulletin Officiel articles and Cour de Cassation decisions, each with a verified source passage, drafted by model and **verified by a jurist**. Four tasks: monolingual Arabic retrieval, cross-lingual FR→AR retrieval, OCR character error rate by legal page type, and answer faithfulness. No such benchmark currently exists.
-
-**A published Arabic legal OCR comparison.** Five systems on 200 hand-verified pages, reported by page type rather than averaged. Context for why this matters: on the KITAB-Bench Arabic benchmark, vision-language models beat traditional OCR by roughly 60% in character error rate, and the best model reached only ~65% accuracy on Arabic PDF-to-Markdown. **Arabic document OCR is not a solved problem** — which is the risk and the reason it is worth doing.
-
-**A text-layer inventory of the Bulletin Officiel archive.** The BO runs from 1912 to present, free, and is published in both an Arabic general edition and an official French translation edition — a state-aligned bilingual legal corpus nobody has mined for alignment. Archive issues are image-mode facsimiles; recent issues are digitally authored. Establishing where that boundary falls is Session 26 and it sets the entire OCR budget.
-
-**Cross-lingual retrieval, French query to Arabic source.** The Arabic edition is legally authoritative; much Moroccan commercial practice runs in French. A retriever that takes a French question and returns the governing Arabic text, cited, serves that directly. Nobody is measuring it.
-
-### Sources
-
-| Source | Contents | Language |
-|---|---|---|
-| [sgg.gov.ma](https://www.sgg.gov.ma/BulletinOfficiel.aspx) | Bulletin Officiel, complete from 1912 · codes · circulars | AR + FR |
-| [jurisprudence.ma](https://www.jurisprudence.ma/) | Cour de Cassation decisions (~7,789 as of Aug 2022) | Mostly AR |
-| [juricaf.org](https://juricaf.org/recherche/+/facet_pays:Maroc) | Moroccan cassation decisions in French (AHJUCAF) | FR |
-| [data.gov.ma](https://data.gov.ma) | National open-data portal | AR / FR |
-
-There is **no legal API in Morocco** — Juridia's founder has said so publicly, which is why everyone in this market maintains their own scrapers. Ingestion is the moat precisely because nobody has solved it in the open.
-
-### Prior art worth reading
-
-- **KITAB-Bench** — Arabic OCR and document understanding benchmark, 8,809 samples across 9 domains · [github.com/mbzuai-oryx/KITAB-Bench](https://github.com/mbzuai-oryx/KITAB-Bench) · [arXiv:2502.14949](https://arxiv.org/abs/2502.14949)
-- **Baseer** — Arabic document-to-markdown VLM, WER 0.25 on Misraj-DocOCR (400 expert-verified images)
-- **ArabicMTEB / Swan** — Arabic-centric, cross-lingual embedding benchmark · [arXiv:2411.01192](https://arxiv.org/pdf/2411.01192)
-- **CAMeL Tools** — the standard Arabic normalisation and morphology toolkit
-
-### Honest risk
-
-Scope 2 depends on a government site with no API, an OCR problem the field has not solved, and one human verifier I do not employ. Any of the three can slip. What protects the programme is that every phase publishes independently: the text-layer inventory stands alone, the OCR comparison stands alone, the alignment corpus stands alone.
-
-**If Arabic OCR turns out to be too poor for citation-grade retrieval, that is the finding and it gets published as one.** A negative result with character error rates attached is worth more than a demo, and nobody in this market has published either.
+- **Document parsing is the weakest link**, and it sits upstream of everything measured here. All four systems assume clean text extraction; every benchmark runs on corpora that were already clean text.
+- **Cross-document reasoning is shallow.** Top-k similarity search does not reliably hold two documents in tension.
+- **Evaluation sets are too small to be decisive.** 40 questions catches obvious regressions, not rare failure modes.
 
 ---
 
-## Also on the roadmap
+## Scope 2 — Arabic and French
 
-**Hybrid retrieval and reranking**, with a before/after measurement on the existing golden set.
+Every metric above is measured on English corpora, so the French/Arabic civil-law positioning is currently a **claim, not a demonstration**. Scope 2 is the twelve-session programme that closes that gap: a text-layer inventory of the Bulletin Officiel archive, a five-system Arabic OCR comparison on hand-verified pages, and a **public French/Arabic legal retrieval benchmark verified by a jurist**. No such benchmark exists today.
 
-**Larger evaluation sets** — 40 questions is a starting point, not a benchmark.
+Three Moroccan legal-AI products are already live — none publishes an evaluation harness, a benchmark, or a failure analysis, and none works on a firm's private corpus. That is the gap this scope targets.
 
-**One deployed design partner**, named with permission.
+→ **[docs/SCOPE-2-ARABIC-FRENCH.md](docs/SCOPE-2-ARABIC-FRENCH.md)** · sources, prior art, competitive landscape, honest risk
 
 ---
 
 ## Stack
 
-| Layer | Tools |
-|-------|-------|
-| Language | Python 3.11+ |
-| Orchestration | LangChain · LangGraph · LangSmith |
-| LLM APIs | OpenAI · Anthropic |
-| Vector DBs | Chroma · Pinecone |
-| Evaluation | RAGAS · DeepEval · Guardrails AI |
-| Fine-tuning | HuggingFace PEFT · LoRA · bitsandbytes · TRL |
-| Embeddings | Sentence Transformers · contrastive learning with hard negatives |
-| Interoperability | MCP (Model Context Protocol) |
-| Production | FastAPI · Docker · GitHub Actions |
-| Monitoring | Helicone · LangSmith |
-| Tooling | pytest · ruff · pre-commit · Git |
+**Orchestration** LangChain · LangGraph · LangSmith · MCP
+**Retrieval** Chroma · Pinecone · Sentence Transformers · contrastive learning with hard negatives
+**Evaluation** RAGAS · DeepEval · Guardrails AI
+**Fine-tuning** HuggingFace PEFT · LoRA · bitsandbytes · TRL
+**Production** FastAPI · Docker · GitHub Actions · pytest · Helicone
 
 ---
 
@@ -177,26 +90,25 @@ Scope 2 depends on a government site with no API, an OCR problem the field has n
 
 ```
 ai-engineer-portfolio/
-├── README.md
 ├── due-diligence-agent/          ← Flagship · legal + finance
 ├── contract-qa-assistant/        ← Legal · RAG baseline + eval harness
 ├── research-briefing-agent/      ← Finance · production agent
 ├── legal-intelligence-engine/    ← Legal · retrieval + MCP server
-├── evaluation/                   ← Golden datasets, harnesses, raw results
+├── docs/                         ← Methodology, limitations, Scope 2
+├── playbook/                     ← Build manual
+├── SESSIONS.md                   ← Engineering log
 └── demos/                        ← Video walkthroughs
 ```
+
+Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the last containing `metrics.json`, raw evaluation runs, traces, and a failure analysis for every number claimed above.
 
 ---
 
 ## Contact
 
-- LinkedIn: [linkedin.com/in/sara-d-1a4795300](https://linkedin.com/in/sara-d-1a4795300)
-- Studio: [DocumentLab.ai](https://documentlab.ai)
-- GitHub: [github.com/SaraDHimdi](https://github.com/SaraDHimdi)
+[LinkedIn](https://linkedin.com/in/sara-d-1a4795300) · [DocumentLab.ai](https://documentlab.ai) · [GitHub](https://github.com/SaraDHimdi)
 
-## License
-
-MIT — see [LICENSE](LICENSE). Code and assets © Sara Dhimdi / DocumentLab.ai.
+MIT licensed — see [LICENSE](LICENSE). Code and assets © Sara Dhimdi / DocumentLab.ai.
 
 ---
 
