@@ -11,7 +11,7 @@
   <em>Built with intention. Shipped with evidence.</em>
 </p>
 
-# Sara Dhimdi — AI Developer & Founder of DocumentLab.ai
+# Sara Dhimdi — AI Engineer & Founder of DocumentLab.ai
 Building RAG systems, LLM agents, and production pipelines for legal and financial document intelligence.
 
 ---
