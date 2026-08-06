@@ -36,8 +36,8 @@ Four demos would be four demos. One system that calls another through a standard
 ## Run it yourself
 
 ```bash
-git clone https://github.com/SaraDHimdi/ai-engineer-portfolio
-cd ai-engineer-portfolio/contract-qa-assistant
+git clone https://github.com/DocumentLab-ai/core
+cd core/contract-qa-assistant
 
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
