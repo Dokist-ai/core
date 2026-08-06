@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
 </p>
 
-#                                          DocumentLab.ai
+                                              #DocumentLab
 
 **RAG systems, LLM agents, and evaluation harnesses for legal and financial documents.**
 Four systems, one niche, every claim traced to a raw run in `evidence/`.
