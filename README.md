@@ -24,7 +24,7 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 | 2 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Recall@3 0.71 → 0.83 vs baseline · faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — no measurable difference · ~€0.002/query | [models](#) · [code](legal-intelligence-engine/) |
 | 3 | **Research Briefing Agent** | Financial news | 94% tool-call success · p95 1.8s · 14 tests passing | [demo](#) · [code](research-briefing-agent/) |
 
-### Why three and not four
+### Why three systems
 
 Each system owns a distinct failure mode: orchestration, retrieval, tool calls. Systems that fail the same way are one system, so the contract Q&A baseline lives inside the Legal Intelligence Engine rather than beside it — it was that engine's baseline, and reporting a baseline as a separate deliverable inflates the count without adding a result.
 
