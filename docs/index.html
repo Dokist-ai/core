@@ -181,7 +181,43 @@
   header.is-condensed .nav{padding:10px 36px;}
   .brand{display:flex; align-items:center; gap:10px;}
   .brand img{width:32px; height:32px; border-radius:6px; display:block; object-fit:contain;}
-  .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;}
+  .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;} header .brand{position:relative;}
+    header .brand{position:relative;}
+  /* Deep ambient halo — the logo feels like a warm light source */
+  header .brand::before{
+    content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+    width:56px; height:56px; border-radius:14px; pointer-events:none; z-index:-1;
+    background:radial-gradient(circle at 40% 40%, rgba(216,178,92,0.14), rgba(216,178,92,0.04) 45%, transparent 70%);
+    filter:blur(14px);
+    opacity:0;
+    animation:haloBreathe 10s ease-in-out 2s infinite;
+  }
+  /* Polished metal specular — a whisper of light across the surface */
+  header .brand::after{
+    content:''; position:absolute; left:0; top:0; width:32px; height:32px; border-radius:6px;
+    background:linear-gradient(125deg, 
+      transparent 35%, 
+      rgba(255,255,255,0.03) 48%, 
+      rgba(241,214,147,0.07) 50%, 
+      rgba(255,255,255,0.03) 52%, 
+      transparent 65%
+    );
+    background-size:300% 300%;
+    animation:specularDrift 12s var(--e-out) 4s infinite;
+    pointer-events:none; mix-blend-mode:overlay;
+  }
+  header .brand img{
+    position:relative; z-index:1;
+    transition:transform .9s var(--e-out), filter .9s var(--e-out);
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+  }
+  header .brand:hover img{
+    transform:scale(1.06) translateY(-1px);
+    filter:drop-shadow(0 4px 14px rgba(216,178,92,0.2)) drop-shadow(0 0 28px rgba(216,178,92,0.1));
+  }
+  header .brand:hover::before{
+    animation:none; opacity:0.85; transition:opacity .8s var(--e-out);
+  }
   .brand-mark-fallback{
     width:32px; height:32px; border-radius:6px; flex-shrink:0;
     background:linear-gradient(135deg, var(--navy-4), var(--navy-2));
@@ -454,6 +490,7 @@
     font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--mist-dim);
     text-transform:uppercase; letter-spacing:.08em;
     border-bottom:1px solid var(--line); padding-bottom:14px; margin-bottom:20px;
+
   }
   .dossier .doc-tag{color:var(--gold); font-weight:600;}
   .dossier p.clause{font-family:'Inter',sans-serif; font-size:14.5px; line-height:1.75; color:#D6DCE8; margin:0 0 16px;}
@@ -490,6 +527,33 @@
   }
   .hlmark.h1{animation-delay:0s, 3.5s; animation-fill-mode:forwards, none;}
   .hlmark.h2{animation-delay:1s, 4.5s; animation-fill-mode:forwards, none;}
+    @keyframes haloBreathe{
+    0%,100%{opacity:0; transform:translate(-50%,-50%) scale(0.9);}
+    50%{opacity:1; transform:translate(-50%,-50%) scale(1.2);}
+  }
+  @keyframes specularDrift{
+    0%{background-position:250% 250%; opacity:0;}
+    15%{opacity:1;}
+    45%{background-position:-150% -150%; opacity:1;}
+    60%{opacity:0;}
+    100%{opacity:0;}
+  }
+    .cite-sup{
+    font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600;
+    color:var(--gold); vertical-align:super; margin-left:3px;
+    text-shadow:0 0 12px rgba(216,178,92,.4);
+    animation:citePulse 3s ease-in-out 2s infinite;
+  }
+  @keyframes logoShine{
+    0%{background-position:250% 0; opacity:0;}
+    15%{opacity:.9;}
+    85%{opacity:.9;}
+    100%{background-position:-250% 0; opacity:0;}
+  }
+  @keyframes citePulse{
+    0%,100%{text-shadow:0 0 12px rgba(216,178,92,.4);}
+    50%{text-shadow:0 0 22px rgba(241,214,147,.75);}
+  }
   @keyframes hlActivate{to{opacity:1;}}
   @keyframes hlBreathe{
     0%,100%{background:rgba(216,178,92,0.18); border-bottom-color:var(--gold);}
@@ -1378,7 +1442,7 @@ h1, h2, h3, .price-amount, .stat-num{
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">Legal &amp; Financial Document Intelligence</div>
-      <h1>Turn document backlogs into <span class="hl">cited, defensible</span> answers.</h1>
+      <h1>Turn document backlogs into <span class="hl">cited, defensible</span> answers.<sup class="cite-sup">[1]</sup></h1>
 <p class="lede">DOKIST builds AI systems that read your contracts and filings — and answer questions instantly, with the exact source attached.</p>
       <div class="hero-ctas">
         <a href="#contact" class="btn-gold">Book a call</a>
