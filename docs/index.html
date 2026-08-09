@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DocumentLab.ai — Legal & Financial Document Intelligence</title>
+<title>DOKS — Legal & Financial Document Intelligence</title>
 <link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,9 +179,9 @@
   }
   .nav{display:flex; align-items:center; justify-content:space-between; padding:16px 36px; max-width:1180px; margin:0 auto; transition:padding var(--t-3) var(--e-out);}
   header.is-condensed .nav{padding:10px 36px;}
-  .brand{display:flex; align-items:center; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px;}
   .brand img{width:32px; height:32px; border-radius:6px; display:block; object-fit:contain;}
-  .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.01em;}
+  .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;}
   .brand-mark-fallback{
     width:32px; height:32px; border-radius:6px; flex-shrink:0;
     background:linear-gradient(135deg, var(--navy-4), var(--navy-2));
@@ -932,7 +932,7 @@
   .results-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
   @media(max-width:820px){ .results-grid{grid-template-columns:1fr;} }
   .result-card{padding:28px 28px 26px;}
-  .result-card.flagship{background:var(--navy-4); border-color:var(--gold);}
+  .result-card.flagship{background:var(--navy-4); border-color:var(--gold); grid-column:1 / -1;}
   .result-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px;}
   .result-vert{font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:20px; white-space:nowrap; font-weight:500;}
   .result-vert.legal{background:rgba(142,202,230,0.12); color:var(--azure); border:1px solid rgba(142,202,230,0.22);}
@@ -1364,7 +1364,7 @@ h1, h2, h3, .price-amount, .stat-num{
 
 <header>
   <div class="nav">
-    <div class="brand"><img src="logo.png" alt="DocumentLab.ai" width="28" height="28" decoding="async" fetchpriority="high"><span>DocumentLab.ai</span></div>
+<div class="brand"><img src="logo.png" alt="DOKS" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
     <nav class="nav-links">
       <a href="#build">Product</a>
       <a href="#proof">Results</a>
@@ -1379,14 +1379,14 @@ h1, h2, h3, .price-amount, .stat-num{
     <div>
       <div class="eyebrow">Legal &amp; Financial Document Intelligence</div>
       <h1>Turn document backlogs into <span class="hl">cited, defensible</span> answers.</h1>
-      <p class="lede">DocumentLab.ai builds AI systems that read your contracts and filings — and answer questions instantly, with the exact source attached.</p>
+<p class="lede">DOKIST builds AI systems that read your contracts and filings — and answer questions instantly, with the exact source attached.</p>
       <div class="hero-ctas">
         <a href="#contact" class="btn-gold">Book a call</a>
         <a href="#proof" class="btn-ghost">See the results</a>
       </div>
       <div class="hero-stats">
         <div><b>2×</b> fewer unsupported answers after tuning, on our own benchmark</div>
-        <div><b class="count" data-target="4">0</b> reference systems, benchmarked on public legal &amp; financial corpora</div>
+        <div><b class="count" data-target="3">0</b> reference systems, benchmarked on public legal &amp; financial corpora</div>
         <div><b>FR / AR / EN</b> · civil &amp; common law</div>
       </div>
     </div>
@@ -1463,7 +1463,7 @@ h1, h2, h3, .price-amount, .stat-num{
     <div class="section-head reveal">
       <span class="exhibit-index">EXHIBIT B<br>TRACK RECORD</span>
       <div class="eyebrow">Results</div>
-      <h2>Four reference systems, built and benchmarked on public corpora.</h2>
+      <h2>Three reference systems, built and benchmarked on public corpora.</h2>
       <p>What each one does, in plain terms — and the measurement behind it.</p>
     </div>
     <div class="results-grid reveal">
@@ -1475,22 +1475,17 @@ h1, h2, h3, .price-amount, .stat-num{
       </div>
       <div class="fold-card result-card">
         <div class="result-top"><span class="result-vert legal">Legal</span></div>
-        <h3>Contract Q&amp;A assistant</h3>
-        <p>Live tool that answers questions across a full contract library, with every answer linked back to the exact clause and page it came from.</p>
+        <h3>Legal intelligence engine</h3>
+        <p>Answers questions across a whole contract library with every answer linked to its exact clause and page, and flags unusual or risky clauses so reviewers only look at what needs a second read. Retrieval is tuned on legal language specifically &mdash; the right clause lands in the top three results 83% of the time, up from 71% untuned.</p>
       </div>
       <div class="fold-card result-card">
         <div class="result-top"><span class="result-vert fin">Finance</span></div>
         <h3>Research briefing agent</h3>
         <p>Assembles a structured briefing from raw sources in seconds. Traced end to end, so every step of the agent&rsquo;s reasoning is inspectable.</p>
       </div>
-      <div class="fold-card result-card">
-        <div class="result-top"><span class="result-vert legal">Legal</span></div>
-        <h3>Contract risk flagging</h3>
-        <p>Reads incoming contracts and flags unusual or risky clauses automatically, so reviewers spend time only on what actually needs a second look.</p>
-      </div>
     </div>
     <div class="results-note reveal">
-      <p><b class="coral-accent">4 reference systems</b> across legal and financial documents — each measured before and after tuning, on public corpora. No client deployments yet.</p>
+      <p><b class="coral-accent">3 reference systems</b> across legal and financial documents — each measured before and after tuning, on public corpora. No client deployments yet.</p>
       <a href="https://github.com/pseudobarbie/DocumentLab.ai-Portfolio/tree/main" class="btn-ghost">See the code and the numbers</a>
     </div>
   </div>
@@ -1500,7 +1495,7 @@ h1, h2, h3, .price-amount, .stat-num{
   <div class="wrap">
     <div class="section-head reveal">
       <span class="exhibit-index">EXHIBIT C<br>COMPARISON</span>
-      <div class="eyebrow">Why DocumentLab.ai</div>
+      <div class="eyebrow">Why DOKIST</div>
       <h2>Not a generalist. A specialist.</h2>
       <p>Enterprise players build horizontal tools for Fortune 500 budgets. This studio builds only for legal and financial documents — including the French- and Arabic-speaking, civil-law markets they don't serve.</p>
     </div>
@@ -1516,7 +1511,7 @@ h1, h2, h3, .price-amount, .stat-num{
         </ul>
       </div>
       <div class="compare-col win">
-        <h4>DocumentLab.ai</h4>
+        <h4>DOKS</h4>
         <ul class="compare-list">
           <li>Built specifically for legal and financial documents</li>
           <li>Published eval numbers, with the harness and sample sizes</li>
@@ -1588,7 +1583,7 @@ h1, h2, h3, .price-amount, .stat-num{
     <p>Tell us about your documents and what you need to find in them. We'll suggest the right starting point — no jargon required.</p>
     <p style="margin-top:14px;">Your documents stay yours. Before any work begins we agree in writing where they are stored, which models see them, and who has access — NDA as standard, self-hosted deployment on request.</p>
     <div class="final-ctas">
-      <a href="mailto:hello@documentlab.ai" class="btn-gold">hello@documentlab.ai</a>
+      <a href="mailto:hello@documentlab.ai" class="btn-gold">hello@dokist.ai</a>
       <a href="#pricing" class="btn-ghost">View pricing</a>
     </div>
   </div>
@@ -1597,7 +1592,7 @@ h1, h2, h3, .price-amount, .stat-num{
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <div class="brand"><img src="logo.png" alt="DocumentLab.ai" width="28" height="28" decoding="async" fetchpriority="high"><span>DocumentLab.ai</span></div>
+<div class="brand"><img src="logo.png" alt="DOKS" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
       <div class="foot-links">
         <a href="#build">Product</a>
         <a href="#proof">Results</a>
