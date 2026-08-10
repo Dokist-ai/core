@@ -226,7 +226,7 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 [LinkedIn](https://www.linkedin.com/in/x-y-1a4795300/) · [DOKIST](https://dokist-ai.github.io/core/) · [GitHub](https://github.com/Dokist-ai/core)
 
-MIT licensed — see [LICENSE](LICENSE). Code and assets © Sara Dhimdi / DocumentLab.ai.
+MIT licensed — see [LICENSE](LICENSE). Code and assets © Sara Dhimdi / DOKIST.
 
 ---
 
