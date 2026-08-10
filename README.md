@@ -245,7 +245,7 @@ core/
 ├── research-briefing-agent/      ← Finance · production agent
 ├── docs/                         ← Methodology, limitations, Scope 2
 ├── assests/                     ← logo etc
-├── SESSIONS.md                   ← Engineering log
+├── SESSIONS.md                   ← Engineering log (like a memo)
 └── demos/                        ← Video walkthroughs
 ```
 
