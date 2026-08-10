@@ -50,9 +50,9 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 | 2 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Recall@3 0.71 → 0.83 vs baseline · faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — no measurable difference · ~€0.002/query | [models](#) · [code](legal-intelligence-engine/) |
 | 3 | **Research Briefing Agent** | Financial news | 94% tool-call success · p95 1.8s · 14 tests passing | [demo](#) · [code](research-briefing-agent/) |
 
-### Why three systems
+### Why DOKIST is built this way
 
-Each system owns a distinct failure mode: orchestration, retrieval, tool calls. Systems that fail the same way are one system, so the contract Q&A baseline lives inside the Legal Intelligence Engine rather than beside it — it was that engine's baseline, and reporting a baseline as a separate deliverable inflates the count without adding a result.
+DOKIST is one argument: measure the failure mode first, then design the system around it. Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — DOKIST splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
 
 ### How they connect
 
