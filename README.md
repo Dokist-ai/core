@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.png">
-    <img src="assets/logo.png" alt="DocumentLab.ai" width="80"/>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo.png">
+    <img src="assets/logo.png" alt="Dokist" width="80"/>
   </picture>
 </p>
 <p align="center">
@@ -211,10 +211,10 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 ## Cite this work
 
 ```bibtex
-@software{dhimdi_legal_rag_2026,
-  author = {Dhimdi, Sara},
+@software{dokist_legal_rag_2026,
+  author = {X, Y},
   title = {Legal Intelligence Engine: RAG Systems for Legal and Financial Documents},
-  url = {https://github.com/SaraDHimdi/ai-engineer-portfolio},
+  url = {https://dokist-ai.github.io/core/},
   year = {2026},
   license = {MIT}
 }
@@ -224,7 +224,7 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ## Contact
 
-[LinkedIn](https://linkedin.com/in/sara-d-1a4795300) · [DocumentLab.ai](https://documentlab.ai) · [GitHub](https://github.com/SaraDHimdi)
+[LinkedIn](https://www.linkedin.com/in/x-y-1a4795300/) · [DOKIST](https://dokist-ai.github.io/core/) · [GitHub](https://github.com/Dokist-ai/core)
 
 MIT licensed — see [LICENSE](LICENSE). Code and assets © Sara Dhimdi / DocumentLab.ai.
 
