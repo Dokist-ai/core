@@ -136,7 +136,16 @@ flowchart LR
 
 <br>
 
-### Option A — Full stack via Docker
+### Option A — Pull the image (fastest)
+
+```bash
+docker pull ghcr.io/dokist-ai/core:latest
+docker run -p 8000:8000 -e OPENAI_API_KEY=$OPENAI_API_KEY ghcr.io/dokist-ai/core:latest
+```
+
+<br>
+
+### Option B — Full stack via Docker Compose
 
 ```bash
 git clone https://github.com/Dokist-ai/core.git
@@ -148,7 +157,7 @@ docker compose up
 
 <br>
 
-### Option B — Engine only (~5 min)
+### Option C — Engine only from source (~5 min)
 
 ```bash
 git clone https://github.com/Dokist-ai/core.git
@@ -164,7 +173,7 @@ python -m src.ask "What is the termination notice period?"
 
 <br>
 
-### Option C — Reproduce the numbers
+### Option D — Reproduce the numbers
 
 ```bash
 pytest                                    # 14 tests, all external calls mocked
