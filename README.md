@@ -23,25 +23,25 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 
 ---
 
-## 📑 Contents
+## Contents
 
-- [🔬 The three systems](#-the-three-systems)
-- [🏗️ Architecture](#️-architecture)
-- [📊 Latest evaluation run](#-latest-evaluation-run)
-- [🧠 Key decisions](#-key-decisions)
-- [🚀 Run it yourself](#-run-it-yourself)
-- [💰 Cost per document](#-cost-per-document)
-- [⚠️ Known limitations](#️-known-limitations)
-- [🔥 What broke last](#-what-broke-last)
-- [🌍 Scope 2 — Arabic and French](#-scope-2--arabic-and-french)
-- [🛠️ Stack](#️-stack)
-- [📁 Repo structure](#-repo-structure)
-- [📖 Cite this work](#-cite-this-work)
-- [📬 Contact](#-contact)
+- [The three systems](#the-three-systems)
+- [Architecture](#architecture)
+- [Latest evaluation run](#latest-evaluation-run)
+- [Key decisions](#key-decisions)
+- [Run it yourself](#run-it-yourself)
+- [Cost per document](#cost-per-document)
+- [Known limitations](#known-limitations)
+- [What broke last](#what-broke-last)
+- [Scope 2 — Arabic and French](#scope-2--arabic-and-french)
+- [Stack](#stack)
+- [Repo structure](#repo-structure)
+- [Cite this work](#cite-this-work)
+- [Contact](#contact)
 
 ---
 
-## 🔬 The three systems
+## The three systems
 
 | # | System | Corpus | Headline measurement | Live |
 |---|--------|--------|----------------------|------|
@@ -51,18 +51,16 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 
 <br>
 
-> ### Why DOKIST is built this way
->
-> **Measure the failure mode first, then design the system around it.** Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — DOKIST splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
+> **Why DOKIST is built this way.** Measure the failure mode first, then design the system around it. Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — DOKIST splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
 
 <br>
 
 ### How they connect
 
-**🔍 Legal Intelligence Engine — retrieval core.** Is the retrieval core, and its history is the argument.
+**1. Legal Intelligence Engine — retrieval core.**
 
 <details>
-<summary><b>Expand ↓</b></summary>
+<summary><b>Read the argument</b></summary>
 
 It starts as a plain RAG pipeline over CUAD with an evaluation harness attached. A rank-8 LoRA tested against that baseline produced no measurable improvement in faithfulness at n = 40 — 0.84 against 0.81 — so RAG stayed, at roughly a quarter of the cost. The generation half being already close to its ceiling is what moved the work to the retrieval half: a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding. Recall@3 went 0.71 → 0.83. The engine exposes the result as an MCP server.
 
@@ -70,10 +68,10 @@ It starts as a plain RAG pipeline over CUAD with an evaluation harness attached.
 
 <br>
 
-**🛠️ Research Briefing Agent — tool-call surface.** Tests a different failure surface.
+**2. Research Briefing Agent — tool-call surface.**
 
 <details>
-<summary><b>Expand ↓</b></summary>
+<summary><b>Read the argument</b></summary>
 
 Retrieval faithfulness is not what breaks an agent in production — tool calls are, and they break in ways an answer-quality metric cannot see. It measures that directly at 94% success and p95 1.8s, behind FastAPI, Docker, CI/CD and tracing.
 
@@ -81,10 +79,10 @@ Retrieval faithfulness is not what breaks an agent in production — tool calls 
 
 <br>
 
-**⚖️ Due Diligence Agent — orchestration layer.** Composes both.
+**3. Due Diligence Agent — orchestration layer.**
 
 <details>
-<summary><b>Expand ↓</b></summary>
+<summary><b>Read the argument</b></summary>
 
 Calls the engine's MCP server as a tool rather than reimplementing retrieval. Three demos would be three demos. One system that calls another through a standard protocol is an architecture.
 
@@ -92,7 +90,7 @@ Calls the engine's MCP server as a tool rather than reimplementing retrieval. Th
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -106,7 +104,7 @@ flowchart LR
 
 ---
 
-## 📊 Latest evaluation run
+## Latest evaluation run
 
 | Metric | Before | After | Δ | Evidence |
 |--------|--------|-------|---|----------|
@@ -118,7 +116,7 @@ flowchart LR
 
 ---
 
-## 🧠 Key decisions
+## Key decisions
 
 | ADR | Decision | Status |
 |-----|----------|--------|
@@ -128,17 +126,17 @@ flowchart LR
 
 ---
 
-## 🚀 Run it yourself
+## Run it yourself
 
 ### Prerequisites
 
-- **Python 3.11+**
-- **Docker** (optional, for full stack)
-- **OpenAI API key** (or compatible provider)
+- Python 3.11+
+- Docker (optional, for full stack)
+- OpenAI API key (or compatible provider)
 
 <br>
 
-### Option A — Full stack (Docker, 1 command)
+### Option A — Full stack via Docker
 
 ```bash
 git clone https://github.com/Dokist-ai/core.git
@@ -150,7 +148,7 @@ docker compose up
 
 <br>
 
-### Option B — Engine only (5 minutes)
+### Option B — Engine only (~5 min)
 
 ```bash
 git clone https://github.com/Dokist-ai/core.git
@@ -177,7 +175,7 @@ python -m src.evaluate --config all       # writes to evidence/eval_runs/<date>/
 
 ---
 
-## 💰 Cost per document (Due Diligence Agent)
+## Cost per document (Due Diligence Agent)
 
 | Layer | Operation | Cost |
 |-------|-----------|------|
@@ -191,7 +189,7 @@ python -m src.evaluate --config all       # writes to evidence/eval_runs/<date>/
 
 ---
 
-## ⚠️ Known limitations
+## Known limitations
 
 Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)**, per-system detail in each `evidence/failure_analysis.md`.
 
@@ -201,7 +199,7 @@ Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)*
 
 ---
 
-## 🔥 What broke last
+## What broke last
 
 - **Legal Intelligence Engine**: Cross-document reasoning fails when two clauses *read* alike but *mean* opposite things. Fixed with hard-negative mining. [Analysis](legal-intelligence-engine/evidence/failure_analysis.md)
 - **Research Briefing Agent**: 6% tool-call failures traced to schema drift in financial data API. [Analysis](research-briefing-agent/evidence/failure_analysis.md)
@@ -209,7 +207,7 @@ Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)*
 
 ---
 
-## 🌍 Scope 2 — Arabic and French
+## Scope 2 — Arabic and French
 
 Every metric above is measured on English corpora, so the French/Arabic civil-law positioning is currently a **claim, not a demonstration**. Scope 2 is the twelve-session programme that closes that gap: a text-layer inventory of the Bulletin Officiel archive, a five-system Arabic OCR comparison on hand-verified pages, and a **public French/Arabic legal retrieval benchmark verified by a jurist**. No such benchmark exists today.
 
@@ -219,7 +217,7 @@ Three Moroccan legal-AI products are already live — none publishes an evaluati
 
 ---
 
-## 🛠️ Stack
+## Stack
 
 **Orchestration** LangChain · LangGraph · LangSmith · MCP
 **Retrieval** Chroma · Pinecone · Sentence Transformers · contrastive learning with hard negatives
@@ -229,7 +227,7 @@ Three Moroccan legal-AI products are already live — none publishes an evaluati
 
 ---
 
-## 📁 Repo structure
+## Repo structure
 
 ```
 core/
@@ -246,7 +244,7 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ---
 
-## 📖 Cite this work
+## Cite this work
 
 ```bibtex
 @software{dokist_legal_rag_2026,
@@ -260,7 +258,7 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ---
 
-## 📬 Contact
+## Contact
 
 [LinkedIn](https://www.linkedin.com/in/x-y-1a4795300/) · [DOKIST](https://dokist-ai.github.io/core/) · [GitHub](https://github.com/Dokist-ai/core)
 
