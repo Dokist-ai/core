@@ -1,14 +1,20 @@
 <p align="center">
-  <img src="assets/logo.png" alt="DocumentLab.ai" width="80"/>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.png">
+    <img src="assets/logo.png" alt="DocumentLab.ai" width="80"/>
+  </picture>
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-0c1a2e?style=flat-square" alt="License: MIT"/>
   <img src="https://img.shields.io/badge/python-3.11+-0c1a2e?style=flat-square" alt="Python 3.11+"/>
   <img src="https://img.shields.io/github/repo-size/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Repo size"/>
   <img src="https://img.shields.io/github/languages/top/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Top language"/>
+  <img src="https://img.shields.io/github/actions/workflow/status/SaraDHimdi/ai-engineer-portfolio/ci.yml?branch=main&color=0c1a2e&style=flat-square" alt="CI"/>
+  <img src="https://img.shields.io/codecov/c/github/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Coverage"/>
+  <img src="https://img.shields.io/badge/docker-ready-0c1a2e?style=flat-square&logo=docker" alt="Docker"/>
   <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
+  <img src="https://img.shields.io/badge/corpus-EN%20%C2%B7%20AR%20%C2%B7%20FR-0c1a2e?style=flat-square" alt="Corpus languages: English, Arabic, French"/>
 </p>
-
 
 # DOKIST
 
@@ -16,6 +22,24 @@
 Three systems, one niche, every claim traced to a raw run in `evidence/`.
 
 > **These are reference systems, not client deployments.** Built on public corpora (CUAD, EDGAR, EUR-Lex) and benchmarked before and after tuning. Sample sizes, definitions and caveats: **[docs/METHODOLOGY.md](docs/METHODOLOGY.md)**
+
+---
+
+## Contents
+
+- [The three systems](#the-three-systems)
+- [Architecture](#architecture)
+- [Latest evaluation run](#latest-evaluation-run)
+- [Key decisions](#key-decisions)
+- [Run it yourself](#run-it-yourself)
+- [Cost per document](#cost-per-document)
+- [Known limitations](#known-limitations)
+- [What broke last](#what-broke-last)
+- [Scope 2 — Arabic and French](#scope-2--arabic-and-french)
+- [Stack](#stack)
+- [Repo structure](#repo-structure)
+- [Cite this work](#cite-this-work)
+- [Contact](#contact)
 
 ---
 
@@ -43,10 +67,57 @@ Three demos would be three demos. One system that calls another through a standa
 
 ---
 
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Due Diligence Agent] -->|MCP| B[Legal Intelligence Engine]
+    B -->|Retrieval| C[(Chroma / Pinecone)]
+    B -->|Generation| D[LLM]
+    A -->|Tool calls| E[Research Briefing Agent]
+    style A fill:#C8960C,stroke:#0c1a2e,color:#fff
+    style B fill:#0c1a2e,stroke:#C8960C,color:#fff
+```
+
+---
+
+## Latest evaluation run
+
+| Metric | Before | After | Δ | Evidence |
+|--------|--------|-------|---|----------|
+| Unsupported answers | 31% | 12% | −19 pp | [`evidence/eval_runs/2026-08-09/`](legal-intelligence-engine/evidence/) |
+| Recall@3 | 0.71 | 0.83 | +0.12 | [`metrics.json`](legal-intelligence-engine/evidence/metrics.json) |
+| Tool-call success | — | 94% | — | [`research-briefing-agent/evidence/`](research-briefing-agent/evidence/) |
+
+> Full methodology: [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md)
+
+---
+
+## Key decisions
+
+| ADR | Decision | Status |
+|-----|----------|--------|
+| [ADR-003](legal-intelligence-engine/adr/003-rag-vs-lora.md) | RAG baseline beats LoRA r8 at ¼ cost | Accepted |
+| [ADR-007](due-diligence-agent/adr/007-mcp-over-embedded-retrieval.md) | Engine exposed via MCP, not imported | Accepted |
+| [ADR-012](research-briefing-agent/adr/012-fastapi-over-streamlit.md) | FastAPI + Docker for production agent | Accepted |
+
+---
+
 ## Run it yourself
 
+### Full stack (Docker)
+
 ```bash
-git clone https://github.com/SaraDHimdi/ai-engineer-portfolio
+git clone https://github.com/SaraDHimdi/ai-engineer-portfolio.git
+cd ai-engineer-portfolio
+cp .env.example .env
+# Add your API key, then:
+docker compose up
+```
+
+### Legal Intelligence Engine only
+
+```bash
 cd ai-engineer-portfolio/legal-intelligence-engine
 
 python -m venv .venv && source .venv/bin/activate
@@ -57,7 +128,7 @@ python -m src.ingest          # builds the index from the sample corpus
 python -m src.ask "What is the termination notice period?"
 ```
 
-Reproduce the published numbers:
+### Reproduce the published numbers
 
 ```bash
 pytest                                    # 14 tests, all external calls mocked
@@ -68,6 +139,20 @@ The LoRA comparison above is a stored run, not a live one — the config and its
 
 ---
 
+## Cost per document (Due Diligence Agent)
+
+| Layer | Operation | Cost |
+|-------|-----------|------|
+| Parsing | Unstructured.io (assumed) | ~€0.001 |
+| Embedding | `sentence-transformers` (local) | €0.000 |
+| Retrieval | Chroma query | €0.000 |
+| Generation | GPT-4o-mini, ~2k tokens | ~€0.022 |
+| **Total** | | **~€0.023** |
+
+> Compare: manual review ≈ €15–€50/hour. Break-even at ~650 documents.
+
+---
+
 ## Known limitations
 
 Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)**, per-system detail in each `evidence/failure_analysis.md`.
@@ -75,6 +160,14 @@ Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)*
 - **Document parsing is the weakest link**, and it sits upstream of everything measured here. All three systems assume clean text extraction; every benchmark runs on corpora that were already clean text.
 - **Cross-document reasoning is shallow.** Top-k similarity search does not reliably hold two documents in tension.
 - **Evaluation sets are too small to be decisive.** 40 questions catches obvious regressions, not rare failure modes. Consolidating the contract baseline into the Legal Intelligence Engine puts one harness over one legal corpus, which is where that number grows next.
+
+---
+
+## What broke last
+
+- **Legal Intelligence Engine**: Cross-document reasoning fails when two clauses *read* alike but *mean* opposite things. Fixed with hard-negative mining. [Analysis](legal-intelligence-engine/evidence/failure_analysis.md)
+- **Research Briefing Agent**: 6% tool-call failures traced to schema drift in financial data API. [Analysis](research-briefing-agent/evidence/failure_analysis.md)
+- **Scope 2 risk**: No public French/Arabic legal retrieval benchmark exists yet. [Risk doc](docs/SCOPE-2-ARABIC-FRENCH.md)
 
 ---
 
@@ -112,6 +205,20 @@ ai-engineer-portfolio/
 ```
 
 Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the last containing `metrics.json`, raw evaluation runs, traces, and a failure analysis for every number claimed above.
+
+---
+
+## Cite this work
+
+```bibtex
+@software{dhimdi_legal_rag_2026,
+  author = {Dhimdi, Sara},
+  title = {Legal Intelligence Engine: RAG Systems for Legal and Financial Documents},
+  url = {https://github.com/SaraDHimdi/ai-engineer-portfolio},
+  year = {2026},
+  license = {MIT}
+}
+```
 
 ---
 
