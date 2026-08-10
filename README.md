@@ -4,10 +4,13 @@
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-0c1a2e?style=flat-square" alt="License: MIT"/>
   <img src="https://img.shields.io/badge/python-3.11+-0c1a2e?style=flat-square" alt="Python 3.11+"/>
+  <img src="https://img.shields.io/github/repo-size/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Repo size"/>
+  <img src="https://img.shields.io/github/languages/top/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Top language"/>
   <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
 </p>
 
-# Dokist
+
+# DOKIST
 
 **RAG systems, LLM agents, and evaluation harnesses for legal and financial documents.**
 Three systems, one niche, every claim traced to a raw run in `evidence/`.
@@ -24,7 +27,7 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 | 2 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Recall@3 0.71 → 0.83 vs baseline · faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — no measurable difference · ~€0.002/query | [models](#) · [code](legal-intelligence-engine/) |
 | 3 | **Research Briefing Agent** | Financial news | 94% tool-call success · p95 1.8s · 14 tests passing | [demo](#) · [code](research-briefing-agent/) |
 
-### Why three systems
+### Why three and not four
 
 Each system owns a distinct failure mode: orchestration, retrieval, tool calls. Systems that fail the same way are one system, so the contract Q&A baseline lives inside the Legal Intelligence Engine rather than beside it — it was that engine's baseline, and reporting a baseline as a separate deliverable inflates the count without adding a result.
 
