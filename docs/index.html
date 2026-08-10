@@ -82,8 +82,8 @@
   body::before{
     content:'';
     position:fixed; inset:0; z-index:998; pointer-events:none;
-    background:radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(6,14,26,0.4) 100%);
-    opacity:.6;
+        background:radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(6,14,26,0.5) 100%);
+    opacity:.75;
   }
 
   /* Premium scrollbar */
@@ -178,45 +178,55 @@
     border-color:rgba(38,56,92,0.35);
   }
   .nav{display:flex; align-items:center; justify-content:space-between; padding:16px 36px; max-width:1180px; margin:0 auto; transition:padding var(--t-3) var(--e-out);}
-  header.is-condensed .nav{padding:10px 36px;}
+  
   .brand{display:flex; align-items:center; gap:10px;}
   .brand img{width:32px; height:32px; border-radius:6px; display:block; object-fit:contain;}
-  .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;} header .brand{position:relative;}
+    .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;}
     header .brand{position:relative;}
   /* Deep ambient halo — the logo feels like a warm light source */
+    header .brand{position:relative;}
+  /* Perfectly centered warm backlight — appears on hover */
   header .brand::before{
-    content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-    width:56px; height:56px; border-radius:14px; pointer-events:none; z-index:-1;
-    background:radial-gradient(circle at 40% 40%, rgba(216,178,92,0.14), rgba(216,178,92,0.04) 45%, transparent 70%);
-    filter:blur(14px);
+    content:''; position:absolute; left:16px; top:16px;
+    width:72px; height:72px; border-radius:20px; pointer-events:none; z-index:-1;
+    background:radial-gradient(circle at 40% 40%, rgba(241,214,147,0.45), rgba(216,178,92,0.15) 50%, transparent 75%);
+    filter:blur(20px);
     opacity:0;
-    animation:haloBreathe 10s ease-in-out 2s infinite;
+    transform:translate(-50%,-50%) scale(0.85);
+    transition:opacity 0.55s var(--e-out), transform 0.55s var(--e-out);
   }
-  /* Polished metal specular — a whisper of light across the surface */
+  /* Surface specular sweep — the "polished metal" flash */
   header .brand::after{
     content:''; position:absolute; left:0; top:0; width:32px; height:32px; border-radius:6px;
-    background:linear-gradient(125deg, 
-      transparent 35%, 
-      rgba(255,255,255,0.03) 48%, 
-      rgba(241,214,147,0.07) 50%, 
-      rgba(255,255,255,0.03) 52%, 
-      transparent 65%
+    background:linear-gradient(115deg, 
+      transparent 32%, 
+      rgba(255,255,255,0.03) 47%, 
+      rgba(241,214,147,0.28) 50%, 
+      rgba(255,255,255,0.03) 53%, 
+      transparent 68%
     );
     background-size:300% 300%;
-    animation:specularDrift 12s var(--e-out) 4s infinite;
+    background-position:250% 250%;
+    opacity:0;
+    transition:opacity 0.15s var(--e-out);
     pointer-events:none; mix-blend-mode:overlay;
   }
   header .brand img{
     position:relative; z-index:1;
-    transition:transform .9s var(--e-out), filter .9s var(--e-out);
-    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+    transition:transform 0.5s var(--e-out), filter 0.5s var(--e-out);
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.45));
   }
   header .brand:hover img{
-    transform:scale(1.06) translateY(-1px);
-    filter:drop-shadow(0 4px 14px rgba(216,178,92,0.2)) drop-shadow(0 0 28px rgba(216,178,92,0.1));
+    transform:scale(1.05) translateY(-1px);
+    filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35)) drop-shadow(0 0 28px rgba(216,178,92,0.18));
   }
   header .brand:hover::before{
-    animation:none; opacity:0.85; transition:opacity .8s var(--e-out);
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+  }
+  header .brand:hover::after{
+    opacity:1;
+    animation:specularSweep 0.55s var(--e-out) forwards;
   }
   .brand-mark-fallback{
     width:32px; height:32px; border-radius:6px; flex-shrink:0;
@@ -303,11 +313,11 @@
     padding:52px 0 96px;
     border-bottom:1px solid var(--line);
     --mx:50%; --my:20%;
-    background:
-      radial-gradient(720px 480px at 78% 15%, rgba(216,178,92,0.14), transparent 55%),
-      radial-gradient(580px 480px at 100% 55%, rgba(255,155,92,0.09), transparent 55%),
-      radial-gradient(900px 600px at 20% 80%, rgba(142,202,230,0.04), transparent 50%),
-      var(--navy-1);
+        background:
+      radial-gradient(900px 600px at 72% 5%, rgba(216,178,92,0.18), transparent 62%),
+      radial-gradient(500px 400px at 98% 35%, rgba(255,155,92,0.05), transparent 55%),
+      radial-gradient(800px 600px at 12% 88%, rgba(142,202,230,0.02), transparent 50%),
+      var(--navy-0);
   }
   .hero::before{
     content:''; position:absolute; inset:0; pointer-events:none;
@@ -531,12 +541,9 @@
     0%,100%{opacity:0; transform:translate(-50%,-50%) scale(0.9);}
     50%{opacity:1; transform:translate(-50%,-50%) scale(1.2);}
   }
-  @keyframes specularDrift{
-    0%{background-position:250% 250%; opacity:0;}
-    15%{opacity:1;}
-    45%{background-position:-150% -150%; opacity:1;}
-    60%{opacity:0;}
-    100%{opacity:0;}
+    @keyframes specularSweep{
+    0%{background-position:250% 250%;}
+    100%{background-position:-150% -150%;}
   }
     .cite-sup{
     font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600;
