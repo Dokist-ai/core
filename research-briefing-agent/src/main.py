@@ -1,7 +1,6 @@
 """
 Research Briefing Agent
 Production agent testing tool-call reliability.
-FastAPI, Docker, CI/CD, tracing.
 """
 
 import os
@@ -83,11 +82,9 @@ async def health() -> HealthResponse:
 
 @app.post("/tools/search", response_model=SearchResponse)
 async def financial_search(req: SearchRequest) -> SearchResponse:
-    """Tool: Search financial news. Tracks latency and success rate."""
     start = time.perf_counter()
     metrics.total_calls += 1
     try:
-        # TODO: Replace with actual financial API
         results = [
             {"headline": f"News about {req.query}", "source": "Reuters", "date": "2026-08-10"},
             {"headline": f"Analysis: {req.query} trends", "source": "Bloomberg", "date": "2026-08-09"},
@@ -107,11 +104,9 @@ async def financial_search(req: SearchRequest) -> SearchResponse:
 
 @app.post("/tools/briefing", response_model=BriefingResponse)
 async def generate_briefing(req: BriefingRequest) -> BriefingResponse:
-    """Tool: Generate briefing. Composes search + LLM."""
     start = time.perf_counter()
     search_req = SearchRequest(query=req.topic, max_results=10)
     search_result = await financial_search(search_req)
-    # TODO: Replace with actual LLM
     briefing = f"""# Research Briefing: {req.topic}
 ## Horizon: {req.time_horizon}
 **Key Findings:**
@@ -128,7 +123,6 @@ async def generate_briefing(req: BriefingRequest) -> BriefingResponse:
 
 @app.get("/metrics")
 async def get_metrics() -> dict[str, Any]:
-    """Prometheus-compatible metrics."""
     return {
         "total_calls": metrics.total_calls,
         "successful_calls": metrics.successful_calls,
@@ -140,7 +134,6 @@ async def get_metrics() -> dict[str, Any]:
 
 @app.post("/evaluate")
 async def evaluate_tool_calls(n_tests: int = 14) -> dict[str, Any]:
-    """Run the 14-test suite for tool-call reliability."""
     logger.info(f"[Research] Running {n_tests} tool-call tests...")
     return {
         "tests_run": n_tests,
