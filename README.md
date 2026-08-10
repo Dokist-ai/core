@@ -56,11 +56,11 @@ DOKIST is one argument: measure the failure mode first, then design the system a
 
 ### How they connect
 
-**The Legal Intelligence Engine** is the retrieval core, and its history is the argument. It starts as a plain RAG pipeline over CUAD with an evaluation harness attached. A rank-8 LoRA tested against that baseline produced no measurable improvement in faithfulness at n = 40 — 0.84 against 0.81 — so RAG stayed, at roughly a quarter of the cost. The generation half being already close to its ceiling is what moved the work to the retrieval half: a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding. Recall@3 went 0.71 → 0.83. The engine exposes the result as an MCP server.
+**🔍 Legal Intelligence Engine — retrieval core.** Is the retrieval core, and its history is the argument. It starts as a plain RAG pipeline over CUAD with an evaluation harness attached. A rank-8 LoRA tested against that baseline produced no measurable improvement in faithfulness at n = 40 — 0.84 against 0.81 — so RAG stayed, at roughly a quarter of the cost. The generation half being already close to its ceiling is what moved the work to the retrieval half: a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding. Recall@3 went 0.71 → 0.83. The engine exposes the result as an MCP server.
 
-**The Research Briefing Agent** tests a different failure surface. Retrieval faithfulness is not what breaks an agent in production — tool calls are, and they break in ways an answer-quality metric cannot see. It measures that directly at 94% success and p95 1.8s, behind FastAPI, Docker, CI/CD and tracing.
+**🛠️ Research Briefing Agent — tool-call surface.** It tests a different failure surface. Retrieval faithfulness is not what breaks an agent in production — tool calls are, and they break in ways an answer-quality metric cannot see. It measures that directly at 94% success and p95 1.8s, behind FastAPI, Docker, CI/CD and tracing.
 
-**The Due Diligence Agent** composes both, calling the engine's MCP server as a tool rather than reimplementing retrieval.
+**⚖️ Due Diligence Agent — orchestration layer.** It composes both, calling the engine's MCP server as a tool rather than reimplementing retrieval.
 
 Three demos would be three demos. One system that calls another through a standard protocol is an architecture.
 
