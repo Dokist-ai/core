@@ -255,16 +255,8 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ## Cite this work
 
-```bibtex
-@software{dokist_legal_rag_2026,
-  author = {Dokist},
-  title = {Legal Intelligence Engine: RAG Systems for Legal and Financial Documents},
-  url = {https://dokist-ai.github.io/core/},
-  year = {2026},
-  license = {MIT}
-}
-```
-
+If you use this software in your research, please cite it.  
+See [`CITATION.cff`](CITATION.cff) for BibTeX, APA, and other formats, or use the "Cite this repository" button in the sidebar.
 ---
 
 ## Contact
