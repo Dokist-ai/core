@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  legal-engine:
+    build: ./legal-intelligence-engine
+    ports:
+      - "8001:8000"
+    env_file: .env
+    volumes:
+      - engine-data:/app/data
+
+  research-agent:
+    build: ./research-briefing-agent
+    ports:
+      - "8002:8000"
+    env_file: .env
+
+  due-diligence:
+    build: ./due-diligence-agent
+    ports:
+      - "8000:8000"
+    env_file: .env
+    depends_on:
+      - legal-engine
+      - research-agent
+
+volumes:
+  engine-data:
