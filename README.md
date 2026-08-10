@@ -244,8 +244,8 @@ core/
 ├── legal-intelligence-engine/    ← Legal · RAG baseline, eval harness, retrieval model, MCP server
 ├── research-briefing-agent/      ← Finance · production agent
 ├── docs/                         ← Methodology, limitations, Scope 2
-├── playbook/                     ← Build manual
-├── SESSIONS.md                   ← Engineering log
+├── assests/                     ← logo etc
+├── SESSIONS.md                   ← Engineering log (like a memo)
 └── demos/                        ← Video walkthroughs
 ```
 
@@ -266,6 +266,7 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 ```
 
 ---
+
 
 ## Contact
 
