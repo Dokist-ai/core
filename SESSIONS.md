@@ -14,3 +14,5 @@
 
 **Next unknown:**  
 - How to reduce Docker image size? Currently pulling heavy LangChain deps. Maybe slim base image or multi-stage build?
+
+do this every sunday.
