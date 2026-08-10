@@ -7,13 +7,12 @@
 <p align="center">
   <img src="https://img.shields.io/badge/license-MIT-0c1a2e?style=flat-square" alt="License: MIT"/>
   <img src="https://img.shields.io/badge/python-3.11+-0c1a2e?style=flat-square" alt="Python 3.11+"/>
-  <img src="https://img.shields.io/github/repo-size/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Repo size"/>
-  <img src="https://img.shields.io/github/languages/top/SaraDHimdi/ai-engineer-portfolio?color=0c1a2e&style=flat-square" alt="Top language"/>
+  <img src="https://img.shields.io/github/repo-size/Dokist-ai/core?color=0c1a2e&style=flat-square" alt="Repo size"/>
+  <img src="https://img.shields.io/github/languages/top/Dokist-ai/core?color=0c1a2e&style=flat-square" alt="Top language"/>
   <img src="https://img.shields.io/badge/docker-ready-0c1a2e?style=flat-square&logo=docker" alt="Docker"/>
   <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
   <img src="https://img.shields.io/badge/corpus-EN%20%C2%B7%20AR%20%C2%B7%20FR-0c1a2e?style=flat-square" alt="Corpus languages: English, Arabic, French"/>
 </p>
-
 
 # DOKIST
 
@@ -24,25 +23,25 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 
 ---
 
-## Contents
+## 📑 Contents
 
-- [The three systems](#the-three-systems)
-- [Architecture](#architecture)
-- [Latest evaluation run](#latest-evaluation-run)
-- [Key decisions](#key-decisions)
-- [Run it yourself](#run-it-yourself)
-- [Cost per document](#cost-per-document)
-- [Known limitations](#known-limitations)
-- [What broke last](#what-broke-last)
-- [Scope 2 — Arabic and French](#scope-2--arabic-and-french)
-- [Stack](#stack)
-- [Repo structure](#repo-structure)
-- [Cite this work](#cite-this-work)
-- [Contact](#contact)
+- [🔬 The three systems](#-the-three-systems)
+- [🏗️ Architecture](#️-architecture)
+- [📊 Latest evaluation run](#-latest-evaluation-run)
+- [🧠 Key decisions](#-key-decisions)
+- [🚀 Run it yourself](#-run-it-yourself)
+- [💰 Cost per document](#-cost-per-document)
+- [⚠️ Known limitations](#️-known-limitations)
+- [🔥 What broke last](#-what-broke-last)
+- [🌍 Scope 2 — Arabic and French](#-scope-2--arabic-and-french)
+- [🛠️ Stack](#️-stack)
+- [📁 Repo structure](#-repo-structure)
+- [📖 Cite this work](#-cite-this-work)
+- [📬 Contact](#-contact)
 
 ---
 
-## The three systems
+## 🔬 The three systems
 
 | # | System | Corpus | Headline measurement | Live |
 |---|--------|--------|----------------------|------|
@@ -50,23 +49,50 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 | 2 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Recall@3 0.71 → 0.83 vs baseline · faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — no measurable difference · ~€0.002/query | [models](#) · [code](legal-intelligence-engine/) |
 | 3 | **Research Briefing Agent** | Financial news | 94% tool-call success · p95 1.8s · 14 tests passing | [demo](#) · [code](research-briefing-agent/) |
 
-### Why DOKIST is built this way
+<br>
 
-DOKIST is one argument: measure the failure mode first, then design the system around it. Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — DOKIST splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
+> ### Why DOKIST is built this way
+>
+> **Measure the failure mode first, then design the system around it.** Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — DOKIST splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
+
+<br>
 
 ### How they connect
 
-**🔍 Legal Intelligence Engine — retrieval core.** Is the retrieval core, and its history is the argument. It starts as a plain RAG pipeline over CUAD with an evaluation harness attached. A rank-8 LoRA tested against that baseline produced no measurable improvement in faithfulness at n = 40 — 0.84 against 0.81 — so RAG stayed, at roughly a quarter of the cost. The generation half being already close to its ceiling is what moved the work to the retrieval half: a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding. Recall@3 went 0.71 → 0.83. The engine exposes the result as an MCP server.
+**🔍 Legal Intelligence Engine — retrieval core.** Is the retrieval core, and its history is the argument.
 
-**🛠️ Research Briefing Agent — tool-call surface.** It tests a different failure surface. Retrieval faithfulness is not what breaks an agent in production — tool calls are, and they break in ways an answer-quality metric cannot see. It measures that directly at 94% success and p95 1.8s, behind FastAPI, Docker, CI/CD and tracing.
+<details>
+<summary><b>Expand ↓</b></summary>
 
-**⚖️ Due Diligence Agent — orchestration layer.** It composes both, calling the engine's MCP server as a tool rather than reimplementing retrieval.
+It starts as a plain RAG pipeline over CUAD with an evaluation harness attached. A rank-8 LoRA tested against that baseline produced no measurable improvement in faithfulness at n = 40 — 0.84 against 0.81 — so RAG stayed, at roughly a quarter of the cost. The generation half being already close to its ceiling is what moved the work to the retrieval half: a domain-adapted embedding model trained with hard negative mining, so clauses that *read* alike but *mean* opposite things stop colliding. Recall@3 went 0.71 → 0.83. The engine exposes the result as an MCP server.
 
-Three demos would be three demos. One system that calls another through a standard protocol is an architecture.
+</details>
+
+<br>
+
+**🛠️ Research Briefing Agent — tool-call surface.** Tests a different failure surface.
+
+<details>
+<summary><b>Expand ↓</b></summary>
+
+Retrieval faithfulness is not what breaks an agent in production — tool calls are, and they break in ways an answer-quality metric cannot see. It measures that directly at 94% success and p95 1.8s, behind FastAPI, Docker, CI/CD and tracing.
+
+</details>
+
+<br>
+
+**⚖️ Due Diligence Agent — orchestration layer.** Composes both.
+
+<details>
+<summary><b>Expand ↓</b></summary>
+
+Calls the engine's MCP server as a tool rather than reimplementing retrieval. Three demos would be three demos. One system that calls another through a standard protocol is an architecture.
+
+</details>
 
 ---
 
-## Architecture
+## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
@@ -80,7 +106,7 @@ flowchart LR
 
 ---
 
-## Latest evaluation run
+## 📊 Latest evaluation run
 
 | Metric | Before | After | Δ | Evidence |
 |--------|--------|-------|---|----------|
@@ -92,7 +118,7 @@ flowchart LR
 
 ---
 
-## Key decisions
+## 🧠 Key decisions
 
 | ADR | Decision | Status |
 |-----|----------|--------|
@@ -102,22 +128,33 @@ flowchart LR
 
 ---
 
-## Run it yourself
+## 🚀 Run it yourself
 
-### Full stack (Docker)
+### Prerequisites
+
+- **Python 3.11+**
+- **Docker** (optional, for full stack)
+- **OpenAI API key** (or compatible provider)
+
+<br>
+
+### Option A — Full stack (Docker, 1 command)
 
 ```bash
-git clone https://github.com/SaraDHimdi/ai-engineer-portfolio.git
-cd ai-engineer-portfolio
+git clone https://github.com/Dokist-ai/core.git
+cd core
 cp .env.example .env
-# Add your API key, then:
+# Add your API key to .env, then:
 docker compose up
 ```
 
-### Legal Intelligence Engine only
+<br>
+
+### Option B — Engine only (5 minutes)
 
 ```bash
-cd ai-engineer-portfolio/legal-intelligence-engine
+git clone https://github.com/Dokist-ai/core.git
+cd core/legal-intelligence-engine
 
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
@@ -127,18 +164,20 @@ python -m src.ingest          # builds the index from the sample corpus
 python -m src.ask "What is the termination notice period?"
 ```
 
-### Reproduce the published numbers
+<br>
+
+### Option C — Reproduce the numbers
 
 ```bash
 pytest                                    # 14 tests, all external calls mocked
 python -m src.evaluate --config all       # writes to evidence/eval_runs/<date>/
 ```
 
-The LoRA comparison above is a stored run, not a live one — the config and its raw output sit in `legal-intelligence-engine/evidence/`.
+> The LoRA comparison is a stored run — config and raw output sit in `legal-intelligence-engine/evidence/`.
 
 ---
 
-## Cost per document (Due Diligence Agent)
+## 💰 Cost per document (Due Diligence Agent)
 
 | Layer | Operation | Cost |
 |-------|-----------|------|
@@ -152,7 +191,7 @@ The LoRA comparison above is a stored run, not a live one — the config and its
 
 ---
 
-## Known limitations
+## ⚠️ Known limitations
 
 Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)**, per-system detail in each `evidence/failure_analysis.md`.
 
@@ -162,7 +201,7 @@ Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)*
 
 ---
 
-## What broke last
+## 🔥 What broke last
 
 - **Legal Intelligence Engine**: Cross-document reasoning fails when two clauses *read* alike but *mean* opposite things. Fixed with hard-negative mining. [Analysis](legal-intelligence-engine/evidence/failure_analysis.md)
 - **Research Briefing Agent**: 6% tool-call failures traced to schema drift in financial data API. [Analysis](research-briefing-agent/evidence/failure_analysis.md)
@@ -170,7 +209,7 @@ Short version — full analysis in **[docs/LIMITATIONS.md](docs/LIMITATIONS.md)*
 
 ---
 
-## Scope 2 — Arabic and French
+## 🌍 Scope 2 — Arabic and French
 
 Every metric above is measured on English corpora, so the French/Arabic civil-law positioning is currently a **claim, not a demonstration**. Scope 2 is the twelve-session programme that closes that gap: a text-layer inventory of the Bulletin Officiel archive, a five-system Arabic OCR comparison on hand-verified pages, and a **public French/Arabic legal retrieval benchmark verified by a jurist**. No such benchmark exists today.
 
@@ -180,7 +219,7 @@ Three Moroccan legal-AI products are already live — none publishes an evaluati
 
 ---
 
-## Stack
+## 🛠️ Stack
 
 **Orchestration** LangChain · LangGraph · LangSmith · MCP
 **Retrieval** Chroma · Pinecone · Sentence Transformers · contrastive learning with hard negatives
@@ -190,10 +229,10 @@ Three Moroccan legal-AI products are already live — none publishes an evaluati
 
 ---
 
-## Repo structure
+## 📁 Repo structure
 
 ```
-ai-engineer-portfolio/
+core/
 ├── due-diligence-agent/          ← Flagship · legal + finance · composes the engine over MCP
 ├── legal-intelligence-engine/    ← Legal · RAG baseline, eval harness, retrieval model, MCP server
 ├── research-briefing-agent/      ← Finance · production agent
@@ -207,11 +246,11 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ---
 
-## Cite this work
+## 📖 Cite this work
 
 ```bibtex
 @software{dokist_legal_rag_2026,
-  author = {X, Y},
+  author = {Dokist},
   title = {Legal Intelligence Engine: RAG Systems for Legal and Financial Documents},
   url = {https://dokist-ai.github.io/core/},
   year = {2026},
@@ -221,11 +260,11 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ---
 
-## Contact
+## 📬 Contact
 
 [LinkedIn](https://www.linkedin.com/in/x-y-1a4795300/) · [DOKIST](https://dokist-ai.github.io/core/) · [GitHub](https://github.com/Dokist-ai/core)
 
-MIT licensed — see [LICENSE](LICENSE). Code and assets © Sara Dhimdi / DOKIST.
+MIT licensed — see [LICENSE](LICENSE). Code and assets © Dokist.
 
 ---
 
