@@ -45,9 +45,9 @@ Three systems, one niche, every claim traced to a raw run in `evidence/`.
 
 | # | System | Corpus | Headline measurement | Live |
 |---|--------|--------|----------------------|------|
-| 1 | **Due Diligence Agent** — *flagship* | CUAD + EDGAR | Unsupported answers 31% → 12% · ~€0.023/doc · ~4.2s end to end | [demo](#) · [code](due-diligence-agent/) |
-| 2 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | Recall@3 0.71 → 0.83 vs baseline · faithfulness 0.84 (RAG) vs 0.81 (LoRA r8), n = 40 — no measurable difference · ~€0.002/query | [models](#) · [code](legal-intelligence-engine/) |
-| 3 | **Research Briefing Agent** | Financial news | 94% tool-call success · p95 1.8s · 14 tests passing | [demo](#) · [code](research-briefing-agent/) |
+| 1 | **Due Diligence Agent** — *flagship* | CUAD + EDGAR | Unsupported answers | Recall@3 | TBD | TBD | not yet measured | · ~€TBD/doc · ~TBDs end to end | [demo](#) · [code](due-diligence-agent/) |
+| 2 | **Legal Intelligence Engine** | CUAD + EDGAR + EUR-Lex | | Recall@3 | TBD | TBD | not yet measured | vs baseline · faithfulness TBD (RAG) vs TBD (LoRA r8), n = TBD — no measurable difference · ~€TBD/query | [models](#) · [code](legal-intelligence-engine/) |
+| 3 | **Research Briefing Agent** | Financial news | TBD% tool-call success · p95 TBDs · TBD tests passing | [demo](#) · [code](research-briefing-agent/) |
 
 <br>
 
@@ -108,9 +108,9 @@ flowchart LR
 
 | Metric | Before | After | Δ | Evidence |
 |--------|--------|-------|---|----------|
-| Unsupported answers | 31% | 12% | −19 pp | [`evidence/eval_runs/2026-08-09/`](legal-intelligence-engine/evidence/) |
-| Recall@3 | 0.71 | 0.83 | +0.12 | [`metrics.json`](legal-intelligence-engine/evidence/metrics.json) |
-| Tool-call success | — | 94% | — | [`research-briefing-agent/evidence/`](research-briefing-agent/evidence/) |
+| Unsupported answers | TBD% | TBD% | −TBD pp | [`evidence/eval_runs/2026-08-09/`](legal-intelligence-engine/evidence/) |
+| Recall@3 | TBD | TBD | not yet measured | [`metrics.json`](legal-intelligence-engine/evidence/metrics.json) |
+| Tool-call success | — | TBD% | — | [`research-briefing-agent/evidence/`](research-briefing-agent/evidence/) |
 
 > Full methodology: [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md)
 
