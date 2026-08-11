@@ -188,11 +188,11 @@ python -m src.evaluate --config all       # writes to evidence/eval_runs/<date>/
 
 | Layer | Operation | Cost |
 |-------|-----------|------|
-| Parsing | Unstructured.io (assumed) | ~€0.001 |
-| Embedding | `sentence-transformers` (local) | €0.000 |
-| Retrieval | Chroma query | €0.000 |
-| Generation | GPT-4o-mini, ~2k tokens | ~€0.022 |
-| **Total** | | **~€0.023** |
+| Parsing | Unstructured.io (assumed) | ~€TBD |
+| Embedding | `sentence-transformers` (local) | €TBD |
+| Retrieval | Chroma query | €TBD |
+| Generation | GPT-4o-mini, ~2k tokens | ~€TBD |
+| **Total** | | **~€TBD** |
 
 > Compare: manual review ≈ €15–€50/hour. Break-even at ~650 documents.
 
