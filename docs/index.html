@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DOKIST — Legal & Financial Document Intelligence</title>
-<link rel="icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Font payload trimmed to weights actually used: Sora 700/800 (headings, brand),
@@ -1288,25 +1287,46 @@
   }
 
   /* ==========================================================================
-     AMBIENT SCAN LINES — Occasional horizontal sweep (very subtle)
+     AMBIENT SCAN — a beam travelling the entire page, top to bottom and
+     back, forever. Same dense-core, tapered-edge profile as the hero's
+     scan-line — this is the same material, just loose on the page instead
+     of held to one dossier: the system itself, always looking, tied to no
+     single document. Fixed to the viewport behind every layer of content,
+     pointer-events:none, and dim enough to lose against any paragraph it
+     crosses, so it never interrupts reading or navigation — felt rather
+     than watched, present rather than dominant.
+
+     Off for the hero specifically: the dossier's own scan-line already
+     owns that frame, and two gold sweeps reading at once there would
+     compete rather than reinforce. The ambient beam picks up the instant
+     the reader scrolls past it, so the two read as sequential, not
+     simultaneous — one document read closely, then the whole system at
+     work behind everything that follows.
+
+     Handoff runs on its own dedicated observer (below, watching .hero
+     directly) rather than the shared section-grader: that one only
+     switches once the *next* section already outweighs the hero, which
+     held the reveal back a beat longer than it should feel. `.past-hero`
+     fires as soon as the hero itself has mostly scrolled away.
      ========================================================================== */
   .ambient-scan{
     position:fixed; inset:0; pointer-events:none; z-index:4;
     overflow:hidden;
-    opacity:0.04;
+    opacity:0;
+    transition:opacity .6s var(--e-soft);
   }
+  .ambient-scan.past-hero{ opacity:0.11; }
   .ambient-scan::before{
     content:'';
-    position:absolute; left:0; right:0; top:0; height:1px;
-    background:linear-gradient(90deg, transparent, var(--gold-hi), transparent);
-    box-shadow:0 0 20px 2px rgba(241,214,147,.3);
-    animation:ambientSweep 12s ease-in-out 5s infinite;
+    position:absolute; left:0; right:0; top:0; height:2px;
+    background:linear-gradient(90deg, transparent, var(--gold-hi) 18%, var(--gold-hi) 82%, transparent);
+    box-shadow:0 0 22px 3px rgba(241,214,147,.5), 0 0 50px 14px rgba(241,214,147,.16), 0 0 90px 28px rgba(241,214,147,.05);
+    will-change:transform;
+    animation:ambientSweep 8s ease-in-out infinite;
   }
   @keyframes ambientSweep{
-    0%,100%{ top:-10%; opacity:0; }
-    5%{ opacity:1; }
-    45%{ top:110%; opacity:1; }
-    50%{ opacity:0; }
+    0%,100%{ transform:translateY(0); }
+    50%    { transform:translateY(100vh); }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -1380,8 +1400,8 @@ h1, h2, h3, .price-amount, .stat-num{
 
 </style>
 <base target="_blank">
-</head>
 
+</head>
 <body>
 <!-- Atmospheric layers -->
 <div class="cursor-light"></div>
@@ -1926,6 +1946,23 @@ h1, h2, h3, .price-amount, .stat-num{
       });
     }, {threshold:[0, .12, .25, .4, .55, .7, .85, 1]});
     nodes.forEach(n => io2.observe(n.el));
+  })();
+
+  /* ---------- Ambient-scan hero handoff ----------
+     Dedicated observer, deliberately separate from the section grader above:
+     that one waits for the *next* section to outweigh the hero before it
+     switches, which is right for grading paper density but reads as a lag
+     when it's the only thing gating the ambient beam's reveal. This fires
+     the moment the hero itself has mostly scrolled out, no comparison
+     against whatever comes next required. */
+  (function(){
+    const hero = document.querySelector('.hero');
+    const scan = document.querySelector('.ambient-scan');
+    if(!hero || !scan) return;
+    const io3 = new IntersectionObserver(([entry]) => {
+      scan.classList.toggle('past-hero', entry.intersectionRatio < 0.5);
+    }, {threshold:[0, .1, .2, .3, .4, .5, .7, 1]});
+    io3.observe(hero);
   })();
 
   /* ---------- Spotlight zone states ----------
