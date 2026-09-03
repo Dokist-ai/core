@@ -46,10 +46,15 @@
     --t-4:.85s;
     --t-5:1.4s;
     --stagger:60ms;
+    /* Motion has two jobs and they need different clocks. Ambient and entrance
+       motion can be luxurious; INTERACTIVE FEEDBACK cannot. A hover that takes
+       half a second to resolve reads as lag, not elegance — the hand has already
+       moved on. Feedback answers in --t-react; atmosphere keeps --t-3/--t-4. */
+    --t-react:.17s;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{
-    scroll-behavior:smooth;
+    scroll-behavior:auto;   /* driven in JS — see ANCHOR NAVIGATION */
     scroll-padding-top:88px;
     scrollbar-width: thin;
     scrollbar-color: rgba(38,56,92,0.4) transparent;
@@ -124,9 +129,25 @@
     border:1px solid var(--line);
     clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
     box-shadow: 0 1px 0 rgba(255,255,255,.025) inset, 0 28px 56px -32px rgba(0,0,0,.6);
-    transition:transform var(--t-3) var(--e-out), box-shadow var(--t-3) var(--e-out), border-color var(--t-3) var(--e-out);
+    transition:transform var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out);
     overflow:hidden;
   }
+  /* SCANNED — a card the beam has just crossed.
+     The product's whole claim is that it reads a document and marks what it
+     found. A scan that passes over the page changing nothing is a screensaver;
+     one that leaves a mark behind it is the thing this company sells. The mark
+     is deliberately small — an edge warming and cooling over a second — because
+     the moment it becomes a flash it stops reading as instrumentation. */
+  .fold-card.is-scanned{
+    border-color:rgba(184,148,63,.62);
+    box-shadow:0 1px 0 rgba(255,255,255,.025) inset,
+               0 28px 56px -32px rgba(0,0,0,.6),
+               0 0 0 1px rgba(216,178,92,.10);
+  }
+  /* Warms in fast, cools out on the card's own slower base transition —
+     asymmetric, the way a reading indicates a hit and then releases it. */
+  .fold-card.is-scanned{ transition:border-color .16s linear, box-shadow .16s linear; }
+
   .fold-card::after{
     content:'';
     position:absolute; top:0; right:0; width:24px; height:24px;
@@ -251,7 +272,7 @@
     font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
     padding:12px 24px; border:1px solid var(--gold); background:var(--gold); color:var(--navy-0);
     text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
-    transition:background var(--t-2) var(--e-out), color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+    transition:background var(--t-react) var(--e-out), color var(--t-react) var(--e-out), transform var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out);
     position:relative; overflow:hidden;
   }
   .btn-gold::before{
@@ -272,7 +293,7 @@
     font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
     padding:12px 24px; border:1px solid var(--coral); background:var(--coral); color:var(--navy-0);
     text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
-    transition:background var(--t-2) var(--e-out), color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+    transition:background var(--t-react) var(--e-out), color var(--t-react) var(--e-out), transform var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out);
     position:relative; overflow:hidden;
   }
   .btn-coral::before{
@@ -293,7 +314,7 @@
     font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
     padding:12px 24px; border:1px solid var(--line); background:transparent; color:var(--white);
     text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
-    transition:background var(--t-2) var(--e-out), color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
+    transition:background var(--t-react) var(--e-out), color var(--t-react) var(--e-out), transform var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out);
   }
   .btn-ghost:hover{
     border-color:var(--azure); background:rgba(142,202,230,0.07); color:var(--azure);
@@ -343,7 +364,7 @@
   .eyebrow::before{content:''; width:20px; height:1px; background:var(--gold);}
   .hero .eyebrow::before{
     width:0;
-    animation:eyebrowDraw .7s ease forwards .3s, goldPulse 3.5s ease-in-out 3.5s infinite;
+    animation:eyebrowDraw .5s ease forwards .12s, goldPulse 3.5s ease-in-out 2.2s infinite;
   }
   @keyframes eyebrowDraw{to{width:20px;}}
   @keyframes goldPulse{
@@ -377,7 +398,7 @@
     padding:28px 28px 24px;
     opacity:0;
     transform:translateY(16px) rotateX(2deg);
-    animation:docIn .9s var(--e-out) forwards .2s, float 7s ease-in-out 3s infinite;
+    animation:docIn .6s var(--e-out) forwards .1s, float 7s ease-in-out 1.8s infinite;
     position:relative;
     z-index:3;
     overflow:visible !important;
@@ -392,7 +413,7 @@
     border:1px solid var(--line);
     clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
     box-shadow:0 16px 40px rgba(3,7,15,.5);
-    transition:transform var(--t-3) var(--e-out), opacity var(--t-3) var(--e-out);
+    transition:transform var(--t-react) var(--e-out), opacity var(--t-react) var(--e-out);
     opacity:0;
   }
   .corpus-sheet .sheet-label{
@@ -466,7 +487,7 @@
     padding:7px 14px;
     border-radius:1px;
     opacity:0; transform:translateY(8px);
-    animation:corpusTagIn .6s var(--e-out) forwards 1.1s;
+    animation:corpusTagIn .45s var(--e-out) forwards .75s;
     box-shadow:0 8px 24px rgba(0,0,0,.4);
   }
   .corpus-count::before{
@@ -516,7 +537,7 @@
     background:linear-gradient(90deg, transparent, var(--gold-hi) 15%, var(--gold-hi) 85%, transparent);
     box-shadow:0 0 20px 3px rgba(241,214,147,.6), 0 0 50px 12px rgba(241,214,147,.18), 0 0 80px 24px rgba(241,214,147,.06);
     opacity:0;
-    animation:scanSweep 5s var(--e-soft) 1.3s infinite;
+    animation:scanSweep 5s var(--e-soft) .85s infinite;
   }
   @keyframes scanSweep{
     0%   { top:0;    opacity:0; }
@@ -532,10 +553,10 @@
     border-bottom:2px solid var(--gold);
     color:var(--white); padding:0 2px;
     opacity:0;
-    animation:hlActivate .5s var(--e-out) forwards, hlBreathe 4s ease-in-out 3.5s infinite;
+    animation:hlActivate .4s var(--e-out) forwards, hlBreathe 4s ease-in-out 2.2s infinite;
   }
-  .hlmark.h1{animation-delay:0s, 3.5s; animation-fill-mode:forwards, none;}
-  .hlmark.h2{animation-delay:1s, 4.5s; animation-fill-mode:forwards, none;}
+  .hlmark.h1{animation-delay:.55s, 2.0s; animation-fill-mode:forwards, none;}
+  .hlmark.h2{animation-delay:.75s, 2.4s; animation-fill-mode:forwards, none;}
     @keyframes haloBreathe{
     0%,100%{opacity:0; transform:translate(-50%,-50%) scale(0.9);}
     50%{opacity:1; transform:translate(-50%,-50%) scale(1.2);}
@@ -560,6 +581,61 @@
     0%,100%{text-shadow:0 0 12px rgba(216,178,92,.4);}
     50%{text-shadow:0 0 22px rgba(241,214,147,.75);}
   }
+  /* ==========================================================================
+     SPAN PROVENANCE — the response contract, demonstrated rather than described.
+
+     The whole product is one sentence: every claim carries the span it came
+     from. The hero has been *asserting* that in prose while its own highlighted
+     clauses sat inert. Now they behave like the system's output — hover or focus
+     a marked clause and it shows you the document, the page, the character
+     offsets and the retrieval score. Those are the real fields of the engine's
+     response object, not invented chrome.
+
+     Pure CSS, one attribute per mark, zero JavaScript, no per-frame cost.
+     ========================================================================== */
+  .hlmark{
+    position:relative; cursor:help; outline:none;
+    transition:background var(--t-react) var(--e-out),
+               border-color var(--t-react) var(--e-out),
+               box-shadow var(--t-react) var(--e-out);
+  }
+  .hlmark::after{
+    content:attr(data-span);
+    position:absolute; left:-2px; bottom:calc(100% + 10px);
+    /* wraps rather than overflowing the dossier — a record that runs off the
+       edge of its own document is the opposite of the point */
+    width:max-content; max-width:238px; white-space:normal; line-height:1.55;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.015em;
+    color:var(--gold-hi);
+    background:rgba(6,14,26,.97);
+    border:1px solid rgba(216,178,92,.32);
+    border-radius:var(--radius);
+    padding:6px 10px;
+    box-shadow:0 14px 34px -14px rgba(0,0,0,.95);
+    opacity:0; transform:translateY(5px);
+    transition:opacity var(--t-react) var(--e-out), transform var(--t-react) var(--e-out);
+    pointer-events:none; z-index:6;
+  }
+  /* the breathe animation owns background and border while it runs, so it is
+     switched off on interaction rather than fought with — and opacity is pinned,
+     since killing the animation would also discard its forwards fill. */
+  .hlmark:hover, .hlmark:focus{
+    animation:none; opacity:1;
+    background:rgba(216,178,92,.34);
+    border-bottom-color:var(--gold-hi);
+    box-shadow:0 2px 18px rgba(241,214,147,.18);
+  }
+  .hlmark:hover::after, .hlmark:focus::after{ opacity:1; transform:translateY(0); }
+  /* the second mark sits near the right edge; its record hangs from the right */
+  .hlmark.h2::after{ left:auto; right:-2px; }
+
+  /* ---- Keyboard is a first-class input.
+     A page that cannot be navigated by keyboard is not finished, and a visible
+     focus ring is the cheapest craft signal on the whole site. ---- */
+  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:var(--radius); }
+  .btn-gold:focus-visible, .btn-coral:focus-visible{ outline-color:var(--white); outline-offset:4px; }
+  .hlmark:focus-visible{ outline:1px solid var(--gold-hi); outline-offset:2px; }
+
   @keyframes hlActivate{to{opacity:1;}}
   @keyframes hlBreathe{
     0%,100%{background:rgba(216,178,92,0.18); border-bottom-color:var(--gold);}
@@ -576,13 +652,13 @@
     color:var(--azure);
     border-left:2px solid var(--azure);
     box-shadow: 0 0 20px rgba(142,202,230,0.1);
-    animation:chipIn .5s var(--e-out) forwards 3s, verifyPulse 3s ease-in-out 4s infinite;
+    animation:chipIn .4s var(--e-out) forwards .95s, verifyPulse 3s ease-in-out 1.9s infinite;
   }
   .chip.risk{
     background:rgba(255,155,92,0.12);
     color:var(--coral-hi);
     border-left:2px solid var(--coral);
-    animation:chipIn .5s var(--e-out) forwards 3.4s;
+    animation:chipIn .4s var(--e-out) forwards 1.15s;
   }
   @keyframes verifyPulse{
     0%,100%{box-shadow:0 0 0 0 rgba(142,202,230,.5), 0 0 20px rgba(142,202,230,0.1);}
@@ -724,7 +800,7 @@
     position:absolute; inset:0;
     background:linear-gradient(100deg, transparent 15%, rgba(241,214,147,.22) 42%, rgba(255,255,255,.32) 50%, rgba(241,214,147,.22) 58%, transparent 85%);
     transform:translateX(-115%);
-    transition:transform var(--t-4) var(--e-out);
+    transition:transform .48s var(--e-out);
   }
   .build-card:hover .build-tag::after{transform:translateX(115%);}
   .build-card h3{font-size:19px; margin-bottom:12px; line-height:1.3; font-weight:700;}
@@ -763,7 +839,7 @@
     position:absolute; inset:0;
     background:linear-gradient(100deg, transparent 15%, rgba(255,255,255,.16) 42%, rgba(255,255,255,.26) 50%, rgba(255,255,255,.16) 58%, transparent 85%);
     transform:translateX(-115%);
-    transition:transform var(--t-4) var(--e-out) .05s;
+    transition:transform .48s var(--e-out) .04s;
   }
   .result-card:hover .result-vert::after{transform:translateX(115%);}
   .result-card h3{font-size:17px; margin-bottom:10px; line-height:1.35; font-weight:700;}
@@ -814,13 +890,13 @@
      CARD HOVER — Premium light-catching sheen
      ========================================================================== */
   .build-card, .result-card, .price-card{
-    transition:transform var(--t-3) var(--e-out), box-shadow var(--t-3) var(--e-out), border-color var(--t-3) var(--e-out);
+    transition:transform var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out);
   }
   .build-card::before, .result-card::before, .price-card::before{
     content:''; position:absolute; inset:0;
     background:linear-gradient(115deg, transparent 32%, rgba(255,255,255,.06) 46%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.06) 54%, transparent 68%);
     transform:translateX(-130%);
-    transition:transform var(--t-4) var(--e-out);
+    transition:transform .48s var(--e-out);
     pointer-events:none;
   }
   .build-card:hover, .result-card:hover, .price-card:hover{
@@ -1059,18 +1135,73 @@
     opacity:0;
     transition:opacity .6s var(--e-soft);
   }
-  .ambient-scan.past-hero{ opacity:0.17; }
-  .ambient-scan::before{
+  .ambient-scan.past-hero{ opacity:0.30; }
+
+  /* Two layers moving as one: a hard HEAD and the TRAIL it leaves behind.
+     A scanner has a leading edge and a decaying wake; a single line has neither,
+     which is why the old version read as a floating rule rather than a machine
+     passing over the page. Both are transform-only, so this costs one composited
+     layer each and no paint per frame. */
+  .ambient-scan::before,
+  .ambient-scan::after{
     content:'';
-    position:absolute; left:0; right:0; top:0; height:2px;
-    background:linear-gradient(90deg, transparent, var(--gold-hi) 18%, var(--gold-hi) 82%, transparent);
-    box-shadow:0 0 16px 2px rgba(241,214,147,.62), 0 0 42px 11px rgba(241,214,147,.15), 0 0 78px 22px rgba(241,214,147,.04);
-    will-change:transform;
-    animation:ambientSweep 8s ease-in-out infinite;
+    position:absolute; left:0; right:0; top:0;
+    will-change:transform, opacity;
+    /* linear: constant traverse velocity. Ease-in-out is a pendulum — it
+       accelerates and decelerates, which reads as breathing, not scanning. */
+    animation:ambientSweep 7.4s linear infinite;
   }
+  /* TRAIL — sits above the head and follows it down */
+  .ambient-scan::before{
+    height:180px; margin-top:-180px;
+    background:linear-gradient(to bottom,
+      transparent 0%,
+      rgba(241,214,147,.055) 45%,
+      rgba(241,214,147,.16)  78%,
+      rgba(241,214,147,.40)  100%);
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+            mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+  }
+  /* HEAD — the reading edge.
+     Three pixels, not two, so the beam can carry a hotter core than its own
+     edges. Instruments read as precise because the centre of the line is a
+     different temperature from its shoulders; a flat band reads as a rule
+     someone drew. The horizontal falloff moves to a mask so the vertical
+     gradient is free to carry the core. */
+  .ambient-scan::after{
+    height:3px;
+    background:linear-gradient(to bottom,
+      var(--scan-tint, #F1D693) 0%,
+      #FFFFFF 50%,
+      var(--scan-tint, #F1D693) 100%);
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+            mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+    box-shadow:0 0 14px 1px rgba(241,214,147,.66),
+               0 0 38px  9px rgba(241,214,147,.14),
+               0 0 70px 20px rgba(241,214,147,.035);
+  }
+
+  /* The scan takes the temperature of what it is passing over. The product
+     section is accented azure throughout; the beam agreeing with it — very
+     slightly — is the difference between an overlay on the page and a system
+     moving through it. */
+  .ambient-scan{ --scan-tint:#F1D693; transition:opacity .6s var(--e-soft); }
+  body.sec-build   .ambient-scan{ --scan-tint:#CFE3EE; }
+  body.sec-proof   .ambient-scan{ --scan-tint:#F1D693; }
+  body.sec-pricing .ambient-scan{ --scan-tint:#E4DCC6; }
+  body.sec-contact .ambient-scan{ --scan-tint:#FFE9B8; }
+
+  /* The cycle of an actual scanner: enter, traverse at constant speed, leave,
+     then a dark beat before the next pass. The retrace is invisible — the head
+     fades before it snaps back to the top — so the page never shows a line
+     travelling upward, which is the detail that made the old sweep read as a
+     decoration bouncing rather than a system reading. */
   @keyframes ambientSweep{
-    0%,100%{ transform:translateY(0); }
-    50%    { transform:translateY(100vh); }
+    0%    { transform:translateY(-4vh);  opacity:0; }
+    3%    { transform:translateY(0vh);   opacity:1; }
+    73%   { transform:translateY(97vh);  opacity:1; }
+    79%   { transform:translateY(104vh); opacity:0; }
+    100%  { transform:translateY(-4vh);  opacity:0; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -1208,8 +1339,8 @@ h1, h2, h3, .price-amount, .stat-num{
       <div class="fold-card dossier">
         <div class="scan-line" aria-hidden="true"></div>
         <div class="doc-head"><span class="doc-tag">CASE FILE</span><span>MSA_2024.pdf — p.12</span></div>
-        <p class="clause"><span class="clause-num">§4.2</span>Either party may terminate this Agreement upon <span class="hlmark h1">thirty (30) days written notice</span> if the other party materially breaches any provision and fails to cure such breach within the notice period.</p>
-        <p class="clause">Confidential Information shall remain protected for <span class="hlmark h2">five (5) years</span> following termination.</p>
+        <p class="clause"><span class="clause-num">§4.2</span>Either party may terminate this Agreement upon <span class="hlmark h1" tabindex="0" data-span="MSA_2024.pdf · p.12 · chars 1182–1317 · score 0.87">thirty (30) days written notice</span> if the other party materially breaches any provision and fails to cure such breach within the notice period.</p>
+        <p class="clause">Confidential Information shall remain protected for <span class="hlmark h2" tabindex="0" data-span="MSA_2024.pdf · p.14 · chars 2604–2661 · score 0.91">five (5) years</span> following termination.</p>
         <span class="chip verify">✓ Verified — MSA_2024.pdf, p.12</span>
         <span class="chip risk">⚠ Cure period shorter than your standard term</span>
       </div>
@@ -1607,6 +1738,147 @@ h1, h2, h3, .price-amount, .stat-num{
     /* a backgrounded tab should cost nothing at all */
     document.addEventListener('visibilitychange', () => { if(!document.hidden) wake(); });
     wake();
+  })();
+
+
+
+
+  /* ---------- AMBIENT ANIMATION GOVERNOR ----------
+     Twelve infinite animations were running for the life of the page, and nine
+     of them belong to the hero — which a reader passes in the first six seconds
+     and never sees again. Worse, most of them animate paint properties:
+     box-shadow (goldPulse, verifyPulse), text-shadow (citePulse), background
+     (hlBreathe), background-position across a whole section (watermarkDrift).
+     A composited transform is free; a repainting shadow is not, and it was being
+     repainted forever, off screen, for nobody.
+
+     This pauses each ambient loop when its own element leaves the viewport and
+     resumes it on the way back. It uses the Web Animations API rather than a CSS
+     class so that scroll-driven reveal animations are never touched — pausing
+     those would freeze the reveals. Runs only in IntersectionObserver callbacks:
+     no polling, no per-frame work. */
+  (function(){
+    const AMBIENT = new Set(['scanSweep','float','hlBreathe','citePulse',
+                             'goldPulse','verifyPulse','watermarkDrift']);
+    function wire(){
+      const byTarget = new Map();
+      document.getAnimations().forEach(a => {
+        if(!AMBIENT.has(a.animationName)) return;
+        const el = a.effect && a.effect.target;
+        if(!el || el.nodeType !== 1) return;                 /* skip pseudo targets */
+        if(!byTarget.has(el)) byTarget.set(el, []);
+        byTarget.get(el).push(a);
+      });
+      if(!byTarget.size) return;
+
+      /* A reader who asked for less motion should get less motion, not the same
+         motion running invisibly. Cancelling (rather than pausing) drops each
+         effect so the element falls back to its static CSS — the hero scan line
+         returns to opacity 0, the pulses to a fixed shadow. */
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+        byTarget.forEach(list => list.forEach(a => { try { a.cancel(); } catch(_){} }));
+        return;
+      }
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          const list = byTarget.get(e.target); if(!list) return;
+          list.forEach(a => { try { e.isIntersecting ? a.play() : a.pause(); } catch(_){} });
+        });
+      }, { rootMargin:'120px 0px' });
+      byTarget.forEach((_, el) => io.observe(el));
+      document.addEventListener('visibilitychange', () => {
+        byTarget.forEach(list => list.forEach(a => { try { document.hidden ? a.pause() : a.play(); } catch(_){} }));
+      });
+    }
+    /* wait until the entrance animations have been created and settled */
+    if(document.readyState === 'complete') setTimeout(wire, 1200);
+    else addEventListener('load', () => setTimeout(wire, 1200));
+  })();
+
+  /* ---------- ANCHOR NAVIGATION ----------
+     `scroll-behavior:smooth` hands the duration to the browser, which scales it
+     with distance: a jump from the hero to the footer takes well over a second
+     and the page feels like it is thinking. A fixed 460ms with an ease-in-out
+     covers any distance in the same time, which is what makes navigation feel
+     instant without being a teleport. */
+  (function(){
+    const OFFSET = 88, DUR = 460;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
+    document.addEventListener('click', e => {
+      const a = e.target.closest && e.target.closest('a[href^="#"]');
+      if(!a) return;
+      const id = a.getAttribute('href');
+      if(!id || id.length < 2) return;
+      const el = document.querySelector(id);
+      if(!el) return;
+      e.preventDefault();
+      const from = window.scrollY;
+      const to = Math.max(0, el.getBoundingClientRect().top + from - OFFSET);
+      if(reduce || Math.abs(to - from) < 4){ window.scrollTo(0, to); history.pushState(null, '', id); return; }
+      const t0 = performance.now();
+      (function step(now){
+        const p = Math.min(1, (now - t0) / DUR);
+        window.scrollTo(0, from + (to - from) * ease(p));
+        if(p < 1) requestAnimationFrame(step); else history.pushState(null, '', id);
+      })(t0);
+    }, { passive:false });
+  })();
+
+  /* ---------- SCAN RESONANCE ----------
+     The beam marks what it crosses. Three rules kept this cheap enough to leave
+     running: positions are measured in DOCUMENT coordinates once (and on resize),
+     so the hot path reads scrollY and never forces layout; the beam's phase comes
+     from the Web Animations API rather than a guessed clock, so the mark is
+     exactly under the line and not near it; and the timer only exists while the
+     beam is visible and the tab is in front. 12Hz, because the head travels
+     ~13px in that time and a highlight does not need frame precision. */
+  (function(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const scan = document.querySelector('.ambient-scan');
+    if(!scan) return;
+
+    const CYCLE = 7400, IN = 0.03, OUT = 0.73, SPAN = 0.97;  /* must match @keyframes ambientSweep */
+    let cards = [], timer = null, t0 = performance.now();
+
+    function measure(){
+      cards = Array.prototype.map.call(
+        document.querySelectorAll('.fold-card'),
+        el => { const r = el.getBoundingClientRect();
+                return { el, top:r.top + scrollY, bot:r.bottom + scrollY, lit:false }; });
+    }
+
+    function phase(){
+      if(scan.getAnimations){
+        const a = scan.getAnimations({subtree:true})
+                      .find(a => a.animationName === 'ambientSweep');
+        if(a && a.currentTime != null) return ((a.currentTime % CYCLE) + CYCLE) % CYCLE / CYCLE;
+      }
+      return ((performance.now() - t0) % CYCLE) / CYCLE;   /* fallback */
+    }
+
+    function clear(){ cards.forEach(c => { if(c.lit){ c.lit = false; c.el.classList.remove('is-scanned'); } }); }
+
+    function tick(){
+      const p = phase();
+      if(p < IN || p > OUT){ clear(); return; }            /* retrace + dark beat */
+      const y = (p - IN) / (OUT - IN) * SPAN * innerHeight + scrollY;
+      for(let i = 0; i < cards.length; i++){
+        const c = cards[i], hit = y >= c.top - 30 && y <= c.bot + 30;
+        if(hit !== c.lit){ c.lit = hit; c.el.classList.toggle('is-scanned', hit); }
+      }
+    }
+
+    function start(){ if(!timer){ measure(); timer = setInterval(tick, 80); } }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; clear(); } }
+
+    /* only while the beam is actually on screen and the tab is in front */
+    new MutationObserver(() => scan.classList.contains('past-hero') ? start() : stop())
+      .observe(scan, { attributes:true, attributeFilter:['class'] });
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : (scan.classList.contains('past-hero') && start()));
+    addEventListener('resize', () => { if(timer) measure(); }, { passive:true });
+    if(scan.classList.contains('past-hero')) start();
   })();
 
   /* ---------- Section grading ----------
