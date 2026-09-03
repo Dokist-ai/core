@@ -480,11 +480,11 @@
     bottom:-14px; right:16px;
     z-index:4;
     display:flex; align-items:center; gap:8px;
-    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.1em;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.07em;
     text-transform:uppercase; color:var(--mist);
     background:var(--navy-0);
-    border:1px solid var(--line);
-    padding:7px 14px;
+    border:1px solid rgba(38,56,92,1);
+    padding:9px 18px;
     border-radius:1px;
     opacity:0; transform:translateY(8px);
     animation:corpusTagIn .45s var(--e-out) forwards .75s;
@@ -642,6 +642,244 @@
     50%{background:rgba(216,178,92,0.32); border-bottom-color:var(--gold-hi); box-shadow:0 2px 16px rgba(241,214,147,0.15);}
   }
 
+
+  /* ==========================================================================
+     THE DOSSIER FLIP — two audiences, one card.
+
+     A sponsor reading this page wants to know what the system does. A CTO wants
+     Recall@3 with its sample size. Putting both on one face serves neither: the
+     numbers read as clutter to the first reader and as decoration to the second.
+
+     So the card turns over. The front is the product, unchanged. The back is an
+     evidence sheet — the same register as the hero dossier, because it is the
+     same object: a record, monospaced, ruled, with a run id and a corpus. Not a
+     dashboard widget. The number IS the graphic here; a thin progress bar was
+     the wrong instrument and read cheap against everything around it.
+
+     Flipping is deliberate — a labelled control, never hover. Nobody arrives at
+     the evidence by accident, which is the point.
+     ========================================================================== */
+  /* Perspective has to scale with the card. 1700px across a 1000px-wide card
+     swings a huge surface through space: the middle of the turn moves enormously
+     fast in screen space and reads as a snap, not a rotation. A longer focal
+     length flattens the arc and the motion becomes even. */
+  .rc-flip{ position:relative; perspective:2800px; }
+  .rc-flip.flagship{ perspective:5200px; }
+  /* promoted only while it is actually moving — a permanent will-change costs
+     memory for a layer that is static 99% of the time */
+  .rc-flip.is-flipping .rc-inner{ will-change:transform; }
+  .rc-flip.flagship{ grid-column:1 / -1; }
+  .rc-inner{
+    /* both faces occupy one grid cell, so the row takes the height of the
+       taller of the two. Absolute positioning would have clipped the evidence
+       sheet wherever the marketing copy happened to be shorter. */
+    display:grid; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .64s cubic-bezier(.38,.06,.18,1);
+  }
+  .rc-flip.is-flipped .rc-inner{ transform:rotateY(180deg); }
+  .rc-front, .rc-back{ backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+  .rc-front{ display:flex; flex-direction:column; }
+  .rc-front, .rc-back{
+    grid-area:1 / 1; cursor:pointer;
+    transition:opacity .64s cubic-bezier(.38,.06,.18,1);
+  }
+  .rc-back{ opacity:.35; }
+  .rc-flip.is-flipped .rc-front{ opacity:.35; }
+  .rc-flip.is-flipped .rc-back{ opacity:1; }
+  .rc-back{
+    transform:rotateY(180deg);
+    display:flex; flex-direction:column; padding:0;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.028), transparent 120px),
+      var(--navy-2);
+  }
+  /* same lining, both sides. A border that changes weight when the card turns
+     reads as two different objects. */
+  .rc-flip.flagship .rc-back{
+    border-color:var(--gold);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.03), transparent 130px),
+      var(--navy-4);
+  }
+  /* while a card is turned, its own accent leads */
+  /* two steps per system: --acc carries structure (rules, labels, the arrow),
+     --acc-hi is reserved for the result itself. One accent used for everything
+     flattens the sheet; the number has to be the brightest thing on it. */
+  .rc-flip         { --acc:#D8B25C; --acc-hi:#F1D693; --acc-rgb:216,178,92; }
+  .rc-flip.legal   { --acc:#8ECAE6; --acc-hi:#A8DCF0; --acc-rgb:142,202,230; }
+  .rc-flip.fin     { --acc:#D8B25C; --acc-hi:#F1D693; --acc-rgb:216,178,92; }
+  .rc-flip.flagship{ --acc:#FF9B5C; --acc-hi:#FFB183; --acc-rgb:255,155,92; }
+
+  /* The front had a void under the copy where the grid row stretched it to the
+     sheet's height. Filling it with the metric's NAME — not its value — tells a
+     sponsor the measurement exists without putting a number in front of someone
+     who did not ask for one, and doubles as the strongest hint that the card has
+     another side. */
+  .rc-hint{
+    margin-top:auto; padding-top:16px;
+    border-top:1px solid rgba(38,56,92,.7);
+    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--mist-dim);
+    transition:color var(--t-react) var(--e-out);
+  }
+  .rc-hint b{ color:var(--acc); font-weight:600; letter-spacing:.06em; }
+  .rc-flip:hover .rc-hint{ color:var(--mist); }
+
+
+  /* ==========================================================================
+     TWO BUGS THAT LOOKED LIKE ONE
+
+     1 · The hidden face still hit-tests. `backface-visibility:hidden` stops a
+         face being *drawn*, not being *hovered* — so with two cards stacked in
+         one grid cell the cursor alternated between them, each applying its own
+         hover state. That flicker is what read as the card flipping by itself.
+         Only the face you can actually see is interactive now.
+
+     2 · The hover lift moved the hit area. `.fold-card:hover` translates the
+         card up 4px; near an edge the card slides out from under the cursor,
+         hover is lost, it drops back, hover returns — an oscillation at frame
+         rate. On a card that also rotates in 3D it looks like a malfunction.
+         Flip cards keep their hover feedback but never move: colour and shadow
+         only, no geometry. Nothing on these cards moves unless you click it.
+     ========================================================================== */
+  .rc-back{ pointer-events:none; }
+  .rc-flip.is-flipped .rc-front{ pointer-events:none; }
+  .rc-flip.is-flipped .rc-back{ pointer-events:auto; }
+
+  .rc-flip .rc-front:hover{ transform:none; }
+  .rc-flip .rc-back:hover{ transform:rotateY(180deg); }
+
+  /* feedback without displacement, driven from the wrapper so both faces agree */
+  .rc-flip:hover .rc-front, .rc-flip:hover .rc-back{
+    border-color:rgba(147,160,184,.42);
+    box-shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 40px 80px -36px rgba(0,0,0,.7);
+  }
+  .rc-flip.flagship:hover .rc-front, .rc-flip.flagship:hover .rc-back{
+    border-color:var(--gold-hi);
+    box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 44px 88px -38px rgba(0,0,0,.75),
+               0 0 0 1px rgba(216,178,92,.12);
+  }
+
+  /* ---- the control ---- */
+  .rc-toggle{
+    position:absolute; top:20px; right:34px; z-index:4;
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.11em;
+    text-transform:uppercase; font-weight:600;
+    color:var(--mist); background:rgba(6,14,26,.5);
+    border:1px solid rgba(38,56,92,1); border-radius:20px;
+    padding:5px 11px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:7px;
+    transition:color var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out),
+               background var(--t-react) var(--e-out);
+  }
+  .rc-flip:hover .rc-toggle{ color:var(--acc); border-color:color-mix(in srgb, var(--acc) 40%, transparent); }
+  .rc-toggle:hover{ color:var(--acc); border-color:color-mix(in srgb, var(--acc) 55%, transparent);
+                    background:color-mix(in srgb, var(--acc) 8%, transparent); }
+  .rc-toggle i{ font-style:normal; transition:transform var(--t-react) var(--e-out); }
+  .rc-toggle .lb-b{ display:none; }
+  .rc-flip.is-flipped .rc-toggle .lb-a{ display:none; }
+  .rc-flip.is-flipped .rc-toggle .lb-b{ display:inline; }
+  .rc-flip.is-flipped .rc-toggle{ color:var(--acc); border-color:color-mix(in srgb, var(--acc) 45%, transparent); }
+  .rc-flip.is-flipped .rc-toggle i{ transform:rotate(180deg); }
+
+  /* ---- the evidence sheet ---- */
+  .ev{ padding:24px 28px 22px; display:flex; flex-direction:column; height:100%; }
+  .ev-head{
+    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.13em;
+    text-transform:uppercase; padding-bottom:11px; margin-bottom:16px;
+    border-bottom:1px solid rgba(38,56,92,.85);
+  }
+  .ev-head b{ color:var(--acc-hi); font-weight:600; text-shadow:0 0 16px rgba(var(--acc-rgb),.4); }
+  .ev-head span{ color:var(--mist-dim); letter-spacing:.04em; text-transform:none; }
+
+  .ev-metric{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.11em;
+    text-transform:uppercase; color:var(--mist); margin-bottom:2px;
+  }
+  .ev-metric em{ font-style:normal; color:var(--mist-dim); letter-spacing:.04em; text-transform:none; }
+
+  /* the number is the graphic */
+  .ev-move{ display:flex; align-items:center; gap:18px; margin:14px 0 2px; flex-wrap:wrap; }
+  .ev-n{ display:flex; flex-direction:column; gap:5px; }
+  /* Light, not bold. Weight 800 turned a measurement into a headline; a thin
+     face lets the glow do the work and reads as an instrument readout rather
+     than a shout. Thin strokes carry less light, so the bloom is stronger to
+     compensate — luminosity from the halo, not from the weight. */
+  .ev-n b{
+    font-family:'Inter',sans-serif; font-weight:400; letter-spacing:-.03em; line-height:.9;
+    font-size:36px; color:#7C8BA8;
+    font-variant-numeric:tabular-nums;
+  }
+  /* the result glows the way the scan head does — a hot core, a mid halo, a wide
+     bloom. One flat shadow reads as a drop shadow; three layers read as light. */
+  .ev-n.to b{
+    font-size:48px; font-weight:400; color:var(--acc-hi);
+    /* no white core — a white centre drags the hue out of the number and it
+       stops belonging to its system. The light is the accent's own colour. */
+    text-shadow:
+      0 0  8px rgba(var(--acc-rgb), .80),
+      0 0 22px rgba(var(--acc-rgb), .44),
+      0 0 50px rgba(var(--acc-rgb), .18);
+  }
+  .ev-n.to span{ color:var(--acc); opacity:.85; }
+  .ev-n span{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.13em;
+              text-transform:uppercase; color:var(--mist-dim); }
+  .ev-arrow{
+    flex:1 1 60px; min-width:52px; max-width:150px; height:1px; position:relative;
+    background:linear-gradient(90deg, rgba(109,124,153,.22), rgba(var(--acc-rgb),.55) 55%, var(--acc-hi));
+    box-shadow:0 0 10px rgba(var(--acc-rgb),.35);
+    align-self:center; margin-top:-8px;
+  }
+  .ev-arrow::after{
+    content:''; position:absolute; right:-1px; top:50%;
+    border-left:6px solid var(--acc-hi);
+    border-top:4px solid transparent; border-bottom:4px solid transparent;
+    transform:translateY(-50%);
+  }
+  .ev-delta{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+    color:var(--acc-hi); letter-spacing:.05em; align-self:center; margin-top:-8px;
+    padding:5px 11px; border-radius:20px;
+    background:rgba(var(--acc-rgb), .10);
+    border:1px solid rgba(var(--acc-rgb), .30);
+    text-shadow:0 0 14px rgba(var(--acc-rgb), .35);
+  }
+
+  .ev-facts{
+    /* a matrix, not a ragged wrap — an orphan fact hanging under three others
+       is the difference between a record and a leftover */
+    display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+    column-gap:26px; row-gap:15px; margin-top:auto; padding-top:16px;
+    border-top:1px solid rgba(38,56,92,.85);
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.09em; text-transform:uppercase;
+  }
+  .ev-facts div{ display:flex; flex-direction:column; gap:4px; color:var(--mist-dim); }
+  .ev-facts b{ color:var(--mist); font-weight:600; font-size:11.5px; letter-spacing:.04em; text-transform:none; }
+  .ev-note{
+    margin-top:24px; font-family:'Inter',sans-serif; font-size:11.5px; line-height:1.62;
+    color:var(--mist-dim); max-width:60ch;
+  }
+  .ev-note code{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--mist); }
+
+  /* the flagship is full width — give the record two columns instead of a
+     long measure floating in an empty half */
+  @media(min-width:900px){
+    .rc-flip.flagship .ev-facts{ grid-template-columns:repeat(4,max-content); column-gap:46px; }
+    .rc-flip.flagship .ev{ display:grid; grid-template-columns:1fr 1fr; column-gap:52px; }
+    .rc-flip.flagship .ev-head{ grid-column:1 / -1; }
+    .rc-flip.flagship .ev-metric{ grid-column:1; grid-row:2; }
+    .rc-flip.flagship .ev-move{ grid-column:1; grid-row:3; align-content:start; }
+    .rc-flip.flagship .ev-note{ grid-column:2; grid-row:2 / span 2; margin-top:0; align-self:center; max-width:none; }
+    .rc-flip.flagship .ev-facts{ grid-column:1 / -1; grid-row:4; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .rc-inner{ transition:none; }
+  }
+
   .chip{
     display:inline-flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:11px;
     padding:7px 12px; border-radius:var(--radius); margin:4px 6px 0 0; opacity:0; animation:chipIn .5s var(--e-out) forwards;
@@ -704,18 +942,18 @@
   .build-grid.reveal, .results-grid.reveal, .pricing-grid.reveal, .compare.reveal{
     opacity:1; transform:none; transition:none;
   }
-  .build-grid .build-card, .results-grid .result-card, .pricing-grid .price-card, .compare .compare-col{
+  .build-grid .build-card, .results-grid .rc-flip, .pricing-grid .price-card, .compare .compare-col{
     opacity:0; transform:translateY(20px);
     transition:opacity var(--t-3) var(--e-out), transform var(--t-3) var(--e-out);
   }
-  .build-grid.in .build-card, .results-grid.in .result-card, .pricing-grid.in .price-card, .compare.in .compare-col{
+  .build-grid.in .build-card, .results-grid.in .rc-flip, .pricing-grid.in .price-card, .compare.in .compare-col{
     opacity:1; transform:translateY(0);
   }
-  .build-grid.in .build-card:nth-child(2), .results-grid.in .result-card:nth-child(2),
+  .build-grid.in .build-card:nth-child(2), .results-grid.in .rc-flip:nth-child(2),
   .pricing-grid.in .price-card:nth-child(2), .compare.in .compare-col:nth-child(2){ transition-delay:.08s; }
-  .build-grid.in .build-card:nth-child(3), .results-grid.in .result-card:nth-child(3),
+  .build-grid.in .build-card:nth-child(3), .results-grid.in .rc-flip:nth-child(3),
   .pricing-grid.in .price-card:nth-child(3){ transition-delay:.16s; }
-  .results-grid.in .result-card:nth-child(4){ transition-delay:.24s; }
+  .results-grid.in .rc-flip:nth-child(4){ transition-delay:.24s; }
 
   @supports (animation-timeline: view()){
     .reveal{
@@ -733,7 +971,7 @@
     .build-grid.reveal, .results-grid.reveal, .pricing-grid.reveal, .compare.reveal{
       opacity:1; transform:none; animation:none;
     }
-    .build-grid .build-card, .results-grid .result-card,
+    .build-grid .build-card, .results-grid .rc-flip,
     .pricing-grid .price-card, .compare .compare-col{
       opacity:0; transform:translateY(28px);
       transition:none;
@@ -1095,7 +1333,7 @@
   /* ==========================================================================
      CORPUS COUNTER — Flash animation
      ========================================================================== */
-  .corpus-num{
+  .corpus-num{ font-size:13.5px;
     display:inline-block;
     min-width:2.2em;
     text-align:right;
@@ -1388,26 +1626,87 @@ h1, h2, h3, .price-amount, .stat-num{
       <p>What each one does, in plain terms — and the measurement behind it.</p>
     </div>
     <div class="results-grid reveal">
-      <div class="fold-card result-card flagship">
-        <div class="result-top"><span class="result-vert both">Legal &amp; Finance</span></div>
-        <span class="result-flag">★ Flagship project</span>
-        <h3>Due diligence agent for legal &amp; financial teams</h3>
-        <p>Reviews a full document set and drafts the due diligence report. Cut unsupported answers by more than half against its own first version, measured on a fixed benchmark set. About 4 seconds end to end. Harness and sample sizes are in the repo.</p>
+      <div class="rc-flip flagship">
+        <div class="rc-inner">
+          <div class="fold-card result-card flagship rc-front">
+            <div class="result-top"><span class="result-vert both">Legal &amp; Finance</span></div>
+            <span class="result-flag">★ Flagship project</span>
+            <h3>Due diligence agent for legal &amp; financial teams</h3>
+            <p>Reviews a full document set and drafts the due diligence report. Cut unsupported answers by more than half against its own first version, measured on a fixed benchmark set. About 4 seconds end to end.</p>
+            <div class="rc-hint"><span>Measured</span><b>Unsupported answers</b></div>
+          </div>
+          <div class="fold-card result-card flagship rc-back">
+            <div class="ev">
+              <div class="ev-head"><b>Evidence</b><span>evidence/eval_runs/2026‑08‑09</span></div>
+              <div class="ev-metric">Unsupported answers <em>· lower is better</em></div>
+              <div class="ev-move">
+                <div class="ev-n from"><b>31%</b><span>before tuning</span></div>
+                <div class="ev-arrow"></div>
+                <div class="ev-n to"><b>12%</b><span>after tuning</span></div>
+                <div class="ev-delta">▼ 19 pts</div>
+              </div>
+              <div class="ev-facts"><div><span>corpus</span><b>CUAD + EDGAR</b></div><div><span>cost / doc</span><b>≈ €0.023</b></div><div><span>end to end</span><b>≈ 4.2 s</b></div><div><span>ci gate</span><b>≤ 15%</b></div></div>
+              <p class="ev-note">Same question set, before and after; both configurations versioned, neither regenerated at read time. Roughly one claim in eight still lacks a clean span binding — flagged in the memo, never dropped. A system reporting 0% at this sample size would be reporting its own blind spot.</p>
+            </div>
+          </div>
+        </div>
+        <button class="rc-toggle" type="button" aria-expanded="false"><span class="lb-a">Evidence</span><span class="lb-b">Back</span><i>→</i></button>
       </div>
-      <div class="fold-card result-card">
-        <div class="result-top"><span class="result-vert legal">Legal</span></div>
-        <h3>Legal intelligence engine</h3>
-        <p>Answers questions across a whole contract library with every answer linked to its exact clause and page, and flags unusual or risky clauses so reviewers only look at what needs a second read. Retrieval is tuned on legal language specifically &mdash; the right clause lands in the top three results 83% of the time, up from 71% untuned.</p>
+      <div class="rc-flip legal">
+        <div class="rc-inner">
+          <div class="fold-card result-card rc-front">
+            <div class="result-top"><span class="result-vert legal">Legal</span></div>
+            <h3>Legal intelligence engine</h3>
+            <p>Answers questions across a whole contract library with every answer linked to its exact clause and page, and flags unusual or risky clauses so reviewers only look at what needs a second read. Retrieval is tuned on legal language specifically, so clauses that read alike but mean opposite things stop colliding.</p>
+            <div class="rc-hint"><span>Measured</span><b>Recall@3</b></div>
+          </div>
+          <div class="fold-card result-card rc-back">
+            <div class="ev">
+              <div class="ev-head"><b>Evidence</b><span>evidence/eval_runs/2026‑08‑09</span></div>
+              <div class="ev-metric">Recall@3 <em>· higher is better</em></div>
+              <div class="ev-move">
+                <div class="ev-n from"><b>0.71</b><span>baseline</span></div>
+                <div class="ev-arrow"></div>
+                <div class="ev-n to"><b>0.83</b><span>tuned</span></div>
+                <div class="ev-delta">▲ 0.12</div>
+              </div>
+              <div class="ev-facts"><div><span>corpus</span><b>CUAD · EDGAR · EUR‑Lex</b></div><div><span>index</span><b>2,438 docs</b></div><div><span>cost / query</span><b>≈ €0.002</b></div><div><span>ci gate</span><b>≥ 0.80</b></div></div>
+              <p class="ev-note">The load‑bearing null result: a rank‑8 LoRA on the generation side scored 0.81 faithfulness against plain RAG's 0.84 at n = 40 — inside the noise floor. RAG shipped at a quarter of the inference cost, and the work moved to retrieval, where the number above then moved.</p>
+            </div>
+          </div>
+        </div>
+        <button class="rc-toggle" type="button" aria-expanded="false"><span class="lb-a">Evidence</span><span class="lb-b">Back</span><i>→</i></button>
       </div>
-      <div class="fold-card result-card">
-        <div class="result-top"><span class="result-vert fin">Finance</span></div>
-        <h3>Research briefing agent</h3>
-        <p>Assembles a structured briefing from raw sources in seconds. Traced end to end, so every step of the agent&rsquo;s reasoning is inspectable.</p>
+      <div class="rc-flip fin">
+        <div class="rc-inner">
+          <div class="fold-card result-card rc-front">
+            <div class="result-top"><span class="result-vert fin">Finance</span></div>
+            <h3>Research briefing agent</h3>
+            <p>Assembles a structured briefing from raw sources in seconds. Traced end to end, so every step of the agent’s reasoning is inspectable.</p>
+            <div class="rc-hint"><span>Measured</span><b>Tool-call success</b></div>
+          </div>
+          <div class="fold-card result-card rc-back">
+            <div class="ev">
+              <div class="ev-head"><b>Evidence</b><span>evidence/eval_runs/ · LangSmith traces</span></div>
+              <div class="ev-metric">Tool‑call success <em>· live sources</em></div>
+              <div class="ev-move">
+                <div class="ev-n from"><b>—</b><span>no baseline</span></div>
+                <div class="ev-arrow"></div>
+                <div class="ev-n to"><b>94%</b><span>measured</span></div>
+                <div class="ev-delta">p95 1.8 s</div>
+              </div>
+              <div class="ev-facts"><div><span>tool calls</span><b>10 of 11</b></div><div><span>latency p50</span><b>720 ms</b></div><div><span>tests</span><b>14, all mocked</b></div><div><span>sources</span><b>5 of 6 returned</b></div></div>
+              <p class="ev-note">The remaining 6% is upstream rate limits and transient source failures — handled by degrading to a partial brief with a visible gap list, not eliminated. p95 is reported rather than the mean: a mean of 0.9 s hides a p99 of 14 s, and the p99 is what a user calls broken.</p>
+            </div>
+          </div>
+        </div>
+        <button class="rc-toggle" type="button" aria-expanded="false"><span class="lb-a">Evidence</span><span class="lb-b">Back</span><i>→</i></button>
       </div>
     </div>
+
     <div class="results-note reveal">
       <p><b class="coral-accent">3 reference systems</b> across legal and financial documents — each measured before and after tuning, on public corpora. No client deployments yet.</p>
-      <a href="https://github.com/pseudobarbie/DocumentLab.ai-Portfolio/tree/main" class="btn-ghost">See the code and the numbers</a>
+      <a href="https://github.com/Dokist-ai/core" class="btn-ghost">See the code and the numbers</a>
     </div>
   </div>
 </section>
@@ -1743,6 +2042,37 @@ h1, h2, h3, .price-amount, .stat-num{
 
 
 
+
+  /* ---------- CARD FLIP ---------- */
+  (function(){
+    /* the layer is promoted for the length of the turn and released after, so a
+       card that is sitting still costs nothing to keep on screen */
+    function turn(card, on){
+      if(!card) return;
+      card.classList.add('is-flipping');
+      card.classList.toggle('is-flipped', on);
+      card.querySelector('.rc-toggle').setAttribute('aria-expanded', on ? 'true' : 'false');
+      const inner = card.querySelector('.rc-inner');
+      const done = e => { if(e.target !== inner) return;
+        card.classList.remove('is-flipping'); inner.removeEventListener('transitionend', done); };
+      inner.addEventListener('transitionend', done);
+      setTimeout(() => card.classList.remove('is-flipping'), 900);   /* belt and braces */
+    }
+    document.addEventListener('click', e => {
+      const btn = e.target.closest && e.target.closest('.rc-toggle');
+      if(btn){ turn(btn.closest('.rc-flip'), !btn.closest('.rc-flip').classList.contains('is-flipped')); return; }
+      /* the whole card is the target. Requiring a hit on a 90px chip is a
+         discoverability failure: people click the card, nothing happens, and
+         they conclude it does not flip. Links and buttons inside still win. */
+      const face = e.target.closest && e.target.closest('.rc-front, .rc-back');
+      if(face && !e.target.closest('a, button')) turn(face.closest('.rc-flip'), face.classList.contains('rc-front'));
+    });
+    addEventListener('keydown', e => {
+      if(e.key !== 'Escape') return;
+      document.querySelectorAll('.rc-flip.is-flipped').forEach(c => turn(c, false));
+    });
+  })();
+
   /* ---------- AMBIENT ANIMATION GOVERNOR ----------
      Twelve infinite animations were running for the life of the page, and nine
      of them belong to the hero — which a reader passes in the first six seconds
@@ -1817,10 +2147,15 @@ h1, h2, h3, .price-amount, .stat-num{
       const from = window.scrollY;
       const to = Math.max(0, el.getBoundingClientRect().top + from - OFFSET);
       if(reduce || Math.abs(to - from) < 4){ window.scrollTo(0, to); history.pushState(null, '', id); return; }
+      /* the target is re-read each frame: sections reveal as you travel and the
+         document grows underneath you, so a position computed once at click time
+         lands short. ~28 layout reads for one navigation is a fair price for
+         landing on the heading instead of near it. */
       const t0 = performance.now();
       (function step(now){
         const p = Math.min(1, (now - t0) / DUR);
-        window.scrollTo(0, from + (to - from) * ease(p));
+        const live = Math.max(0, el.getBoundingClientRect().top + window.scrollY - OFFSET);
+        window.scrollTo(0, from + (live - from) * ease(p));
         if(p < 1) requestAnimationFrame(step); else history.pushState(null, '', id);
       })(t0);
     }, { passive:false });
