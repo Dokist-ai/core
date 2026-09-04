@@ -200,7 +200,10 @@
   .nav{display:flex; align-items:center; justify-content:space-between; padding:16px 36px; max-width:1180px; margin:0 auto; transition:padding var(--t-3) var(--e-out);}
   
   .brand{display:flex; align-items:center; gap:10px;}
-  .brand img{width:32px; height:32px; border-radius:6px; display:block; object-fit:contain;}
+  /* The mark is drawn, not loaded. At 32px a bitmap of this shape is mush on a
+     1x display and a network request on every visit; as geometry it is crisp at
+     any density, costs nothing, and can take the page's own gold. */
+  .brand-mark{ width:32px; height:32px; display:block; flex-shrink:0; border-radius:2px; }
     .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;}
     header .brand{position:relative;}
   /* Deep ambient halo — the logo feels like a warm light source */
@@ -231,14 +234,14 @@
     transition:opacity 0.15s var(--e-out);
     pointer-events:none; mix-blend-mode:overlay;
   }
-  header .brand img{
+  header .brand-mark{
     position:relative; z-index:1;
-    transition:transform 0.5s var(--e-out), filter 0.5s var(--e-out);
+    transition:transform var(--t-react) var(--e-out), filter var(--t-react) var(--e-out);
     filter:drop-shadow(0 2px 6px rgba(0,0,0,0.45));
   }
-  header .brand:hover img{
-    transform:scale(1.05) translateY(-1px);
-    filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35)) drop-shadow(0 0 28px rgba(216,178,92,0.18));
+  header .brand:hover .brand-mark{
+    transform:translateY(-1px);
+    filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35)) drop-shadow(0 0 22px rgba(216,178,92,0.22));
   }
   header .brand:hover::before{
     opacity:1;
@@ -1500,7 +1503,7 @@ body::after, body::before{
 }
 
 /* Images: never let a late-loading logo shift the header. */
-.brand img{ aspect-ratio:1/1; }
+.brand-mark{ aspect-ratio:1/1; }
 
 /* Long-form copy renders faster when the browser is allowed to optimise for
    throughput rather than per-glyph precision. */
@@ -1523,7 +1526,7 @@ h1, h2, h3, .price-amount, .stat-num{
 
 <header>
   <div class="nav">
-<div class="brand"><img src="logo.png" alt="DOKIST" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
+<div class="brand"><svg class="brand-mark" viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="DOKIST"><defs><linearGradient id="dkFace" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DDA4"/><stop offset=".55" stop-color="#E9CE8C"/><stop offset="1" stop-color="#DEC384"/></linearGradient><linearGradient id="dkFold" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#E6C271"/><stop offset="1" stop-color="#C8960C"/></linearGradient><clipPath id="dkClip"><rect x="0" y="0" width="58" height="59"/></clipPath></defs><rect x="5" y="5" width="58" height="59" fill="#F3E3BE" opacity=".86"/><rect x="0" y="0" width="58" height="59" fill="url(#dkFace)"/><path d="M0 0 H58 A58 58 0 0 1 0 58 Z" fill="url(#dkFold)" clip-path="url(#dkClip)"/></svg><span>DOKIST</span></div>
     <nav class="nav-links">
       <a href="#build">Product</a>
       <a href="#proof">Results</a>
@@ -1812,7 +1815,7 @@ h1, h2, h3, .price-amount, .stat-num{
 <footer>
   <div class="wrap">
     <div class="foot-row">
-<div class="brand"><img src="logo.png" alt="DOKIST" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
+<div class="brand"><svg class="brand-mark" viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="DOKIST"><defs><linearGradient id="dkFace" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4DDA4"/><stop offset=".55" stop-color="#E9CE8C"/><stop offset="1" stop-color="#DEC384"/></linearGradient><linearGradient id="dkFold" x1=".1" y1="0" x2=".9" y2="1"><stop offset="0" stop-color="#E6C271"/><stop offset="1" stop-color="#C8960C"/></linearGradient><clipPath id="dkClip"><rect x="0" y="0" width="58" height="59"/></clipPath></defs><rect x="5" y="5" width="58" height="59" fill="#F3E3BE" opacity=".86"/><rect x="0" y="0" width="58" height="59" fill="url(#dkFace)"/><path d="M0 0 H58 A58 58 0 0 1 0 58 Z" fill="url(#dkFold)" clip-path="url(#dkClip)"/></svg><span>DOKIST</span></div>
       <div class="foot-links">
         <a href="#build">Product</a>
         <a href="#proof">Results</a>
@@ -1851,15 +1854,7 @@ h1, h2, h3, .price-amount, .stat-num{
     });
   }
 
-  /* ---------- Logo fallback ---------- */
-  document.querySelectorAll('.brand img').forEach(img=>{
-    img.addEventListener('error', ()=>{
-      const mark = document.createElement('span');
-      mark.className = 'brand-mark-fallback';
-      mark.textContent = 'DL';
-      img.replaceWith(mark);
-    }, {once:true});
-  });
+  /* Logo fallback removed: the mark is inline SVG, so there is nothing to fail. */
 
   /* ---------- Count up stats ---------- */
   document.querySelectorAll('.count').forEach(el=>{
