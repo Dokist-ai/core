@@ -1871,11 +1871,27 @@ h1, h2, h3, .price-amount, .stat-num{
   /* ---------- Hero cursor-reactive glow ---------- */
   const heroEl = document.querySelector('.hero');
   if(heroEl && matchMedia('(hover:hover) and (pointer:fine)').matches){
+    /* A high-polling mouse fires mousemove far faster than the screen refreshes.
+       Reading the rect inside the handler forced a layout on EVERY one of those
+       events, and the two custom-property writes invalidated it again — read,
+       write, read, write, hundreds of times a second, all of it discarded before
+       the next paint. Cache the rect, invalidate it only when it can actually
+       change, and coalesce the writes into one rAF: at most one update lands per
+       frame, which is the most the display can show anyway. */
+    let hRect = null, hx = 0, hy = 0, hQueued = false;
+    const hPaint = ()=>{
+      hQueued = false;
+      if(!hRect) hRect = heroEl.getBoundingClientRect();
+      heroEl.style.setProperty('--mx', ((hx - hRect.left) / hRect.width * 100) + '%');
+      heroEl.style.setProperty('--my', ((hy - hRect.top) / hRect.height * 100) + '%');
+    };
     heroEl.addEventListener('mousemove', (e)=>{
-      const r = heroEl.getBoundingClientRect();
-      heroEl.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
-      heroEl.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
-    });
+      hx = e.clientX; hy = e.clientY;
+      if(!hQueued){ hQueued = true; requestAnimationFrame(hPaint); }
+    }, {passive:true});
+    const hInvalidate = ()=>{ hRect = null; };
+    addEventListener('scroll', hInvalidate, {passive:true});
+    addEventListener('resize', hInvalidate, {passive:true});
   }
 
   /* ---------- Logo fallback ----------
