@@ -5,6 +5,21 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27a%27%20x1%3D%270%27%20y1%3D%27.5%27%20x2%3D%271%27%20y2%3D%27.5%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23DFC88F%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23F0DDAD%27%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%27b%27%20x1%3D%270%27%20y1%3D%27.42%27%20x2%3D%271%27%20y2%3D%27.58%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23F1D693%27%2F%3E%3Cstop%20offset%3D%27.55%27%20stop-color%3D%27%23DDBC6E%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23CBA54D%27%2F%3E%3C%2FlinearGradient%3E%3CclipPath%20id%3D%27c%27%3E%3Crect%20width%3D%2758%27%20height%3D%2759%27%2F%3E%3C%2FclipPath%3E%3C%2Fdefs%3E%3Crect%20x%3D%275%27%20y%3D%275%27%20width%3D%2758%27%20height%3D%2759%27%20fill%3D%27%23F3E1B4%27%2F%3E%3Crect%20width%3D%2758%27%20height%3D%2759%27%20fill%3D%27url%28%23a%29%27%2F%3E%3Cpath%20d%3D%27M0%200H58A58%2058%200%200%201%200%2058Z%27%20fill%3D%27url%28%23b%29%27%20clip-path%3D%27url%28%23c%29%27%2F%3E%3C%2Fsvg%3E">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DOKIST — Legal & Financial Document Intelligence</title>
+<meta name="description" content="DOKIST builds AI systems that read your contracts and filings and answer questions instantly, with the exact clause and page attached. Legal &amp; financial document intelligence in FR, AR and EN.">
+<link rel="canonical" href="https://dokist.ai/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dokist.ai/">
+<meta property="og:title" content="DOKIST — Legal &amp; Financial Document Intelligence">
+<meta property="og:description" content="Turn document backlogs into cited, defensible answers. Ask your contracts and filings a question, get the exact clause and page back.">
+<meta property="og:image" content="https://dokist.ai/social-preview.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta property="og:image:alt" content="DOKIST — turn document backlogs into cited, defensible answers">
+<meta property="og:site_name" content="DOKIST">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DOKIST — Legal &amp; Financial Document Intelligence">
+<meta name="twitter:description" content="Turn document backlogs into cited, defensible answers.">
+<meta name="twitter:image" content="https://dokist.ai/social-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Font payload trimmed to weights actually used: Sora 700/800 (headings, brand),
@@ -205,6 +220,10 @@
      1x display and a network request on every visit; as geometry it is crisp at
      any density, costs nothing, and can take the page's own gold. */
   .brand-mark{ width:32px; height:32px; display:block; flex-shrink:0; border-radius:2px; }
+  /* File-driven mark: swap logo.png in the folder and the header follows.
+     Same box as the drawn fallback so nothing shifts if the file 404s. */
+  .brand-img{ width:32px; height:32px; display:block; flex-shrink:0; border-radius:2px;
+              object-fit:contain; }
     .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;}
     header .brand{position:relative;}
   /* Deep ambient halo — the logo feels like a warm light source */
@@ -235,12 +254,13 @@
     transition:opacity 0.15s var(--e-out);
     pointer-events:none; mix-blend-mode:overlay;
   }
-  header .brand-mark{
+  header .brand-mark, header .brand-img{
     position:relative; z-index:1;
     transition:transform var(--t-react) var(--e-out), filter var(--t-react) var(--e-out);
     filter:drop-shadow(0 2px 6px rgba(0,0,0,0.45));
   }
-  header .brand:hover .brand-mark{
+  header .brand:hover .brand-mark,
+  header .brand:hover .brand-img{
     transform:translateY(-1px);
     filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35)) drop-shadow(0 0 22px rgba(216,178,92,0.22));
   }
@@ -285,6 +305,9 @@
     transform:translateX(-120%);
     transition:transform .7s var(--e-out);
   }
+  /* .nav-links a (0,2,0) outranks .btn-gold (0,1,0), so the header CTA was
+     inheriting --mist and rendering at 1.31:1 on gold. Match the specificity. */
+  .nav-links a.btn-gold{ color:var(--navy-0); }
   .btn-gold:hover{
     background:var(--gold-hi); border-color:var(--gold-hi); transform:translateY(-2px);
     box-shadow: 0 10px 30px -8px rgba(216,178,92,0.35), 0 0 0 1px rgba(241,214,147,0.15);
@@ -1504,7 +1527,7 @@ body::after, body::before{
 }
 
 /* Images: never let a late-loading logo shift the header. */
-.brand-mark{ aspect-ratio:1/1; }
+.brand-mark, .brand-img{ aspect-ratio:1/1; }
 
 /* Long-form copy renders faster when the browser is allowed to optimise for
    throughput rather than per-glyph precision. */
@@ -1527,7 +1550,7 @@ h1, h2, h3, .price-amount, .stat-num{
 
 <header>
   <div class="nav">
-<div class="brand"><svg class="brand-mark" viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="DOKIST"><defs><linearGradient id="dkBh" x1="0" y1=".5" x2="1" y2=".5"><stop offset="0" stop-color="#DFC88F"/><stop offset="1" stop-color="#F0DDAD"/></linearGradient><linearGradient id="dkDh" x1="0" y1=".42" x2="1" y2=".58"><stop offset="0" stop-color="#F1D693"/><stop offset=".55" stop-color="#DDBC6E"/><stop offset="1" stop-color="#CBA54D"/></linearGradient><clipPath id="dkCh"><rect x="0" y="0" width="58" height="59"/></clipPath></defs><rect x="5" y="5" width="58" height="59" fill="#F3E1B4"/><rect x="0" y="0" width="58" height="59" fill="url(#dkBh)"/><path d="M0 0 H58 A58 58 0 0 1 0 58 Z" fill="url(#dkDh)" clip-path="url(#dkCh)"/></svg><span>DOKIST</span></div>
+<div class="brand"><img class="brand-img" src="logo.png" alt="DOKIST" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
     <nav class="nav-links">
       <a href="#build">Product</a>
       <a href="#proof">Results</a>
@@ -1816,7 +1839,7 @@ h1, h2, h3, .price-amount, .stat-num{
 <footer>
   <div class="wrap">
     <div class="foot-row">
-<div class="brand"><svg class="brand-mark" viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="DOKIST"><defs><linearGradient id="dkBf" x1="0" y1=".5" x2="1" y2=".5"><stop offset="0" stop-color="#DFC88F"/><stop offset="1" stop-color="#F0DDAD"/></linearGradient><linearGradient id="dkDf" x1="0" y1=".42" x2="1" y2=".58"><stop offset="0" stop-color="#F1D693"/><stop offset=".55" stop-color="#DDBC6E"/><stop offset="1" stop-color="#CBA54D"/></linearGradient><clipPath id="dkCf"><rect x="0" y="0" width="58" height="59"/></clipPath></defs><rect x="5" y="5" width="58" height="59" fill="#F3E1B4"/><rect x="0" y="0" width="58" height="59" fill="url(#dkBf)"/><path d="M0 0 H58 A58 58 0 0 1 0 58 Z" fill="url(#dkDf)" clip-path="url(#dkCf)"/></svg><span>DOKIST</span></div>
+<div class="brand"><img class="brand-img" src="logo.png" alt="DOKIST" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
       <div class="foot-links">
         <a href="#build">Product</a>
         <a href="#proof">Results</a>
@@ -1855,7 +1878,18 @@ h1, h2, h3, .price-amount, .stat-num{
     });
   }
 
-  /* Logo fallback removed: the mark is inline SVG, so there is nothing to fail. */
+  /* ---------- Logo fallback ----------
+     The header logo is an external file (logo.png). If it is missing, renamed or
+     still uploading, draw the mark inline instead so the brand never renders
+     as a broken-image icon. */
+  document.querySelectorAll('.brand .brand-img').forEach((img, i)=>{
+    img.addEventListener('error', ()=>{
+      const sfx = 'fb' + i;
+      const wrap = document.createElement('span');
+      wrap.innerHTML = `<svg class="brand-mark" viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="DOKIST"><defs><linearGradient id="dkB${sfx}" x1="0" y1=".5" x2="1" y2=".5"><stop offset="0" stop-color="#DFC88F"/><stop offset="1" stop-color="#F0DDAD"/></linearGradient><linearGradient id="dkD${sfx}" x1="0" y1=".42" x2="1" y2=".58"><stop offset="0" stop-color="#F1D693"/><stop offset=".55" stop-color="#DDBC6E"/><stop offset="1" stop-color="#CBA54D"/></linearGradient><clipPath id="dkC${sfx}"><rect x="0" y="0" width="58" height="59"/></clipPath></defs><rect x="5" y="5" width="58" height="59" fill="#F3E1B4"/><rect x="0" y="0" width="58" height="59" fill="url(#dkB${sfx})"/><path d="M0 0 H58 A58 58 0 0 1 0 58 Z" fill="url(#dkD${sfx})" clip-path="url(#dkC${sfx})"/></svg>`;
+      img.replaceWith(wrap.firstElementChild);
+    }, {once:true});
+  });
 
   /* ---------- Count up stats ---------- */
   document.querySelectorAll('.count').forEach(el=>{
