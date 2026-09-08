@@ -1,0 +1,13 @@
+Step 4 — Wire the MCP call between Due Diligence Agent and Legal Intelligence Engine first.
+You likely already have this working per your ADR-007 ("Engine exposed via MCP, not imported"). Point run_pipeline.py's first call at the real MCP server instead of a mock. One real connection is more valuable than three mocked ones.
+
+Step 5 — Add the Research Briefing Agent call once the first connection works.
+Same pattern — swap the mock for the real tool call once Step 4 is solid. Now two of three legs are real.
+
+Step 6 — Add an evidence/ entry once you have one full real run.
+Same convention as your other systems: a timestamped run under evidence/eval_runs/<date>/ with the real output, so this demo inherits the same "traced to a raw run" credibility as everything else in core.
+
+Step 7 — Only then, build the actual front-end demo.
+Once run_pipeline.py genuinely works end-to-end on at least one sample, record a screen capture of it running (fastest path) or wire a minimal web form to it (more work, more impressive). Either way, this becomes the primary video/interactive demo on your landing page, with the three demos/ videos linked below as "explore each component."
+
+Each step leaves you with something committable and demo-able even if you stop partway — Step 2 alone already gives you a "here's the vision" artifact for the README, before a line of orchestration code runs for real.
