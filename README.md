@@ -12,6 +12,7 @@
   <img src="https://img.shields.io/badge/docker-ready-0c1a2e?style=flat-square&logo=docker" alt="Docker"/>
   <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
   <img src="https://img.shields.io/badge/corpus-EN%20%C2%B7%20AR%20%C2%B7%20FR-0c1a2e?style=flat-square" alt="Corpus languages: English, Arabic, French"/>
+  <img src="https://img.shields.io/badge/rust-memory--safe-0c1a2e?style=flat-square&logo=rust" alt="Rust"/>
 </p>
 
 # DOKIST
