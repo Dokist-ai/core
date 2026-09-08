@@ -1,1 +1,0 @@
-Public demonstration: This repository includes a minimal Rust implementation illustrating the memory-safe text-processing boundary used in DOKIST. Production parsing and normalization logic remains in the private core repository.
