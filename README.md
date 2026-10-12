@@ -17,8 +17,8 @@
 
 # DOKIST
 
-**RAG systems, LLM agents, and evaluation harnesses for legal and financial documents.**
-Three systems, one niche, every claim traced to a raw run in `evidence/`.
+**Reference demos and evaluation methodology for legal & financial document intelligence. Production systems are private..** 
+Three systems, one mission, every claim traced to a raw run in `evidence/`.
 
 > **These are public reference systems, not client deployments.** The repository showcases DOKIST's architecture, evaluation methodology, and demonstrations. Production implementations, proprietary workflows, prompts, datasets, and infrastructure are maintained separately in private repositories. Built on public corpora (CUAD, EDGAR, EUR-Lex) and benchmarked before and after tuning. Sample sizes, definitions and caveats: **[docs/METHODOLOGY.md](docs/METHODOLOGY.md)**
 
