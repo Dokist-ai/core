@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Legal Intelligence Engine: RAG Systems for Legal and Financial Documents"
+authors:
+  - name: "Dokist"
+repository-code: "https://github.com/dokist-ai/core"
+url: "https://dokist-ai.github.io/core/"
+license: MIT
+date-released: 2026-08-10
