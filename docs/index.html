@@ -2,2351 +2,450 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27a%27%20x1%3D%270%27%20y1%3D%27.5%27%20x2%3D%271%27%20y2%3D%27.5%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23DFC88F%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23F0DDAD%27%2F%3E%3C%2FlinearGradient%3E%3ClinearGradient%20id%3D%27b%27%20x1%3D%270%27%20y1%3D%27.42%27%20x2%3D%271%27%20y2%3D%27.58%27%3E%3Cstop%20offset%3D%270%27%20stop-color%3D%27%23F1D693%27%2F%3E%3Cstop%20offset%3D%27.55%27%20stop-color%3D%27%23DDBC6E%27%2F%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23CBA54D%27%2F%3E%3C%2FlinearGradient%3E%3CclipPath%20id%3D%27c%27%3E%3Crect%20width%3D%2758%27%20height%3D%2759%27%2F%3E%3C%2FclipPath%3E%3C%2Fdefs%3E%3Crect%20x%3D%275%27%20y%3D%275%27%20width%3D%2758%27%20height%3D%2759%27%20fill%3D%27%23F3E1B4%27%2F%3E%3Crect%20width%3D%2758%27%20height%3D%2759%27%20fill%3D%27url%28%23a%29%27%2F%3E%3Cpath%20d%3D%27M0%200H58A58%2058%200%200%201%200%2058Z%27%20fill%3D%27url%28%23b%29%27%20clip-path%3D%27url%28%23c%29%27%2F%3E%3C%2Fsvg%3E">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOKIST — Legal & Financial Document Intelligence</title>
-<meta name="description" content="DOKIST builds AI systems that read your contracts and filings and answer questions instantly, with the exact clause and page attached. Legal &amp; financial document intelligence in FR, AR and EN.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DOKIST — Legal &amp; financial document intelligence</title>
+<meta name="description" content="DOKIST builds AI systems that read your contracts and filings and answer with the exact clause and page attached.">
 <link rel="canonical" href="https://dokist.ai/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dokist.ai/">
-<meta property="og:title" content="DOKIST — Legal &amp; Financial Document Intelligence">
+<meta property="og:site_name" content="DOKIST">
+<meta property="og:title" content="DOKIST — Legal &amp; financial document intelligence">
 <meta property="og:description" content="Turn document backlogs into cited, defensible answers. Ask your contracts and filings a question, get the exact clause and page back.">
 <meta property="og:image" content="https://dokist.ai/social-preview.png">
 <meta property="og:image:width" content="1280">
 <meta property="og:image:height" content="640">
-<meta property="og:image:alt" content="DOKIST — turn document backlogs into cited, defensible answers">
-<meta property="og:site_name" content="DOKIST">
+<meta property="og:image:alt" content="DOKIST: turn document backlogs into cited, defensible answers">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DOKIST — Legal &amp; Financial Document Intelligence">
-<meta name="twitter:description" content="Turn document backlogs into cited, defensible answers.">
+<meta name="twitter:title" content="DOKIST — Legal &amp; financial document intelligence">
 <meta name="twitter:image" content="https://dokist.ai/social-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Font payload trimmed to weights actually used: Sora 700/800 (headings, brand),
-     Inter 400/500/600/700 (UI + body), IBM Plex Mono 500/600 (labels, exhibit tags).
-     Dropped Sora 400/600 and Mono 400 — four fewer files, ~60KB less over the wire,
-     and four fewer render-blocking round trips before first paint. -->
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap"></noscript>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
 <style>
-  :root{
-    --navy-0:#060e1a;
-    --navy-1:#0a1525;
-    --navy-2:#0f1f38;
-    --navy-3:#15294a;
-    --navy-4:#1d3357;
-    --line:#26385C;
-    --white:#F4F6FA;
-    --mist:#93A0B8;
-    --mist-dim:#5E6C88;
-    --gold:#D8B25C;
-    --gold-hi:#F1D693;
-    --gold-dim:#B8943F;
-    --coral:#FF9B5C;
-    --coral-hi:#FFB183;
-    --azure:#8ECAE6;
-    --azure-soft:rgba(142,202,230,0.10);
-    --radius:2px;
-    --ink:#070E1A;
-
-    /* Refined motion system — tighter, more expensive curves */
-    --e-out:cubic-bezier(.16,1,.3,1);
-    --e-inout:cubic-bezier(.65,0,.35,1);
-    --e-soft:cubic-bezier(.33,.9,.28,1);
-    --e-spring:cubic-bezier(.34,1.56,.64,1);
-    --e-dramatic:cubic-bezier(.87,0,.13,1);
-    --t-1:.14s;
-    --t-2:.28s;
-    --t-3:.52s;
-    --t-4:.85s;
-    --t-5:1.4s;
-    --stagger:60ms;
-    /* Motion has two jobs and they need different clocks. Ambient and entrance
-       motion can be luxurious; INTERACTIVE FEEDBACK cannot. A hover that takes
-       half a second to resolve reads as lag, not elegance — the hand has already
-       moved on. Feedback answers in --t-react; atmosphere keeps --t-3/--t-4. */
-    --t-react:.17s;
-  }
-  *{box-sizing:border-box; margin:0; padding:0;}
-  html{
-    scroll-behavior:auto;   /* driven in JS — see ANCHOR NAVIGATION */
-    scroll-padding-top:88px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(38,56,92,0.4) transparent;
-    font-size:16px;
-  }
-  body{
-    margin:0;
-    background:var(--navy-1);
-    color:var(--white);
-    font-family:'Inter',sans-serif;
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    position:relative;
-    overflow-x:hidden;
-  }
-
-  /* Premium film-grain — finer, more subtle */
-  body::after{
-    content:'';
-    position:fixed; inset:0; z-index:999; pointer-events:none;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    opacity:.028;
-    mix-blend-mode:overlay;
-  }
-
-  /* Vignette — draws eye to center */
-  body::before{
-    content:'';
-    position:fixed; inset:0; z-index:998; pointer-events:none;
-        background:radial-gradient(ellipse at 50% 40%, transparent 35%, rgba(6,14,26,0.5) 100%);
-    opacity:.75;
-  }
-
-  /* Premium scrollbar */
-  ::-webkit-scrollbar{width:4px;}
-  ::-webkit-scrollbar-track{background:transparent;}
-  ::-webkit-scrollbar-thumb{background:rgba(38,56,92,0.45); border-radius:10px;}
-  ::-webkit-scrollbar-thumb:hover{background:var(--gold);}
-  @media(prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
-  }
-  h1,h2,h3,h4{
-    font-family:'Sora',sans-serif;
-    font-weight:700;
-    margin:0;
-    color:var(--white);
-    letter-spacing:-0.02em;
-  }
-  .mono{font-family:'IBM Plex Mono',monospace; font-variant-numeric:tabular-nums;}
-  a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 36px;}
-  ::selection{
-    background:var(--gold-hi);
-    color:var(--navy-0);
-    text-shadow: 0 1px 0 rgba(0,0,0,0.05);
-  }
-  :focus-visible{
-    outline:2px solid var(--gold-hi);
-    outline-offset:3px;
-    box-shadow: 0 0 0 4px rgba(241,214,147,0.12);
-  }
-
-  /* ==========================================================================
-     FOLD CARD — Premium document silhouette signature
-     ========================================================================== */
-  .fold-card{
-    position:relative;
-    background:var(--navy-3);
-    border:1px solid var(--line);
-    clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
-    box-shadow: 0 1px 0 rgba(255,255,255,.025) inset, 0 28px 56px -32px rgba(0,0,0,.6);
-    transition:transform var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out);
-    overflow:hidden;
-  }
-  /* SCANNED — a card the beam has just crossed.
-     The product's whole claim is that it reads a document and marks what it
-     found. A scan that passes over the page changing nothing is a screensaver;
-     one that leaves a mark behind it is the thing this company sells. The mark
-     is deliberately small — an edge warming and cooling over a second — because
-     the moment it becomes a flash it stops reading as instrumentation. */
-  .fold-card.is-scanned{
-    border-color:rgba(184,148,63,.62);
-    box-shadow:0 1px 0 rgba(255,255,255,.025) inset,
-               0 28px 56px -32px rgba(0,0,0,.6),
-               0 0 0 1px rgba(216,178,92,.10);
-  }
-  /* Warms in fast, cools out on the card's own slower base transition —
-     asymmetric, the way a reading indicates a hit and then releases it. */
-  .fold-card.is-scanned{ transition:border-color .16s linear, box-shadow .16s linear; }
-
-  .fold-card::after{
-    content:'';
-    position:absolute; top:0; right:0; width:24px; height:24px;
-    background:linear-gradient(135deg, var(--gold-hi), var(--gold));
-    clip-path:polygon(0 0, 100% 0, 100% 100%);
-    z-index:2;
-    box-shadow: -2px 2px 8px rgba(216,178,92,0.2);
-  }
-  .fold-card:hover{
-    transform:translateY(-4px);
-    border-color:rgba(147,160,184,.4);
-    box-shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 40px 80px -36px rgba(0,0,0,.7);
-  }
-
-  /* Light sheen on hover — premium surface interaction */
-  .fold-card::before{
-    content:'';
-    position:absolute; inset:-40%;
-    background:linear-gradient(112deg,
-      transparent 38%,
-      rgba(244,246,250,.06) 47%,
-      rgba(241,214,147,.05) 52%,
-      transparent 62%);
-    transform:translateX(-65%);
-    transition:transform 1.2s var(--e-out), opacity var(--t-3) var(--e-out);
-    opacity:0;
-    pointer-events:none;
-    z-index:0;
-  }
-  .fold-card:hover::before{ transform:translateX(65%); opacity:1; }
-
-  /* ==========================================================================
-     HEADER — Condenses on scroll, glass morphism
-     ========================================================================== */
-  header{
-    position:sticky; top:0; z-index:90;
-    background:rgba(6,14,26,0.82);
-    backdrop-filter:blur(16px) saturate(1.3);
-    -webkit-backdrop-filter:blur(16px) saturate(1.3);
-    border-bottom:1px solid rgba(38,56,92,0.5);
-    transition:background var(--t-3) var(--e-out), box-shadow var(--t-3) var(--e-out), border-color var(--t-3) var(--e-out);
-  }
-  header.is-condensed{
-    background:rgba(4,11,22,0.94);
-    backdrop-filter:blur(22px) saturate(1.45);
-    -webkit-backdrop-filter:blur(22px) saturate(1.45);
-    box-shadow:0 20px 50px -32px rgba(0,0,0,.95);
-    border-color:rgba(38,56,92,0.35);
-  }
-  .nav{display:flex; align-items:center; justify-content:space-between; padding:16px 36px; max-width:1180px; margin:0 auto; transition:padding var(--t-3) var(--e-out);}
-  
-  .brand{display:flex; align-items:center; gap:10px;}
-  /* The mark is drawn, not loaded. At 32px a bitmap of this shape is mush on a
-     1x display and a network request on every visit; as geometry it is crisp at
-     any density, costs nothing, and can take the page's own gold. */
-  .brand-mark{ width:32px; height:32px; display:block; flex-shrink:0; border-radius:2px; }
-  /* File-driven mark: swap logo.png in the folder and the header follows.
-     Same box as the drawn fallback so nothing shifts if the file 404s. */
-  .brand-img{ width:32px; height:32px; display:block; flex-shrink:0; border-radius:2px;
-              object-fit:contain; }
-    .brand span{font-family:'Sora',sans-serif; font-weight:700; font-size:15.5px; letter-spacing:.085em; color:#E5E3DC;}
-    header .brand{position:relative;}
-  /* Deep ambient halo — the logo feels like a warm light source */
-    header .brand{position:relative;}
-  /* Perfectly centered warm backlight — appears on hover */
-  header .brand::before{
-    content:''; position:absolute; left:16px; top:16px;
-    width:72px; height:72px; border-radius:20px; pointer-events:none; z-index:-1;
-    background:radial-gradient(circle at 40% 40%, rgba(241,214,147,0.45), rgba(216,178,92,0.15) 50%, transparent 75%);
-    filter:blur(20px);
-    opacity:0;
-    transform:translate(-50%,-50%) scale(0.85);
-    transition:opacity 0.55s var(--e-out), transform 0.55s var(--e-out);
-  }
-  /* Surface specular sweep — the "polished metal" flash */
-  header .brand::after{
-    content:''; position:absolute; left:0; top:0; width:32px; height:32px; border-radius:6px;
-    background:linear-gradient(115deg, 
-      transparent 32%, 
-      rgba(255,255,255,0.03) 47%, 
-      rgba(241,214,147,0.28) 50%, 
-      rgba(255,255,255,0.03) 53%, 
-      transparent 68%
-    );
-    background-size:300% 300%;
-    background-position:250% 250%;
-    opacity:0;
-    transition:opacity 0.15s var(--e-out);
-    pointer-events:none; mix-blend-mode:overlay;
-  }
-  header .brand-mark, header .brand-img{
-    position:relative; z-index:1;
-    transition:transform var(--t-react) var(--e-out), filter var(--t-react) var(--e-out);
-    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.45));
-  }
-  header .brand:hover .brand-mark,
-  header .brand:hover .brand-img{
-    transform:translateY(-1px);
-    filter:drop-shadow(0 4px 14px rgba(0,0,0,0.35)) drop-shadow(0 0 22px rgba(216,178,92,0.22));
-  }
-  header .brand:hover::before{
-    opacity:1;
-    transform:translate(-50%,-50%) scale(1);
-  }
-  header .brand:hover::after{
-    opacity:1;
-    animation:specularSweep 0.55s var(--e-out) forwards;
-  }
-  .brand-mark-fallback{
-    width:32px; height:32px; border-radius:6px; flex-shrink:0;
-    background:linear-gradient(135deg, var(--navy-4), var(--navy-2));
-    border:1px solid var(--gold);
-    color:var(--gold-hi); font-family:'Sora',sans-serif; font-weight:800; font-size:12.5px;
-    display:flex; align-items:center; justify-content:center; letter-spacing:-0.02em;
-  }
-  .nav-links{display:flex; gap:32px; align-items:center;}
-  .nav-links a{font-size:14px; text-decoration:none; color:var(--mist); transition:color var(--t-1) var(--e-out), text-shadow var(--t-2) var(--e-out); position:relative;}
-  .nav-links a:hover{color:var(--gold-hi); text-shadow:0 0 16px rgba(241,214,147,0.3);}
-
-  /* Underline grow from origin */
-  .nav-links a:not(.btn-gold)::after{
-    content:''; position:absolute; left:0; right:0; bottom:-5px; height:1px;
-    background:var(--gold-hi); transform:scaleX(0); transform-origin:0 50%;
-    transition:transform var(--t-2) var(--e-out);
-  }
-  .nav-links a:not(.btn-gold):hover::after{ transform:scaleX(1); }
-
-  /* Gold CTA */
-  .btn-gold{
-    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
-    padding:12px 24px; border:1px solid var(--gold); background:var(--gold); color:var(--navy-0);
-    text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
-    transition:background var(--t-react) var(--e-out), color var(--t-react) var(--e-out), transform var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out);
-    position:relative; overflow:hidden;
-  }
-  .btn-gold::before{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.25) 45%, rgba(255,255,255,.35) 50%, rgba(255,255,255,.25) 55%, transparent 80%);
-    transform:translateX(-120%);
-    transition:transform .7s var(--e-out);
-  }
-  /* .nav-links a (0,2,0) outranks .btn-gold (0,1,0), so the header CTA was
-     inheriting --mist and rendering at 1.31:1 on gold. Match the specificity. */
-  .nav-links a.btn-gold{ color:var(--navy-0); }
-  .btn-gold:hover{
-    background:var(--gold-hi); border-color:var(--gold-hi); transform:translateY(-2px);
-    box-shadow: 0 10px 30px -8px rgba(216,178,92,0.35), 0 0 0 1px rgba(241,214,147,0.15);
-  }
-  .btn-gold:hover::before{transform:translateX(120%);}
-  .btn-gold:active{transform:translateY(1px) scale(.985); transition-duration:var(--t-1);}
-
-  /* Coral CTA */
-  .btn-coral{
-    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
-    padding:12px 24px; border:1px solid var(--coral); background:var(--coral); color:var(--navy-0);
-    text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
-    transition:background var(--t-react) var(--e-out), color var(--t-react) var(--e-out), transform var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out);
-    position:relative; overflow:hidden;
-  }
-  .btn-coral::before{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 20%, rgba(255,255,255,.2) 45%, rgba(255,255,255,.3) 50%, rgba(255,255,255,.2) 55%, transparent 80%);
-    transform:translateX(-120%);
-    transition:transform .7s var(--e-out);
-  }
-  .btn-coral:hover{
-    background:var(--coral-hi); border-color:var(--coral-hi); transform:translateY(-2px);
-    box-shadow: 0 10px 30px -8px rgba(255,155,92,0.35), 0 0 0 1px rgba(255,177,131,0.15);
-  }
-  .btn-coral:hover::before{transform:translateX(120%);}
-  .btn-coral:active{transform:translateY(1px) scale(.985); transition-duration:var(--t-1);}
-
-  /* Ghost button */
-  .btn-ghost{
-    font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; letter-spacing:.01em;
-    padding:12px 24px; border:1px solid var(--line); background:transparent; color:var(--white);
-    text-decoration:none; display:inline-block; border-radius:var(--radius); cursor:pointer;
-    transition:background var(--t-react) var(--e-out), color var(--t-react) var(--e-out), transform var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out);
-  }
-  .btn-ghost:hover{
-    border-color:var(--azure); background:rgba(142,202,230,0.07); color:var(--azure);
-    box-shadow: 0 0 24px rgba(142,202,230,0.12);
-    transform:translateY(-1px);
-  }
-  .btn-ghost:active{transform:translateY(1px) scale(.985); transition-duration:var(--t-1);}
-
-  @media(max-width:760px){ .nav-links a:not(.btn-gold){display:none;} }
-
-  /* ==========================================================================
-     HERO — Dramatic lighting, enhanced dossier
-     ========================================================================== */
-  .hero{ content-visibility:visible; contain-intrinsic-size:none;
-    position:relative; overflow:hidden;
-    padding:52px 0 96px;
-    border-bottom:1px solid var(--line);
-    --mx:50%; --my:20%;
-        background:
-      radial-gradient(900px 600px at 72% 5%, rgba(216,178,92,0.18), transparent 62%),
-      radial-gradient(500px 400px at 98% 35%, rgba(255,155,92,0.05), transparent 55%),
-      radial-gradient(800px 600px at 12% 88%, rgba(142,202,230,0.02), transparent 50%),
-      var(--navy-0);
-  }
-  .hero::before{
-    content:''; position:absolute; inset:0; pointer-events:none;
-    background:radial-gradient(500px 500px at var(--mx) var(--my), rgba(241,214,147,0.06), transparent 70%);
-    opacity:0; transition:opacity var(--t-4) var(--e-soft);
-  }
-  @media(hover:hover) and (pointer:fine){ .hero:hover::before{opacity:1;} }
-
-  /* Atmospheric scan lines — occasional horizontal sweep */
-  .hero::after{
-    content:''; position:absolute; inset:0; pointer-events:none; z-index:1;
-    background:repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(142,202,230,0.015) 2px, rgba(142,202,230,0.015) 3px);
-    opacity:.5;
-  }
-
-  .hero-grid{position:relative; display:grid; grid-template-columns:1fr 1.08fr; gap:60px; align-items:center; z-index:2;}
-  @media(max-width:920px){ .hero-grid{grid-template-columns:1fr; gap:48px;} }
-
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
-    color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:24px;
-    font-weight:500;
-  }
-  .eyebrow::before{content:''; width:20px; height:1px; background:var(--gold);}
-  .hero .eyebrow::before{
-    width:0;
-    animation:eyebrowDraw .5s ease forwards .12s, goldPulse 3.5s ease-in-out 2.2s infinite;
-  }
-  @keyframes eyebrowDraw{to{width:20px;}}
-  @keyframes goldPulse{
-    0%,100%{opacity:1; box-shadow:0 0 0 0 rgba(216,178,92,0);}
-    50%{opacity:0.8; box-shadow:0 0 10px 2px rgba(216,178,92,0.25);}
-  }
-
-  .hero h1{font-size:clamp(40px,5.8vw,72px); line-height:1.02; margin-bottom:26px; letter-spacing:-0.03em; font-weight:800;}
-  .hero h1 .hl{
-    color:var(--gold-hi);
-    text-shadow:0 0 30px rgba(241,214,147,.4), 0 0 60px rgba(241,214,147,.15);
-    position:relative;
-  }
-
-
-  .hero p.lede{font-size:17.5px; color:var(--mist); max-width:38ch; margin-bottom:32px; line-height:1.65; font-weight:400;}
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:32px;}
-  .hero-stats{display:flex; gap:32px; flex-wrap:wrap; border-top:1px solid var(--line); padding-top:22px;}
-  .hero-stats div{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mist); font-variant-numeric:tabular-nums;}
-  .hero-stats b{color:var(--white); font-weight:600;}
-
-  /* ==========================================================================
-     DOSSIER STACK — Premium document fan with corpus sheets
-     ========================================================================== */
-  .dossier-stack{
-    position:relative;
-    padding: 10px 38px 38px 0;
-    perspective:1200px;
-  }
-  .dossier{
-    padding:28px 28px 24px;
-    opacity:0;
-    transform:translateY(16px) rotateX(2deg);
-    animation:docIn .6s var(--e-out) forwards .1s, float 7s ease-in-out 1.8s infinite;
-    position:relative;
-    z-index:3;
-    overflow:visible !important;
-  }
-
-  /* Corpus sheets — richer document silhouettes */
-  .corpus-sheet{
-    position:absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background:var(--navy-3);
-    border:1px solid var(--line);
-    clip-path:polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
-    box-shadow:0 16px 40px rgba(3,7,15,.5);
-    transition:transform var(--t-react) var(--e-out), opacity var(--t-react) var(--e-out);
-    opacity:0;
-  }
-  .corpus-sheet .sheet-label{
-    position:absolute; top:18px; left:22px; right:22px;
-    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.07em;
-    color:var(--mist-dim); text-transform:uppercase;
-    display:flex; justify-content:space-between;
-    opacity:.85;
-    padding-bottom:10px;
-    border-bottom:1px solid rgba(147,160,184,.16);
-  }
-  .corpus-sheet .sheet-lines{position:absolute; left:22px; right:36px; top:50px; bottom:44px; display:flex; flex-direction:column; gap:10px;}
-  .corpus-sheet .sheet-lines span{
-    display:block; height:6px; border-radius:1px;
-    background:linear-gradient(90deg, rgba(147,160,184,.22), rgba(147,160,184,.06));
-  }
-  .corpus-sheet .sheet-lines span.redact{
-    background:rgba(216,178,92,.18);
-    border:1px solid rgba(216,178,92,.25);
-    height:8px;
-  }
-  .corpus-sheet .sheet-lines span:nth-child(1){width:96%;}
-  .corpus-sheet .sheet-lines span:nth-child(2){width:88%;}
-  .corpus-sheet .sheet-lines span:nth-child(3){width:38%; margin-bottom:5px;}
-  .corpus-sheet .sheet-lines span:nth-child(4){width:92%;}
-  .corpus-sheet .sheet-lines span:nth-child(5){width:71%;}
-  .corpus-sheet .sheet-lines span:nth-child(6){width:83%;}
-
-  /* Document stamp marks */
-  .corpus-sheet .sheet-stamp{
-    position:absolute; bottom:52px; right:28px;
-    font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.12em;
-    color:rgba(216,178,92,.35); text-transform:uppercase;
-    border:1px solid rgba(216,178,92,.2); padding:3px 8px;
-    transform:rotate(-8deg);
-    pointer-events:none;
-  }
-
-  .corpus-sheet .sheet-foot{
-    position:absolute; left:22px; right:22px; bottom:18px;
-    display:flex; justify-content:space-between; align-items:center;
-    font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.06em;
-    color:var(--mist-dim); opacity:.65;
-  }
-  .corpus-sheet .sheet-foot::before{
-    content:''; width:12px; height:12px; border-radius:50%;
-    border:1px solid rgba(147,160,184,.35);
-  }
-
-  /* Fan out animation */
-  .dossier-stack.in .corpus-sheet{opacity:1;}
-  .dossier-stack.in .corpus-sheet:nth-of-type(1){transform:translate(16px,12px) rotate(-2.4deg);}
-  .dossier-stack.in .corpus-sheet:nth-of-type(2){transform:translate(32px,24px) rotate(-4.8deg); opacity:.88;}
-  .dossier-stack.in .corpus-sheet:nth-of-type(3){transform:translate(48px,38px) rotate(-7.2deg); opacity:.72;}
-  .dossier-stack.in .corpus-sheet:nth-of-type(4){transform:translate(64px,52px) rotate(-9.6deg); opacity:.55;}
-
-  .dossier-stack:hover .corpus-sheet:nth-of-type(1){transform:translate(22px,6px) rotate(-3.8deg);}
-  .dossier-stack:hover .corpus-sheet:nth-of-type(2){transform:translate(44px,16px) rotate(-7.6deg);}
-  .dossier-stack:hover .corpus-sheet:nth-of-type(3){transform:translate(66px,28px) rotate(-11.4deg);}
-  .dossier-stack:hover .corpus-sheet:nth-of-type(4){transform:translate(88px,42px) rotate(-15.2deg);}
-
-  .corpus-count{
-    position:absolute;
-    bottom:-14px; right:16px;
-    z-index:4;
-    display:flex; align-items:center; gap:8px;
-    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.07em;
-    text-transform:uppercase; color:var(--mist);
-    background:var(--navy-0);
-    border:1px solid rgba(38,56,92,1);
-    padding:9px 18px;
-    border-radius:1px;
-    opacity:0; transform:translateY(8px);
-    animation:corpusTagIn .45s var(--e-out) forwards .75s;
-    box-shadow:0 8px 24px rgba(0,0,0,.4);
-  }
-  .corpus-count::before{
-    content:'';
-    width:5px; height:5px;
-    border-radius:50%;
-    background:var(--gold);
-    box-shadow:0 0 8px 2px rgba(216,178,92,0.5);
-    flex-shrink:0;
-    animation:goldPulse 2.5s ease-in-out infinite;
-  }
-  .corpus-count b{color:var(--gold-hi); font-weight:600; letter-spacing:.02em;}
-  @keyframes corpusTagIn{to{opacity:1; transform:translateY(0);}}
-
-  @media(max-width:920px){
-    .dossier-stack{padding:16px 28px 28px 0;}
-    .dossier-stack.in .corpus-sheet:nth-of-type(1){transform:translate(12px,10px) rotate(-1.8deg);}
-    .dossier-stack.in .corpus-sheet:nth-of-type(2){transform:translate(24px,18px) rotate(-3.6deg); opacity:.85;}
-    .dossier-stack.in .corpus-sheet:nth-of-type(3){transform:translate(36px,28px) rotate(-5.4deg); opacity:.68;}
-    .dossier-stack.in .corpus-sheet:nth-of-type(4){transform:translate(48px,38px) rotate(-7.2deg); opacity:.5;}
-  }
-  @keyframes docIn{to{opacity:1; transform:translateY(0) rotateX(0);}}
-  @keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-6px);}
-  }
-
-  .dossier .doc-head{
-    display:flex; justify-content:space-between; align-items:baseline;
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--mist-dim);
-    text-transform:uppercase; letter-spacing:.08em;
-    border-bottom:1px solid var(--line); padding-bottom:14px; margin-bottom:20px;
-
-  }
-  .dossier .doc-tag{color:var(--gold); font-weight:600;}
-  .dossier p.clause{font-family:'Inter',sans-serif; font-size:14.5px; line-height:1.75; color:#D6DCE8; margin:0 0 16px;}
-  .clause-num{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--gold); margin-right:6px;}
-
-  /* Scan line — enhanced with bloom */
-  .scan-line{
-    position:absolute; inset:0;
-    pointer-events:none; overflow:visible;
-  }
-  .scan-line::before{
-    content:'';
-    position:absolute; left:-10px; right:-10px; top:0; height:2px;
-    background:linear-gradient(90deg, transparent, var(--gold-hi) 15%, var(--gold-hi) 85%, transparent);
-    box-shadow:0 0 20px 3px rgba(241,214,147,.6), 0 0 50px 12px rgba(241,214,147,.18), 0 0 80px 24px rgba(241,214,147,.06);
-    opacity:0;
-    animation:scanSweep 5s var(--e-soft) .85s infinite;
-  }
-  @keyframes scanSweep{
-    0%   { top:0;    opacity:0; }
-    8%   { opacity:1; }
-    48%  { top:100%; opacity:1; }
-    58%  { top:100%; opacity:0; }
-    100% { top:0;    opacity:0; }
-  }
-
-  /* Highlight marks */
-  .hlmark{
-    background:rgba(216,178,92,0.18);
-    border-bottom:2px solid var(--gold);
-    color:var(--white); padding:0 2px;
-    opacity:0;
-    animation:hlActivate .4s var(--e-out) forwards, hlBreathe 4s ease-in-out 2.2s infinite;
-  }
-  .hlmark.h1{animation-delay:.55s, 2.0s; animation-fill-mode:forwards, none;}
-  .hlmark.h2{animation-delay:.75s, 2.4s; animation-fill-mode:forwards, none;}
-    @keyframes haloBreathe{
-    0%,100%{opacity:0; transform:translate(-50%,-50%) scale(0.9);}
-    50%{opacity:1; transform:translate(-50%,-50%) scale(1.2);}
-  }
-    @keyframes specularSweep{
-    0%{background-position:250% 250%;}
-    100%{background-position:-150% -150%;}
-  }
-    .cite-sup{
-    font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600;
-    color:var(--gold); vertical-align:super; margin-left:3px;
-    text-shadow:0 0 12px rgba(216,178,92,.4);
-    animation:citePulse 3s ease-in-out 2s infinite;
-  }
-  @keyframes logoShine{
-    0%{background-position:250% 0; opacity:0;}
-    15%{opacity:.9;}
-    85%{opacity:.9;}
-    100%{background-position:-250% 0; opacity:0;}
-  }
-  @keyframes citePulse{
-    0%,100%{text-shadow:0 0 12px rgba(216,178,92,.4);}
-    50%{text-shadow:0 0 22px rgba(241,214,147,.75);}
-  }
-  /* ==========================================================================
-     SPAN PROVENANCE — the response contract, demonstrated rather than described.
-
-     The whole product is one sentence: every claim carries the span it came
-     from. The hero has been *asserting* that in prose while its own highlighted
-     clauses sat inert. Now they behave like the system's output — hover or focus
-     a marked clause and it shows you the document, the page, the character
-     offsets and the retrieval score. Those are the real fields of the engine's
-     response object, not invented chrome.
-
-     Pure CSS, one attribute per mark, zero JavaScript, no per-frame cost.
-     ========================================================================== */
-  .hlmark{
-    position:relative; cursor:help; outline:none;
-    transition:background var(--t-react) var(--e-out),
-               border-color var(--t-react) var(--e-out),
-               box-shadow var(--t-react) var(--e-out);
-  }
-  .hlmark::after{
-    content:attr(data-span);
-    position:absolute; left:-2px; bottom:calc(100% + 10px);
-    /* wraps rather than overflowing the dossier — a record that runs off the
-       edge of its own document is the opposite of the point */
-    width:max-content; max-width:238px; white-space:normal; line-height:1.55;
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.015em;
-    color:var(--gold-hi);
-    background:rgba(6,14,26,.97);
-    border:1px solid rgba(216,178,92,.32);
-    border-radius:var(--radius);
-    padding:6px 10px;
-    box-shadow:0 14px 34px -14px rgba(0,0,0,.95);
-    opacity:0; transform:translateY(5px);
-    transition:opacity var(--t-react) var(--e-out), transform var(--t-react) var(--e-out);
-    pointer-events:none; z-index:6;
-  }
-  /* the breathe animation owns background and border while it runs, so it is
-     switched off on interaction rather than fought with — and opacity is pinned,
-     since killing the animation would also discard its forwards fill. */
-  .hlmark:hover, .hlmark:focus{
-    animation:none; opacity:1;
-    background:rgba(216,178,92,.34);
-    border-bottom-color:var(--gold-hi);
-    box-shadow:0 2px 18px rgba(241,214,147,.18);
-  }
-  .hlmark:hover::after, .hlmark:focus::after{ opacity:1; transform:translateY(0); }
-  /* the second mark sits near the right edge; its record hangs from the right */
-  .hlmark.h2::after{ left:auto; right:-2px; }
-
-  /* ---- Keyboard is a first-class input.
-     A page that cannot be navigated by keyboard is not finished, and a visible
-     focus ring is the cheapest craft signal on the whole site. ---- */
-  :focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:var(--radius); }
-  .btn-gold:focus-visible, .btn-coral:focus-visible{ outline-color:var(--white); outline-offset:4px; }
-  .hlmark:focus-visible{ outline:1px solid var(--gold-hi); outline-offset:2px; }
-
-  @keyframes hlActivate{to{opacity:1;}}
-  @keyframes hlBreathe{
-    0%,100%{background:rgba(216,178,92,0.18); border-bottom-color:var(--gold);}
-    50%{background:rgba(216,178,92,0.32); border-bottom-color:var(--gold-hi); box-shadow:0 2px 16px rgba(241,214,147,0.15);}
-  }
-
-
-  /* ==========================================================================
-     THE DOSSIER FLIP — two audiences, one card.
-
-     A sponsor reading this page wants to know what the system does. A CTO wants
-     Recall@3 with its sample size. Putting both on one face serves neither: the
-     numbers read as clutter to the first reader and as decoration to the second.
-
-     So the card turns over. The front is the product, unchanged. The back is an
-     evidence sheet — the same register as the hero dossier, because it is the
-     same object: a record, monospaced, ruled, with a run id and a corpus. Not a
-     dashboard widget. The number IS the graphic here; a thin progress bar was
-     the wrong instrument and read cheap against everything around it.
-
-     Flipping is deliberate — a labelled control, never hover. Nobody arrives at
-     the evidence by accident, which is the point.
-     ========================================================================== */
-  /* Perspective has to scale with the card. 1700px across a 1000px-wide card
-     swings a huge surface through space: the middle of the turn moves enormously
-     fast in screen space and reads as a snap, not a rotation. A longer focal
-     length flattens the arc and the motion becomes even. */
-  .rc-flip{ position:relative; perspective:2800px; }
-  .rc-flip.flagship{ perspective:5200px; }
-  /* promoted only while it is actually moving — a permanent will-change costs
-     memory for a layer that is static 99% of the time */
-  .rc-flip.is-flipping .rc-inner{ will-change:transform; }
-  .rc-flip.flagship{ grid-column:1 / -1; }
-  .rc-inner{
-    /* both faces occupy one grid cell, so the row takes the height of the
-       taller of the two. Absolute positioning would have clipped the evidence
-       sheet wherever the marketing copy happened to be shorter. */
-    display:grid; height:100%;
-    transform-style:preserve-3d;
-    transition:transform .64s cubic-bezier(.38,.06,.18,1);
-  }
-  .rc-flip.is-flipped .rc-inner{ transform:rotateY(180deg); }
-  .rc-front, .rc-back{ backface-visibility:hidden; -webkit-backface-visibility:hidden; }
-  .rc-front{ display:flex; flex-direction:column; }
-  .rc-front, .rc-back{
-    grid-area:1 / 1; cursor:pointer;
-    transition:opacity .64s cubic-bezier(.38,.06,.18,1);
-  }
-  .rc-back{ opacity:.35; }
-  .rc-flip.is-flipped .rc-front{ opacity:.35; }
-  .rc-flip.is-flipped .rc-back{ opacity:1; }
-  .rc-back{
-    transform:rotateY(180deg);
-    display:flex; flex-direction:column; padding:0;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.028), transparent 120px),
-      var(--navy-2);
-  }
-  /* same lining, both sides. A border that changes weight when the card turns
-     reads as two different objects. */
-  .rc-flip.flagship .rc-back{
-    border-color:var(--gold);
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.03), transparent 130px),
-      var(--navy-4);
-  }
-  /* while a card is turned, its own accent leads */
-  /* two steps per system: --acc carries structure (rules, labels, the arrow),
-     --acc-hi is reserved for the result itself. One accent used for everything
-     flattens the sheet; the number has to be the brightest thing on it. */
-  .rc-flip         { --acc:#D8B25C; --acc-hi:#F1D693; --acc-rgb:216,178,92; }
-  .rc-flip.legal   { --acc:#8ECAE6; --acc-hi:#A8DCF0; --acc-rgb:142,202,230; }
-  .rc-flip.fin     { --acc:#D8B25C; --acc-hi:#F1D693; --acc-rgb:216,178,92; }
-  .rc-flip.flagship{ --acc:#FF9B5C; --acc-hi:#FFB183; --acc-rgb:255,155,92; }
-
-  /* The front had a void under the copy where the grid row stretched it to the
-     sheet's height. Filling it with the metric's NAME — not its value — tells a
-     sponsor the measurement exists without putting a number in front of someone
-     who did not ask for one, and doubles as the strongest hint that the card has
-     another side. */
-  .rc-hint{
-    margin-top:auto; padding-top:16px;
-    border-top:1px solid rgba(38,56,92,.7);
-    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
-    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em;
-    text-transform:uppercase; color:var(--mist-dim);
-    transition:color var(--t-react) var(--e-out);
-  }
-  .rc-hint b{ color:var(--acc); font-weight:600; letter-spacing:.06em; }
-  .rc-flip:hover .rc-hint{ color:var(--mist); }
-
-
-  /* ==========================================================================
-     TWO BUGS THAT LOOKED LIKE ONE
-
-     1 · The hidden face still hit-tests. `backface-visibility:hidden` stops a
-         face being *drawn*, not being *hovered* — so with two cards stacked in
-         one grid cell the cursor alternated between them, each applying its own
-         hover state. That flicker is what read as the card flipping by itself.
-         Only the face you can actually see is interactive now.
-
-     2 · The hover lift moved the hit area. `.fold-card:hover` translates the
-         card up 4px; near an edge the card slides out from under the cursor,
-         hover is lost, it drops back, hover returns — an oscillation at frame
-         rate. On a card that also rotates in 3D it looks like a malfunction.
-         Flip cards keep their hover feedback but never move: colour and shadow
-         only, no geometry. Nothing on these cards moves unless you click it.
-     ========================================================================== */
-  .rc-back{ pointer-events:none; }
-  .rc-flip.is-flipped .rc-front{ pointer-events:none; }
-  .rc-flip.is-flipped .rc-back{ pointer-events:auto; }
-
-  .rc-flip .rc-front:hover{ transform:none; }
-  .rc-flip .rc-back:hover{ transform:rotateY(180deg); }
-
-  /* feedback without displacement, driven from the wrapper so both faces agree */
-  .rc-flip:hover .rc-front, .rc-flip:hover .rc-back{
-    border-color:rgba(147,160,184,.42);
-    box-shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 40px 80px -36px rgba(0,0,0,.7);
-  }
-  .rc-flip.flagship:hover .rc-front, .rc-flip.flagship:hover .rc-back{
-    border-color:var(--gold-hi);
-    box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 44px 88px -38px rgba(0,0,0,.75),
-               0 0 0 1px rgba(216,178,92,.12);
-  }
-
-  /* ---- the control ---- */
-  .rc-toggle{
-    position:absolute; top:20px; right:34px; z-index:4;
-    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.11em;
-    text-transform:uppercase; font-weight:600;
-    color:var(--mist); background:rgba(6,14,26,.5);
-    border:1px solid rgba(38,56,92,1); border-radius:20px;
-    padding:5px 11px; cursor:pointer;
-    display:inline-flex; align-items:center; gap:7px;
-    transition:color var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out),
-               background var(--t-react) var(--e-out);
-  }
-  .rc-flip:hover .rc-toggle{ color:var(--acc); border-color:color-mix(in srgb, var(--acc) 40%, transparent); }
-  .rc-toggle:hover{ color:var(--acc); border-color:color-mix(in srgb, var(--acc) 55%, transparent);
-                    background:color-mix(in srgb, var(--acc) 8%, transparent); }
-  .rc-toggle i{ font-style:normal; transition:transform var(--t-react) var(--e-out); }
-  .rc-toggle .lb-b{ display:none; }
-  .rc-flip.is-flipped .rc-toggle .lb-a{ display:none; }
-  .rc-flip.is-flipped .rc-toggle .lb-b{ display:inline; }
-  .rc-flip.is-flipped .rc-toggle{ color:var(--acc); border-color:color-mix(in srgb, var(--acc) 45%, transparent); }
-  .rc-flip.is-flipped .rc-toggle i{ transform:rotate(180deg); }
-
-  /* ---- the evidence sheet ---- */
-  .ev{ padding:24px 28px 22px; display:flex; flex-direction:column; height:100%; }
-  .ev-head{
-    display:flex; justify-content:space-between; align-items:baseline; gap:14px;
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.13em;
-    text-transform:uppercase; padding-bottom:11px; margin-bottom:16px;
-    border-bottom:1px solid rgba(38,56,92,.85);
-  }
-  .ev-head b{ color:var(--acc-hi); font-weight:600; text-shadow:0 0 16px rgba(var(--acc-rgb),.4); }
-  .ev-head span{ color:var(--mist-dim); letter-spacing:.04em; text-transform:none; }
-
-  .ev-metric{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.11em;
-    text-transform:uppercase; color:var(--mist); margin-bottom:2px;
-  }
-  .ev-metric em{ font-style:normal; color:var(--mist-dim); letter-spacing:.04em; text-transform:none; }
-
-  /* the number is the graphic */
-  .ev-move{ display:flex; align-items:center; gap:18px; margin:14px 0 2px; flex-wrap:wrap; }
-  .ev-n{ display:flex; flex-direction:column; gap:5px; }
-  /* Light, not bold. Weight 800 turned a measurement into a headline; a thin
-     face lets the glow do the work and reads as an instrument readout rather
-     than a shout. Thin strokes carry less light, so the bloom is stronger to
-     compensate — luminosity from the halo, not from the weight. */
-  .ev-n b{
-    font-family:'Inter',sans-serif; font-weight:400; letter-spacing:-.03em; line-height:.9;
-    font-size:36px; color:#7C8BA8;
-    font-variant-numeric:tabular-nums;
-  }
-  /* the result glows the way the scan head does — a hot core, a mid halo, a wide
-     bloom. One flat shadow reads as a drop shadow; three layers read as light. */
-  .ev-n.to b{
-    font-size:48px; font-weight:400; color:var(--acc-hi);
-    /* no white core — a white centre drags the hue out of the number and it
-       stops belonging to its system. The light is the accent's own colour. */
-    text-shadow:
-      0 0  8px rgba(var(--acc-rgb), .80),
-      0 0 22px rgba(var(--acc-rgb), .44),
-      0 0 50px rgba(var(--acc-rgb), .18);
-  }
-  .ev-n.to span{ color:var(--acc); opacity:.85; }
-  .ev-n span{ font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.13em;
-              text-transform:uppercase; color:var(--mist-dim); }
-  .ev-arrow{
-    flex:1 1 60px; min-width:52px; max-width:150px; height:1px; position:relative;
-    background:linear-gradient(90deg, rgba(109,124,153,.22), rgba(var(--acc-rgb),.55) 55%, var(--acc-hi));
-    box-shadow:0 0 10px rgba(var(--acc-rgb),.35);
-    align-self:center; margin-top:-8px;
-  }
-  .ev-arrow::after{
-    content:''; position:absolute; right:-1px; top:50%;
-    border-left:6px solid var(--acc-hi);
-    border-top:4px solid transparent; border-bottom:4px solid transparent;
-    transform:translateY(-50%);
-  }
-  .ev-delta{
-    font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
-    color:var(--acc-hi); letter-spacing:.05em; align-self:center; margin-top:-8px;
-    padding:5px 11px; border-radius:20px;
-    background:rgba(var(--acc-rgb), .10);
-    border:1px solid rgba(var(--acc-rgb), .30);
-    text-shadow:0 0 14px rgba(var(--acc-rgb), .35);
-  }
-
-  .ev-facts{
-    /* a matrix, not a ragged wrap — an orphan fact hanging under three others
-       is the difference between a record and a leftover */
-    display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
-    column-gap:26px; row-gap:15px; margin-top:auto; padding-top:16px;
-    border-top:1px solid rgba(38,56,92,.85);
-    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.09em; text-transform:uppercase;
-  }
-  .ev-facts div{ display:flex; flex-direction:column; gap:4px; color:var(--mist-dim); }
-  .ev-facts b{ color:var(--mist); font-weight:600; font-size:11.5px; letter-spacing:.04em; text-transform:none; }
-  .ev-note{
-    margin-top:24px; font-family:'Inter',sans-serif; font-size:11.5px; line-height:1.62;
-    color:var(--mist-dim); max-width:60ch;
-  }
-  .ev-note code{ font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--mist); }
-
-  /* the flagship is full width — give the record two columns instead of a
-     long measure floating in an empty half */
-  @media(min-width:900px){
-    .rc-flip.flagship .ev-facts{ grid-template-columns:repeat(4,max-content); column-gap:46px; }
-    .rc-flip.flagship .ev{ display:grid; grid-template-columns:1fr 1fr; column-gap:52px; }
-    .rc-flip.flagship .ev-head{ grid-column:1 / -1; }
-    .rc-flip.flagship .ev-metric{ grid-column:1; grid-row:2; }
-    .rc-flip.flagship .ev-move{ grid-column:1; grid-row:3; align-content:start; }
-    .rc-flip.flagship .ev-note{ grid-column:2; grid-row:2 / span 2; margin-top:0; align-self:center; max-width:none; }
-    .rc-flip.flagship .ev-facts{ grid-column:1 / -1; grid-row:4; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .rc-inner{ transition:none; }
-  }
-
-  .chip{
-    display:inline-flex; align-items:center; gap:7px; font-family:'IBM Plex Mono',monospace; font-size:11px;
-    padding:7px 12px; border-radius:var(--radius); margin:4px 6px 0 0; opacity:0; animation:chipIn .5s var(--e-out) forwards;
-  }
-  @keyframes chipIn{to{opacity:1;}}
-  .chip.verify{
-    background:rgba(142,202,230,0.18);
-    color:var(--azure);
-    border-left:2px solid var(--azure);
-    box-shadow: 0 0 20px rgba(142,202,230,0.1);
-    animation:chipIn .4s var(--e-out) forwards .95s, verifyPulse 3s ease-in-out 1.9s infinite;
-  }
-  .chip.risk{
-    background:rgba(255,155,92,0.12);
-    color:var(--coral-hi);
-    border-left:2px solid var(--coral);
-    animation:chipIn .4s var(--e-out) forwards 1.15s;
-  }
-  @keyframes verifyPulse{
-    0%,100%{box-shadow:0 0 0 0 rgba(142,202,230,.5), 0 0 20px rgba(142,202,230,0.1);}
-    50%{box-shadow:0 0 0 10px rgba(142,202,230,0), 0 0 32px rgba(142,202,230,0.2);}
-  }
-
-  /* Paper field removed: near-invisible under section grading, and the
-     single most expensive thing on the page per scrolled frame. */
-
-  /* ==========================================================================
-     SECTION SYSTEM
-     ========================================================================== */
-  section{padding:clamp(80px, 8vw, 130px) 0; position:relative; border-bottom:none;
-    /* Sections below the fold skip layout, paint and style work entirely until
-       they approach the viewport. contain-intrinsic-size supplies a placeholder
-       height so the scrollbar never jumps as they resolve. */
-    content-visibility:auto;
-    contain-intrinsic-size:auto 900px;
-  }
-  section::after{
-    content:'';
-    position:absolute; left:0; right:0; bottom:0; height:1px;
-    background:linear-gradient(90deg,
-      transparent 0%,
-      rgba(38,56,92,.4) 15%,
-      var(--line) 50%,
-      rgba(38,56,92,.4) 85%,
-      transparent 100%);
-  }
-  .section-head{max-width:640px; margin-bottom:clamp(44px, 4.6vw, 68px);}
-  .section-head h2{font-size:clamp(28px,3.4vw,44px); margin-bottom:16px; line-height:1.1; letter-spacing:-0.02em; font-weight:800;}
-  .section-head p{color:var(--mist); font-size:16.5px; line-height:1.65;}
-  .exhibit-index{
-    position:absolute; top:4px; right:36px;
-    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em;
-    color:var(--mist-dim); text-align:right; display:none;
-  }
-  @media(min-width:900px){ .exhibit-index{display:block;} }
-
-  /* Reveal system */
-  .reveal{opacity:0; transform:translateY(20px); transition:opacity var(--t-3) var(--e-out), transform var(--t-3) var(--e-out);}
-  .reveal.in{opacity:1; transform:translateY(0);}
-  .build-grid.reveal, .results-grid.reveal, .pricing-grid.reveal, .compare.reveal{
-    opacity:1; transform:none; transition:none;
-  }
-  .build-grid .build-card, .results-grid .rc-flip, .pricing-grid .price-card, .compare .compare-col{
-    opacity:0; transform:translateY(20px);
-    transition:opacity var(--t-3) var(--e-out), transform var(--t-3) var(--e-out);
-  }
-  .build-grid.in .build-card, .results-grid.in .rc-flip, .pricing-grid.in .price-card, .compare.in .compare-col{
-    opacity:1; transform:translateY(0);
-  }
-  .build-grid.in .build-card:nth-child(2), .results-grid.in .rc-flip:nth-child(2),
-  .pricing-grid.in .price-card:nth-child(2), .compare.in .compare-col:nth-child(2){ transition-delay:.08s; }
-  .build-grid.in .build-card:nth-child(3), .results-grid.in .rc-flip:nth-child(3),
-  .pricing-grid.in .price-card:nth-child(3){ transition-delay:.16s; }
-  .results-grid.in .rc-flip:nth-child(4){ transition-delay:.24s; }
-
-  @supports (animation-timeline: view()){
-    .reveal{
-      opacity:0;
-      transform:translateY(24px);
-      transition:none;
-      animation:revealRise linear both;
-      animation-timeline:view();
-      animation-range:entry 3% cover 22%;
-    }
-    .reveal.in{ opacity:0; }
-    @keyframes revealRise{
-      to{ opacity:1; transform:translateY(0); }
-    }
-    .build-grid.reveal, .results-grid.reveal, .pricing-grid.reveal, .compare.reveal{
-      opacity:1; transform:none; animation:none;
-    }
-    .build-grid .build-card, .results-grid .rc-flip,
-    .pricing-grid .price-card, .compare .compare-col{
-      opacity:0; transform:translateY(28px);
-      transition:none;
-      animation:revealRise linear both;
-      animation-timeline:view();
-      animation-range:entry 2% cover 20%;
-    }
-    .build-grid .build-card:nth-child(2), .results-grid .result-card:nth-child(2),
-    .pricing-grid .price-card:nth-child(2), .compare .compare-col:nth-child(2){
-      animation-range:entry 5% cover 23%;
-    }
-    .build-grid .build-card:nth-child(3), .results-grid .result-card:nth-child(3),
-    .pricing-grid .price-card:nth-child(3){
-      animation-range:entry 8% cover 26%;
-    }
-    .results-grid .result-card:nth-child(4){
-      animation-range:entry 11% cover 29%;
-    }
-    .section-head.reveal{ animation-range:entry 2% cover 18%; }
-  }
-
-  /* Watermark drift */
-  @keyframes watermarkDrift {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 100px 100px; }
-  }
-  .alt-bg{
-    background:
-      repeating-linear-gradient(180deg, rgba(147,160,184,.04) 0px, rgba(147,160,184,.04) 1px, transparent 1px, transparent 28px),
-      var(--navy-0);
-    position: relative;
-    overflow: hidden;
-  }
-  .alt-bg::before {
-    content: '';
-    position: absolute;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-    background-image:
-      repeating-linear-gradient(45deg, transparent, transparent 180px, rgba(216,178,92,0.015) 180px, rgba(216,178,92,0.015) 181px),
-      repeating-linear-gradient(-45deg, transparent, transparent 240px, rgba(142,202,230,0.012) 240px, rgba(142,202,230,0.012) 241px);
-    background-size: 300px 300px, 400px 400px;
-    animation: watermarkDrift 60s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
-  .alt-bg > * { position: relative; z-index: 1; }
-
-  /* ==========================================================================
-     WHAT WE BUILD
-     ========================================================================== */
-  .build-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media(max-width:860px){ .build-grid{grid-template-columns:1fr;} }
-  .build-card{padding:28px 26px 26px;}
-  .build-tag{
-    font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--gold);
-    display:inline-block; margin-bottom:16px;
-  }
-  .build-tag.azure{color:var(--azure);}
-  .build-card .build-tag{position:relative; overflow:hidden;}
-  .build-card .build-tag::after{
-    content:'';
-    position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 15%, rgba(241,214,147,.22) 42%, rgba(255,255,255,.32) 50%, rgba(241,214,147,.22) 58%, transparent 85%);
-    transform:translateX(-115%);
-    transition:transform .48s var(--e-out);
-  }
-  .build-card:hover .build-tag::after{transform:translateX(115%);}
-  .build-card h3{font-size:19px; margin-bottom:12px; line-height:1.3; font-weight:700;}
-  .build-card p{font-size:14.5px; color:var(--mist); margin:0; line-height:1.65;}
-
-  .built-for{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
-  .built-for span{
-    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mist);
-    border:1px solid var(--line); padding:7px 14px; border-radius:20px;
-    transition:color var(--t-2) var(--e-out), background var(--t-2) var(--e-out), border-color var(--t-2) var(--e-out), transform var(--t-2) var(--e-out), box-shadow var(--t-2) var(--e-out);
-  }
-  .built-for span:hover{
-    border-color: var(--azure);
-    color: var(--azure);
-    background: rgba(142,202,230,0.07);
-    box-shadow: 0 0 16px rgba(142,202,230,0.1);
-    cursor: default;
-    transform:translateY(-1px);
-  }
-
-  /* ==========================================================================
-     RESULTS
-     ========================================================================== */
-  .results-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:22px;}
-  @media(max-width:820px){ .results-grid{grid-template-columns:1fr;} }
-  .result-card{padding:28px 28px 26px;}
-  .result-card.flagship{background:var(--navy-4); border-color:var(--gold); grid-column:1 / -1;}
-  .result-top{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:14px;}
-  .result-vert{font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:3px 10px; border-radius:20px; white-space:nowrap; font-weight:500;}
-  .result-vert.legal{background:rgba(142,202,230,0.12); color:var(--azure); border:1px solid rgba(142,202,230,0.22);}
-  .result-vert.fin{background:rgba(216,178,92,0.15); color:var(--gold-hi); border:1px solid rgba(216,178,92,0.22);}
-  .result-vert.both{background:rgba(255,155,92,0.15); color:var(--coral-hi); border:1px solid rgba(255,155,92,0.22);}
-  .result-card .result-vert{position:relative; overflow:hidden;}
-  .result-card .result-vert::after{
-    content:'';
-    position:absolute; inset:0;
-    background:linear-gradient(100deg, transparent 15%, rgba(255,255,255,.16) 42%, rgba(255,255,255,.26) 50%, rgba(255,255,255,.16) 58%, transparent 85%);
-    transform:translateX(-115%);
-    transition:transform .48s var(--e-out) .04s;
-  }
-  .result-card:hover .result-vert::after{transform:translateX(115%);}
-  .result-card h3{font-size:17px; margin-bottom:10px; line-height:1.35; font-weight:700;}
-  .result-card p{font-size:14px; color:var(--mist); margin:0; line-height:1.65;}
-  .result-flag{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--coral-hi); margin-bottom:10px; display:block; font-weight:500;
-  }
-  .results-note{
-    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
-    margin-top:32px; padding-top:28px; border-top:1px solid var(--line);
-  }
-  .results-note p{margin:0; font-size:14.5px; color:var(--mist);}
-  .results-note p b{color:var(--white);}
-  .results-note .coral-accent{color:var(--coral-hi);}
-
-  /* ==========================================================================
-     WHY / COMPARISON
-     ========================================================================== */
-  .compare{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line);}
-  @media(max-width:760px){ .compare{grid-template-columns:1fr;} }
-  .compare-col{background:var(--navy-1); padding:32px 30px;}
-  .compare-col h4{font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--mist-dim); margin-bottom:20px; font-weight:600;}
-  .compare-col.win h4{color:var(--gold);}
-  .compare-list{list-style:none; margin:0; padding:0;}
-  .compare-list li{padding:11px 0; border-top:1px solid var(--line); font-size:14.5px; display:flex; gap:10px; line-height:1.55;}
-  .compare-list li:first-child{border-top:none;}
-  .compare-col:not(.win) .compare-list li{color:var(--mist-dim); text-decoration:line-through; text-decoration-color:var(--coral); text-decoration-thickness:1.5px;}
-  .compare-col:not(.win) .compare-list li::before{content:'✗'; color:var(--coral); text-decoration:none; flex-shrink:0; font-weight:600;}
-  .compare-col.win .compare-list li::before{content:'✓'; color:var(--gold); flex-shrink:0; font-weight:600;}
-
-  /* ==========================================================================
-     PRICING
-     ========================================================================== */
-  .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  @media(max-width:900px){ .pricing-grid{grid-template-columns:1fr;} }
-  .price-card{padding:30px 28px; display:flex; flex-direction:column;}
-  .price-card.feat{background:var(--navy-4); border-color:var(--gold);}
-  .price-tier{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.07em; color:var(--mist); text-transform:uppercase; margin-bottom:14px; font-weight:500;}
-  .price-card.feat .price-tier{color:var(--gold-hi);}
-  .price-amount{font-family:'Sora',sans-serif; font-weight:700; font-size:30px; margin-bottom:4px; font-variant-numeric:tabular-nums; letter-spacing:-0.02em;}
-  .price-unit{font-size:12px; color:var(--mist-dim); margin-bottom:22px;}
-  .price-list{list-style:none; margin:0 0 26px; padding:0; flex-grow:1;}
-  .price-list li{font-size:13.5px; padding:9px 0; border-top:1px solid var(--line); display:flex; gap:8px; color:var(--mist); line-height:1.5;}
-  .price-list li:first-child{border-top:none;}
-  .price-list li::before{content:'✓'; color:var(--gold); flex-shrink:0; font-weight:600;}
-
-  /* ==========================================================================
-     CARD HOVER — Premium light-catching sheen
-     ========================================================================== */
-  .build-card, .result-card, .price-card{
-    transition:transform var(--t-react) var(--e-out), box-shadow var(--t-react) var(--e-out), border-color var(--t-react) var(--e-out);
-  }
-  .build-card::before, .result-card::before, .price-card::before{
-    content:''; position:absolute; inset:0;
-    background:linear-gradient(115deg, transparent 32%, rgba(255,255,255,.06) 46%, rgba(255,255,255,.1) 50%, rgba(255,255,255,.06) 54%, transparent 68%);
-    transform:translateX(-130%);
-    transition:transform .48s var(--e-out);
-    pointer-events:none;
-  }
-  .build-card:hover, .result-card:hover, .price-card:hover{
-    transform:translateY(-5px);
-    border-color:var(--gold);
-    box-shadow:
-      0 20px 48px -16px rgba(0,0,0,.55),
-      0 0 0 1px rgba(216,178,92,.2),
-      0 0 32px rgba(216,178,92,.1);
-  }
-  .build-card:hover::before, .result-card:hover::before, .price-card:hover::before{
-    transform:translateX(130%);
-  }
-  .result-card.flagship:hover, .price-card.feat:hover{
-    border-color:var(--gold-hi);
-    box-shadow:
-      0 20px 48px -16px rgba(0,0,0,.55),
-      0 0 0 1px rgba(241,214,147,.3),
-      0 0 32px rgba(241,214,147,.12);
-  }
-
-  /* ==========================================================================
-     FINAL CTA
-     ========================================================================== */
-  .final-cta{
-    border-bottom:none; text-align:center; padding:110px 0 80px;
-    background:
-      radial-gradient(650px 350px at 50% 0%, rgba(216,178,92,0.12), transparent 55%),
-      var(--navy-1);
-    position:relative;
-  }
-  .final-cta::before{
-    content:''; position:absolute; inset:0; pointer-events:none;
-    background:repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(142,202,230,0.01) 3px, rgba(142,202,230,0.01) 4px);
-  }
-  .final-cta h2{font-size:clamp(30px,4.6vw,52px); max-width:16ch; margin:0 auto 20px; line-height:1.08; letter-spacing:-0.02em; font-weight:800;}
-  .final-cta p{color:var(--mist); font-size:17px; max-width:50ch; margin:0 auto 36px; line-height:1.65;}
-  .final-ctas{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
-
-  /* ==========================================================================
-     FOOTER
-     ========================================================================== */
-  footer{padding:44px 0 48px;}
-  .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:24px;}
-  .foot-links{display:flex; gap:24px;}
-  .foot-links a{font-size:13px; color:var(--mist); text-decoration:none; transition:color var(--t-1) var(--e-out);}
-  .foot-links a:hover{color:var(--gold-hi);}
-  .foot-note{font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--mist-dim); border-top:1px solid var(--line); padding-top:22px; letter-spacing:.01em; line-height:1.6;}
-  .foot-note b{color:var(--mist); letter-spacing:.02em;}
-
-  /* ==========================================================================
-     CURSOR LIGHT — Multi-layer atmospheric spotlight
-     ========================================================================== */
-  .cursor-light{
-    position:fixed; inset:0; pointer-events:none; z-index:80;
-    --x:50vw; --y:50vh; --glow:1;
-    opacity:0; transition:opacity var(--t-4) var(--e-soft);
-  }
-  .cursor-light.is-active{opacity:1;}
-  /* The glows are painted ONCE into a fixed-size box and MOVED with a transform,
-     instead of repainting a full-viewport gradient every time the pointer moves.
-     A gradient whose `at <x> <y>` changes is a repaint of the whole layer — and
-     with mix-blend-mode on top, a re-blend of the whole viewport, three layers
-     deep, on every pointer frame. A transform is composited: no paint at all.
-     Identical image, a fraction of the per-frame cost. */
-  .cursor-light::before,
-  .cursor-light::after{
-    content:''; position:absolute; left:0; top:0;
-    transition:background var(--t-3) var(--e-soft);
-    transform:translate3d(var(--x), var(--y), 0);
-    will-change:transform;
-  }
-  /* Glass sheen */
-  .cursor-light::before{
-    width:1400px; height:1400px; margin:-700px 0 0 -700px;
-    background:radial-gradient(620px circle at center,
-      rgba(244,246,250,calc(0.045 * var(--glow))),
-      rgba(244,246,250,calc(0.014 * var(--glow))) 34%,
-      transparent 68%);
-    mix-blend-mode:overlay;
-  }
-  /* Gold core */
-  .cursor-light::after{
-    width:920px; height:920px; margin:-460px 0 0 -460px;
-    background:radial-gradient(400px circle at center,
-      rgba(216,178,92,calc(0.075 * var(--glow))),
-      rgba(216,178,92,calc(0.026 * var(--glow))) 38%,
-      transparent 70%);
-    mix-blend-mode:soft-light;
-  }
-  /* Surface catch */
-  .surface-catch{
-    position:fixed; left:0; top:0; pointer-events:none; z-index:81;
-    --x:50vw; --y:50vh;
-    width:360px; height:360px; margin:-180px 0 0 -180px;
-    transform:translate3d(var(--x), var(--y), 0);
-    opacity:0; transition:opacity var(--t-2) var(--e-out);
-    background:radial-gradient(140px circle at center,
-      rgba(255,255,255,0.16),
-      rgba(241,214,147,0.1) 40%,
-      transparent 75%);
-    mix-blend-mode:overlay;
-  }
-  .surface-catch.is-lit{opacity:1;}
-  .cursor-light{--glow:1;}
-  body.is-reading .cursor-light{--glow:0.45;}
-  body.is-hot-zone .cursor-light{--glow:1.5;}
-
-  /* SCROLL PROGRESS — removed.
-     Previously flagged as reading cheap: a saturated gold bar with a glow is a
-     consumer-app pattern, and chrome that announces itself undercuts the register
-     this brand is working in. To restore, re-add
-     <div class="scroll-progress"></div> and this rule; the frame scheduler still
-     detects and drives the element if it is present. */
-
-  /* ==========================================================================
-     SECTION GRADING — one dial, not two
-
-     The previous grading multiplied a field opacity (.18–.40) by a per-stack
-     opacity (.04–.18). Compounded, that put the paper at an effective 1.4%–7%:
-     433 DOM nodes, five scroll-driven animations and thirty box-shadows, all
-     rendering something essentially invisible. Paying full cost for no image.
-
-     Now the depth planes own their relative weight (ultra behind front, as
-     designed) and the section grade is a single multiplier on the field. One
-     animated property per section change instead of five, and the values are
-     tuned to land where they were always meant to: present, subordinate, never
-     competing with type.
-
-     The curve is a bookend. The hero and the closing CTA carry the material;
-     the argument in between runs quiet, with Pricing quietest of all — a reader
-     deciding to spend money deserves a still page.
-     ========================================================================== */
-
-  /* HERO — the real dossier owns this frame; paper sits well behind it. */
-  /* PRODUCT — the most open section, and the most air to fill. Azure tint picks
-     up the accent chips in the cards. */
-  /* RESULTS — figures must be read and believed. Step back, soften. */
-  /* COMPARISON — a two-column argument needs a clear middle. */
-  /* PRICING — decision moment. Quietest point on the page. */
-  /* CONTACT — the close returns to the material the page opened with. */
-
-  /* ==========================================================================
-     HEADER CONDENSE — Scroll-linked via CSS where supported
-     ========================================================================== */
-  @supports (animation-timeline: scroll(root block)){
-    header{
-      animation:headerCondense linear both;
-      animation-timeline:scroll(root block);
-      animation-range:0 340px;
-    }
-    @keyframes headerCondense{
-      to{
-        background:rgba(4,11,22,0.94);
-        backdrop-filter:blur(22px) saturate(1.45);
-        -webkit-backdrop-filter:blur(22px) saturate(1.45);
-        box-shadow:0 20px 50px -32px rgba(0,0,0,.95);
-        border-color:rgba(38,56,92,0.35);
-      }
-    }
-    .nav{
-      animation:navCondense linear both;
-      animation-timeline:scroll(root block);
-      animation-range:0 340px;
-    }
-    @keyframes navCondense{ to{ padding-top:10px; padding-bottom:10px; } }
-  }
-
-  /* ==========================================================================
-     TYPOGRAPHY ENHANCEMENTS
-     ========================================================================== */
-  .hero h1{ letter-spacing:-0.03em; }
-  .section-head h2, .final-cta h2{ letter-spacing:-0.025em; text-wrap:balance; }
-  .hero p.lede, .section-head p{ text-wrap:pretty; }
-  .price-amount{ letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
-
-  /* ==========================================================================
-     SECTION JOINS — Soft bleed between surfaces
-     ========================================================================== */
-  .alt-bg::after{
-    content:'';
-    position:absolute; left:0; right:0; top:0; height:140px;
-    pointer-events:none; z-index:0;
-    background:linear-gradient(180deg, var(--navy-1), transparent);
-  }
-  .alt-bg > .wrap{ position:relative; z-index:1; }
-  section:not(.alt-bg):not(.hero){ position:relative; }
-  section:not(.alt-bg):not(.hero)::before{
-    content:'';
-    position:absolute; left:0; right:0; top:0; height:140px;
-    pointer-events:none; z-index:0;
-    background:linear-gradient(180deg, var(--navy-0), transparent);
-  }
-  section > .wrap{ position:relative; z-index:1; }
-
-  /* ==========================================================================
-     CORPUS COUNTER — Flash animation
-     ========================================================================== */
-  .corpus-num{ font-size:13.5px;
-    display:inline-block;
-    min-width:2.2em;
-    text-align:right;
-    transition:opacity var(--t-1) var(--e-out), text-shadow var(--t-2) var(--e-out);
-  }
-  .corpus-num.flash{
-    opacity:0.25;
-    text-shadow:0 0 18px rgba(241,214,147,0.6);
-  }
-
-  /* ==========================================================================
-     AMBIENT SCAN — a beam travelling the entire page, top to bottom and
-     back, forever. Same dense-core, tapered-edge profile as the hero's
-     scan-line — this is the same material, just loose on the page instead
-     of held to one dossier: the system itself, always looking, tied to no
-     single document. Fixed to the viewport behind every layer of content,
-     pointer-events:none, and dim enough to lose against any paragraph it
-     crosses, so it never interrupts reading or navigation — felt rather
-     than watched, present rather than dominant.
-
-     Off for the hero specifically: the dossier's own scan-line already
-     owns that frame, and two gold sweeps reading at once there would
-     compete rather than reinforce. The ambient beam picks up the instant
-     the reader scrolls past it, so the two read as sequential, not
-     simultaneous — one document read closely, then the whole system at
-     work behind everything that follows.
-
-     Handoff runs on its own dedicated observer (below, watching .hero
-     directly) rather than the shared section-grader: that one only
-     switches once the *next* section already outweighs the hero, which
-     held the reveal back a beat longer than it should feel. `.past-hero`
-     fires as soon as the hero itself has mostly scrolled away.
-     ========================================================================== */
-  .ambient-scan{
-    position:fixed; inset:0; pointer-events:none; z-index:4;
-    overflow:hidden;
-    opacity:0;
-    transition:opacity .6s var(--e-soft);
-  }
-  .ambient-scan.past-hero{ opacity:0.30; }
-
-  /* Two layers moving as one: a hard HEAD and the TRAIL it leaves behind.
-     A scanner has a leading edge and a decaying wake; a single line has neither,
-     which is why the old version read as a floating rule rather than a machine
-     passing over the page. Both are transform-only, so this costs one composited
-     layer each and no paint per frame. */
-  .ambient-scan::before,
-  .ambient-scan::after{
-    content:'';
-    position:absolute; left:0; right:0; top:0;
-    will-change:transform, opacity;
-    /* linear: constant traverse velocity. Ease-in-out is a pendulum — it
-       accelerates and decelerates, which reads as breathing, not scanning. */
-    animation:ambientSweep 7.4s linear infinite;
-  }
-  /* TRAIL — sits above the head and follows it down */
-  .ambient-scan::before{
-    height:180px; margin-top:-180px;
-    background:linear-gradient(to bottom,
-      transparent 0%,
-      rgba(241,214,147,.055) 45%,
-      rgba(241,214,147,.16)  78%,
-      rgba(241,214,147,.40)  100%);
-    -webkit-mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-            mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-  }
-  /* HEAD — the reading edge.
-     Three pixels, not two, so the beam can carry a hotter core than its own
-     edges. Instruments read as precise because the centre of the line is a
-     different temperature from its shoulders; a flat band reads as a rule
-     someone drew. The horizontal falloff moves to a mask so the vertical
-     gradient is free to carry the core. */
-  .ambient-scan::after{
-    height:3px;
-    background:linear-gradient(to bottom,
-      var(--scan-tint, #F1D693) 0%,
-      #FFFFFF 50%,
-      var(--scan-tint, #F1D693) 100%);
-    -webkit-mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-            mask-image:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
-    box-shadow:0 0 14px 1px rgba(241,214,147,.66),
-               0 0 38px  9px rgba(241,214,147,.14),
-               0 0 70px 20px rgba(241,214,147,.035);
-  }
-
-  /* The scan takes the temperature of what it is passing over. The product
-     section is accented azure throughout; the beam agreeing with it — very
-     slightly — is the difference between an overlay on the page and a system
-     moving through it. */
-  .ambient-scan{ --scan-tint:#F1D693; transition:opacity .6s var(--e-soft); }
-  body.sec-build   .ambient-scan{ --scan-tint:#CFE3EE; }
-  body.sec-proof   .ambient-scan{ --scan-tint:#F1D693; }
-  body.sec-pricing .ambient-scan{ --scan-tint:#E4DCC6; }
-  body.sec-contact .ambient-scan{ --scan-tint:#FFE9B8; }
-
-  /* The cycle of an actual scanner: enter, traverse at constant speed, leave,
-     then a dark beat before the next pass. The retrace is invisible — the head
-     fades before it snaps back to the top — so the page never shows a line
-     travelling upward, which is the detail that made the old sweep read as a
-     decoration bouncing rather than a system reading. */
-  @keyframes ambientSweep{
-    0%    { transform:translateY(-4vh);  opacity:0; }
-    3%    { transform:translateY(0vh);   opacity:1; }
-    73%   { transform:translateY(97vh);  opacity:1; }
-    79%   { transform:translateY(104vh); opacity:0; }
-    100%  { transform:translateY(-4vh);  opacity:0; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .fold-card::before{ display:none; }
-    .ambient-scan{ display:none; }
-  }
-
-  /* ==========================================================================
-     RESPONSIVE
-     ========================================================================== */
-  @media(max-width:920px){
-    .hero-grid{grid-template-columns:1fr; gap:48px;}
-    .dossier-stack{padding:16px 28px 28px 0;}
-  }
-  @media(max-width:900px){
-    .pricing-grid{grid-template-columns:1fr;}
-    .exhibit-index{display:none;}
-  }
-  @media(max-width:860px){
-    .build-grid{grid-template-columns:1fr;}
-  }
-  @media(max-width:820px){
-    .results-grid{grid-template-columns:1fr;}
-  }
-  @media(max-width:760px){
-    .compare{grid-template-columns:1fr;}
-    .nav-links a:not(.btn-gold){display:none;}
-  }
-
-/* ==========================================================================
-   RENDERING HYGIENE
-   Containment tells the browser which parts of the page can never affect each
-   other, so a change inside one card cannot trigger layout of the whole document.
-   These are the cheapest wins available and they are invisible by definition.
-   ========================================================================== */
-
-/* Cards and stacks are self-contained: their internals never reflow siblings. */
-.fold-card, .build-card, .result-card, .price-card, .compare-col{
-  contain:layout style;
+:root{
+  --bg:#081220; --surface:#0E1D34; --ink:#F4F6FA; --mute:#93A0B8; --line:#26385C;
+  --gold:#D8B25C; --gold-hi:#F1D693; --hl:rgba(216,178,92,.3); --btn:#D8B25C; --btn-ink:#0A1525; color-scheme:dark;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
 
-/* The grain and vignette are static full-screen overlays. Promoting them to
-   their own layers stops them being repainted every time anything beneath
-   them moves — which, on this page, is constantly. */
-body::after, body::before{
-  will-change:opacity;
-  transform:translateZ(0);
-}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
+body{background:var(--bg); color:var(--ink); font:400 17px/1.6 'Geist',system-ui,-apple-system,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+a{color:inherit;}
+:focus-visible{outline:2px solid var(--gold-hi); outline-offset:3px; border-radius:4px;}
+.wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+h1,h2,h3{font-weight:600; letter-spacing:-.025em; line-height:1.1;}
+h1{font-size:clamp(38px,6vw,60px); letter-spacing:-.035em;}
+h2{font-size:clamp(28px,3.4vw,36px); max-width:20ch;}
+h3{font-size:20px; line-height:1.25; letter-spacing:-.015em;}
+.mute{color:var(--mute);}
+p{max-width:56ch;}
 
-/* will-change is a promise, not a decoration: it costs memory for every element
-   that carries it. It belongs only on the handful of things that genuinely
-   animate every frame, and is dropped the moment they are not moving. */
-.cursor-light::before, .cursor-light::after, .surface-catch{ will-change:transform; }
-@media (prefers-reduced-motion: reduce){
-  .cursor-light::before, .cursor-light::after, .surface-catch, body::after, body::before{
-    will-change:auto;
-  }
-}
+header .wrap{display:flex; align-items:center; justify-content:space-between; height:72px;}
+.brand{display:flex; align-items:center; gap:10px; font-weight:600; letter-spacing:.01em; text-decoration:none;}
+.brand{transition:color .3s ease;}
+.brand svg{width:22px; height:22px; display:block; transition:transform .55s cubic-bezier(.34,1.56,.64,1), filter .4s ease;}
+.brand:hover,.brand:focus-visible{color:var(--gold-hi);}
+.brand:hover svg,.brand:focus-visible svg{transform:scale(1.18) rotate(-6deg); filter:drop-shadow(0 0 8px rgba(241,214,147,.65)) drop-shadow(0 0 22px rgba(216,178,92,.35));}
+nav{display:flex; align-items:center; gap:28px; font-size:15px;}
+nav a:not(.btn){color:var(--mute); text-decoration:none; transition:color .15s;}
+nav a:not(.btn):hover{color:var(--ink);}
 
-/* Images: never let a late-loading logo shift the header. */
-.brand-mark, .brand-img{ aspect-ratio:1/1; }
+.btn{display:inline-block; padding:12px 20px; border-radius:8px; font:500 15px/1.2 inherit; text-decoration:none; border:1px solid var(--btn); background:var(--btn); color:var(--btn-ink); transition:opacity .15s, border-color .15s;}
+.btn:hover{opacity:.88;}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--gold); opacity:1;}
+header .btn{padding:9px 16px;}
 
-/* Long-form copy renders faster when the browser is allowed to optimise for
-   throughput rather than per-glyph precision. */
-.section-head p, .hero p.lede, .build-card p, .price-card li{
-  text-rendering:optimizeSpeed;
-}
-h1, h2, h3, .price-amount, .stat-num{
-  text-rendering:optimizeLegibility;
-}
+.hero{padding:72px 0 104px;}
+.hero .wrap{display:grid; grid-template-columns:1.05fr 1fr; gap:72px; align-items:center;}
+.hero h1{margin-bottom:22px;}
+.lede{font-size:20px; color:var(--mute); max-width:30ch; margin-bottom:32px; line-height:1.5;}
+.ctas{display:flex; gap:12px; flex-wrap:wrap;}
 
+.answer{position:relative; background:var(--surface); border:1px solid var(--line); border-radius:12px; overflow:hidden;}
+.answer .bar{display:flex; justify-content:space-between; gap:16px; padding:14px 22px; border-bottom:1px solid var(--line); font-size:14px; color:var(--mute);}
+.answer .body{padding:24px 22px 8px;}
+.q{font-size:14px; color:var(--mute); margin-bottom:6px;}
+.a{font-size:20px; line-height:1.4; font-weight:500; letter-spacing:-.01em; margin-bottom:22px;}
+.source{border-left:2px solid var(--gold); padding-left:16px; margin-bottom:22px; font-size:15px; color:var(--mute); line-height:1.6;}
+.source b{display:block; font-weight:500; color:var(--ink); font-size:14px; margin-bottom:4px;}
+.mark{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 100%/0% 100%; color:var(--ink); -webkit-box-decoration-break:clone; box-decoration-break:clone; padding:0 2px; animation:mark .5s 1.5s cubic-bezier(.2,.7,.2,1) forwards;}
+@keyframes mark{to{background-size:100% 100%;}}
+
+/* the beam reads the card once; the clause lights up as it passes */
+.beam{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0; transform:translateY(-100%); background:linear-gradient(to bottom,transparent 55%,rgba(241,214,147,.07) 80%,rgba(241,214,147,.22) 100%); border-bottom:2px solid var(--gold-hi); box-shadow:0 10px 24px -6px rgba(241,214,147,.45); animation:beam 1.5s .5s linear forwards;}
+@keyframes beam{0%{opacity:1; transform:translateY(-100%);} 85%{opacity:1;} 100%{opacity:0; transform:translateY(0);}}
+
+/* dark room, one torch: vignette darkens the edges, the light follows the cursor */
+body::before{content:''; position:fixed; inset:0; z-index:55; pointer-events:none; background:radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(3,8,16,.55) 100%);}
+.torch{position:fixed; left:0; top:0; width:0; height:0; z-index:60; pointer-events:none; opacity:0; transition:opacity .8s ease; transform:translate3d(var(--x,50vw),var(--y,40vh),0);}
+.torch.on{opacity:1;}
+.torch::before,.torch::after{content:''; position:absolute; border-radius:50%;}
+.torch::before{width:900px; height:900px; margin:-450px 0 0 -450px; background:radial-gradient(circle at center,rgba(216,178,92,.10),rgba(216,178,92,.035) 38%,transparent 68%);}
+.torch::after{width:1300px; height:1300px; margin:-650px 0 0 -650px; background:radial-gradient(circle at center,rgba(244,246,250,.05),transparent 62%); mix-blend-mode:overlay;}
+
+
+section{padding:96px 0; border-top:1px solid var(--line);}
+.head{margin-bottom:48px;}
+.cols{display:grid; grid-template-columns:repeat(3,1fr); gap:48px;}
+.cols h3{margin-bottom:10px;}
+.cols p{color:var(--mute);}
+
+.row{display:grid; grid-template-columns:1.2fr 1fr; gap:56px; align-items:start; padding:32px 0; border-top:1px solid var(--line);}
+.row:first-of-type{border-top:0; padding-top:0;}
+.row h3{margin-bottom:8px;}
+.row p{color:var(--mute);}
+.metric .label{font-size:14px; color:var(--mute); margin-bottom:6px;}
+.metric .num{font-size:clamp(40px,5vw,52px); font-weight:600; letter-spacing:-.035em; line-height:1; font-variant-numeric:tabular-nums;}
+.metric .num span{color:var(--mute); font-weight:400; margin:0 .2em;}
+.metric .num em{font-style:normal; color:var(--gold-hi);}
+details{margin-top:16px; font-size:15px;}
+summary{cursor:pointer; font-weight:500; list-style:none; display:inline-flex; align-items:center; gap:8px;}
+summary::-webkit-details-marker{display:none;}
+summary::after{content:'+'; width:20px; height:20px; display:grid; place-items:center; border:1px solid var(--line); border-radius:50%; font-size:14px; line-height:1;}
+details[open] summary::after{content:'−';}
+dl{display:grid; grid-template-columns:repeat(2,1fr); gap:12px 24px; margin:16px 0; max-width:380px;}
+dt{font-size:13px; color:var(--mute);}
+dd{font-weight:500; font-variant-numeric:tabular-nums;}
+details p{font-size:15px;}
+.after{margin-top:32px; padding-top:28px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;}
+
+.compare{display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--line); border-radius:12px; overflow:hidden; background:var(--surface);}
+.compare>div{padding:32px;}
+.compare>div+div{border-left:1px solid var(--line);}
+.compare h3{font-size:17px; margin-bottom:18px;}
+.compare ul{list-style:none; display:grid; gap:14px; font-size:16px;}
+.compare li{color:var(--mute);}
+.compare .us h3{color:var(--gold-hi);}
+.compare .us li{color:var(--ink);}
+.honest{margin-top:32px; padding-left:20px; border-left:2px solid var(--gold); max-width:62ch; color:var(--mute); font-size:15px;}
+.honest b{color:var(--ink); font-weight:500;}
+
+.plans{display:grid; grid-template-columns:repeat(3,1fr); gap:48px;}
+.plan{padding-top:24px; border-top:1px solid var(--line); display:flex; flex-direction:column;}
+.plan.feat{border-top:2px solid var(--gold); margin-top:-1px;}
+.tier{font-weight:500; margin-bottom:12px; display:flex; justify-content:space-between;}
+.tier span{font-weight:400; font-size:14px; color:var(--gold-hi);}
+.price{font-size:32px; font-weight:600; letter-spacing:-.03em; line-height:1.1; margin-bottom:6px;}
+.price small{font-size:15px; font-weight:400; color:var(--mute); letter-spacing:0;}
+.unit{font-size:14px; color:var(--mute); margin-bottom:24px;}
+.plan ul{list-style:none; display:grid; gap:12px; font-size:15px; margin-bottom:32px; flex:1;}
+.plan li{padding-left:20px; position:relative;}
+.plan li::before{content:''; position:absolute; left:2px; top:.7em; width:8px; height:1px; background:var(--gold);}
+.plan .btn{align-self:flex-start;}
+
+.final{padding:112px 0;}
+.final h2{max-width:18ch; margin-bottom:20px;}
+.final p{color:var(--mute);}
+.final .ctas{margin-top:32px;}
+footer{border-top:1px solid var(--line); padding:32px 0 44px; font-size:14px; color:var(--mute);}
+footer .wrap{display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap; align-items:center;}
+footer nav{gap:24px; font-size:14px;}
+
+.console{background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden;}
+.c-top{display:flex; justify-content:space-between; gap:16px; padding:14px 22px; border-bottom:1px solid var(--line); font-size:14px; color:var(--mute);}
+.c-ask{display:flex; flex-wrap:wrap; gap:10px; padding:20px 22px 0;}
+.chip{font-family:inherit; font-size:14px; font-weight:500; line-height:1; color:var(--mute); background:transparent; border:1px solid var(--line); border-radius:999px; padding:10px 16px; cursor:pointer; transition:color .2s,border-color .2s,background .2s;}
+.chip:hover{color:var(--gold-hi); border-color:var(--gold);}
+.chip[aria-pressed="true"]{color:var(--btn-ink); background:var(--gold); border-color:var(--gold);}
+.c-input{margin:14px 22px 0; padding:14px 18px; min-height:52px; border:1px solid var(--line); border-radius:10px; background:var(--bg); font-size:17px;}
+.c-input.empty{color:var(--mute);}
+.caret{display:inline-block; width:2px; height:1.1em; background:var(--gold); margin-left:2px; vertical-align:-3px; animation:blink 1s steps(2) infinite;}
+@keyframes blink{50%{opacity:0;}}
+.c-body{display:grid; grid-template-columns:1.25fr 1fr; gap:22px; padding:22px;}
+.c-doc{position:relative; height:340px; overflow:hidden; border:1px solid var(--line); border-radius:10px; background:var(--bg);}
+.c-sheet{padding:14px 20px 120px;}
+.cl{display:grid; grid-template-columns:36px 1fr 34px; gap:10px; padding:12px; margin:0 -12px; border-left:2px solid transparent; border-radius:6px; font-size:15px; line-height:1.55; color:var(--mute); transition:background .3s,border-color .3s,color .3s;}
+.cl b{font-weight:500; color:var(--ink);}
+.cl small{font-size:12px; text-align:right; padding-top:3px;}
+.cl.hit{background:rgba(216,178,92,.08); border-left-color:var(--gold); color:var(--ink);}
+.mk{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 100%/0% 100%; transition:background-size .8s cubic-bezier(.2,.7,.2,1); padding:0 2px; color:var(--ink);}
+.hit .mk{background-size:100% 100%;}
+.c-beam{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0; background:linear-gradient(to bottom,transparent 60%,rgba(241,214,147,.07) 85%,rgba(241,214,147,.22)); border-bottom:2px solid var(--gold-hi);}
+.c-ans{border:1px solid var(--line); border-radius:10px; padding:22px; display:flex; flex-direction:column; gap:18px;}
+.c-ans .lab{font-size:14px; color:var(--mute);}
+.c-ans .txt{font-size:22px; line-height:1.35; font-weight:500; letter-spacing:-.015em; min-height:4.1em;}
+.src{font-family:inherit; text-align:left; cursor:pointer; background:none; border:0; border-left:2px solid var(--gold); padding:2px 0 2px 14px; color:var(--ink); display:grid; gap:2px; transition:opacity .2s;}
+.src[hidden],.flag[hidden]{display:none;}
+.src b{font-weight:500; font-size:15px;}
+.src span{font-size:13px; color:var(--mute); transition:color .2s;}
+.src:hover span{color:var(--gold-hi);}
+.flag{font-size:14px; color:var(--gold-hi); padding-top:14px; border-top:1px solid var(--line);}
+.c-foot{display:flex; flex-wrap:wrap; align-items:center; gap:10px 28px; padding:16px 22px; border-top:1px solid var(--line); font-size:15px;}
+.c-foot span{color:var(--mute);}
+.c-foot a{color:var(--gold-hi); text-decoration:none; font-weight:500; border-bottom:1px solid transparent; transition:border-color .2s;}
+.c-foot a:hover{border-bottom-color:var(--gold);}
+@media (prefers-reduced-motion:reduce){.caret{animation:none;} .c-beam{display:none;}}
+@media (max-width:860px){
+  .hero{padding:40px 0 72px;} .hero .wrap{grid-template-columns:1fr; gap:48px;}
+  .cols,.plans,.row,.compare,.demos,.c-body{grid-template-columns:1fr; gap:32px;} .c-body{gap:18px; padding:16px;} .c-doc{height:300px;} .c-ask,.c-input{margin-left:16px; margin-right:16px; padding-left:0; padding-right:0;} .c-input{padding:14px 18px;} .c-ask{padding-top:16px;}
+  .row{gap:20px;} .compare{gap:0;} .compare>div+div{border-left:0; border-top:1px solid var(--line);}
+  section{padding:72px 0;} nav a:not(.btn){display:none;} .final{padding:80px 0;}
+}
+@media (prefers-reduced-motion:reduce){ .mark{animation:none; background-size:100% 100%;} .beam,.torch{display:none;} *{transition:none !important;} html{scroll-behavior:auto;} }
 </style>
-<base target="_blank">
-
 </head>
 <body>
-<!-- Atmospheric layers -->
-<div class="cursor-light"></div>
-<div class="surface-catch"></div>
-<div class="ambient-scan" aria-hidden="true"></div>
-
+<div class="torch" aria-hidden="true"></div>
 <header>
-  <div class="nav">
-<div class="brand"><img class="brand-img" src="logo.png" alt="DOKIST" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
-    <nav class="nav-links">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="DOKIST">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#F0DDAD"/><path d="M0 0H64A64 64 0 0 1 0 64Z" fill="#D8B25C"/></svg>
+      DOKIST
+    </a>
+    <nav>
       <a href="#build">Product</a>
       <a href="#proof">Results</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact" class="btn-gold">Book a call</a>
+      <a href="#demos">Demos</a>
+      <a class="btn" href="#contact">Get in touch</a>
     </nav>
   </div>
 </header>
 
-<section class="hero">
-  <div class="wrap hero-grid">
+<main id="top">
+<div class="hero">
+  <div class="wrap">
     <div>
-      <div class="eyebrow">Legal &amp; Financial Document Intelligence</div>
-      <h1>Turn document backlogs into <span class="hl">cited, defensible</span> answers.<sup class="cite-sup">[1]</sup></h1>
-<p class="lede">DOKIST builds AI systems that read your contracts and filings — and answer questions instantly, with the exact source attached.</p>
-      <div class="hero-ctas">
-        <a href="#contact" class="btn-gold">Book a call</a>
-        <a href="#proof" class="btn-ghost">See the results</a>
-      </div>
-      <div class="hero-stats">
-        <div><b>2×</b> fewer unsupported answers after tuning, on our own benchmark</div>
-        <div><b class="count" data-target="3">0</b> reference systems, benchmarked on public legal &amp; financial corpora</div>
-        <div><b>FR / AR / EN</b> · civil &amp; common law</div>
+      <h1>Turn document backlogs into cited, defensible answers.</h1>
+      <p class="lede">AI that reads your contracts and filings and answers with the exact source attached.</p>
+      <div class="ctas">
+        <a class="btn" href="mailto:hello@dokist.ai">Get in touch</a>
+        <a class="btn ghost" href="#proof">See the results</a>
       </div>
     </div>
-    <div class="dossier-stack" id="dossierStack">
-      <div class="corpus-sheet" aria-hidden="true">
-        <div class="sheet-label"><span>NDA_v3.docx</span><span>p.4 / 11</span></div>
-        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
-        <div class="sheet-foot"><span>Sample · CUAD</span><span>EN</span></div>
-        <div class="sheet-stamp">CONFIDENTIAL</div>
+    <div class="answer">
+      <div class="beam" aria-hidden="true"></div>
+      <div class="bar"><span>MSA_2024.pdf</span><span>Illustrative example</span></div>
+      <div class="body">
+        <div class="q">Can either side end the agreement early?</div>
+        <div class="a">Yes, on thirty days’ written notice after an uncured material breach.</div>
+        <div class="source">
+          <b>Section 4.2, page 12</b>
+          Either party may terminate this Agreement upon <span class="mark">thirty (30) days written notice</span> if the other party materially breaches and fails to cure.
+        </div>
       </div>
-      <div class="corpus-sheet" aria-hidden="true">
-        <div class="sheet-label"><span>CreditAgmt_2023.pdf</span><span>p.31 / 58</span></div>
-        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
-        <div class="sheet-foot"><span>Sample · EUR-Lex</span><span>FR</span></div>
-        <div class="sheet-stamp">REDACTED</div>
-      </div>
-      <div class="corpus-sheet" aria-hidden="true">
-        <div class="sheet-label"><span>10-K_Filing.pdf</span><span>p.88 / 214</span></div>
-        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
-        <div class="sheet-foot"><span>Sample · EDGAR</span><span>EN</span></div>
-        <div class="sheet-stamp">REVIEWED</div>
-      </div>
-      <div class="corpus-sheet" aria-hidden="true">
-        <div class="sheet-label"><span>Lease_Amend.docx</span><span>p.2 / 6</span></div>
-        <div class="sheet-lines"><span></span><span></span><span class="redact"></span><span></span><span></span><span></span></div>
-        <div class="sheet-foot"><span>Arabic · roadmap</span><span>AR</span></div>
-        <div class="sheet-stamp">IN PROGRESS</div>
-      </div>
-      <div class="fold-card dossier">
-        <div class="scan-line" aria-hidden="true"></div>
-        <div class="doc-head"><span class="doc-tag">CASE FILE</span><span>MSA_2024.pdf — p.12</span></div>
-        <p class="clause"><span class="clause-num">§4.2</span>Either party may terminate this Agreement upon <span class="hlmark h1" tabindex="0" data-span="MSA_2024.pdf · p.12 · chars 1182–1317 · score 0.87">thirty (30) days written notice</span> if the other party materially breaches any provision and fails to cure such breach within the notice period.</p>
-        <p class="clause">Confidential Information shall remain protected for <span class="hlmark h2" tabindex="0" data-span="MSA_2024.pdf · p.14 · chars 2604–2661 · score 0.91">five (5) years</span> following termination.</p>
-        <span class="chip verify">✓ Verified — MSA_2024.pdf, p.12</span>
-        <span class="chip risk">⚠ Cure period shorter than your standard term</span>
-      </div>
-      <span class="corpus-count">Benchmark corpus — <b class="corpus-num" data-target="2438">0</b> docs indexed · public sets</span>
     </div>
   </div>
-</section>
+</div>
 
-<section id="build" class="alt-bg">
+<section id="build">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="exhibit-index">EXHIBIT A<br>PRODUCT SCOPE</span>
-      <div class="eyebrow">What We Build</div>
-      <h2>Three ways we put your documents to work.</h2>
-    </div>
-    <div class="build-grid reveal">
-      <div class="fold-card build-card">
-        <span class="build-tag">01</span>
-        <h3>Ask your documents anything</h3>
-        <p>A search assistant built over your contracts and filings. Ask a question in plain language, get an answer with the exact source cited — no more digging through hundreds of pages.</p>
-      </div>
-      <div class="fold-card build-card">
-        <span class="build-tag azure">02</span>
-        <h3>Automate the busywork</h3>
-        <p>AI that reads a document, researches the context, and drafts the risk memo or due diligence report your team would otherwise spend hours writing by hand.</p>
-      </div>
-      <div class="fold-card build-card">
-        <span class="build-tag">03</span>
-        <h3>Tuned to your documents</h3>
-        <p>Every system is tested and tuned on your specific contracts and language — not a generic template — so it understands your documents, not just documents in general.</p>
-      </div>
-    </div>
-    <div class="built-for reveal">
-      <span>Law firms</span><span>Legaltech startups</span><span>In-house legal</span><span>Banks</span><span>Fintech</span><span>Investment firms</span><span>Compliance teams</span>
+    <div class="head"><h2>Three ways we put your documents to work.</h2></div>
+    <div class="cols">
+      <div><h3>Ask your documents anything</h3><p>Plain-language questions, answers with the exact source cited.</p></div>
+      <div><h3>Automate the busywork</h3><p>AI drafts the risk memo or due diligence report your team would write by hand.</p></div>
+      <div><h3>Tuned to your documents</h3><p>Tested and tuned on your own contracts, not a generic template.</p></div>
     </div>
   </div>
 </section>
 
 <section id="proof">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="exhibit-index">EXHIBIT B<br>TRACK RECORD</span>
-      <div class="eyebrow">Results</div>
-      <h2>Three reference systems, built and benchmarked on public corpora.</h2>
-      <p>What each one does, in plain terms — and the measurement behind it.</p>
-    </div>
-    <div class="results-grid reveal">
-      <div class="rc-flip flagship">
-        <div class="rc-inner">
-          <div class="fold-card result-card flagship rc-front">
-            <div class="result-top"><span class="result-vert both">Legal &amp; Finance</span></div>
-            <span class="result-flag">★ Flagship project</span>
-            <h3>Due diligence agent for legal &amp; financial teams</h3>
-            <p>Reviews a full document set and drafts the due diligence report. Cut unsupported answers by more than half against its own first version, measured on a fixed benchmark set. About 4 seconds end to end.</p>
-            <div class="rc-hint"><span>Measured</span><b>Unsupported answers</b></div>
-          </div>
-          <div class="fold-card result-card flagship rc-back">
-            <div class="ev">
-              <div class="ev-head"><b>Evidence</b><span>evidence/eval_runs/2026‑08‑09</span></div>
-              <div class="ev-metric">Unsupported answers <em>· lower is better</em></div>
-              <div class="ev-move">
-                <div class="ev-n from"><b>31%</b><span>before tuning</span></div>
-                <div class="ev-arrow"></div>
-                <div class="ev-n to"><b>12%</b><span>after tuning</span></div>
-                <div class="ev-delta">▼ 19 pts</div>
-              </div>
-              <div class="ev-facts"><div><span>corpus</span><b>CUAD + EDGAR</b></div><div><span>cost / doc</span><b>≈ €0.023</b></div><div><span>end to end</span><b>≈ 4.2 s</b></div><div><span>ci gate</span><b>≤ 15%</b></div></div>
-              <p class="ev-note">Same question set, before and after; both configurations versioned, neither regenerated at read time. Roughly one claim in eight still lacks a clean span binding — flagged in the memo, never dropped. A system reporting 0% at this sample size would be reporting its own blind spot.</p>
-            </div>
-          </div>
-        </div>
-        <button class="rc-toggle" type="button" aria-expanded="false"><span class="lb-a">Evidence</span><span class="lb-b">Back</span><i>→</i></button>
+    <div class="head"><h2>Three reference systems, measured on public corpora.</h2></div>
+
+    <div class="row">
+      <div>
+        <h3>Due diligence agent</h3>
+        <p>Reviews a full document set and drafts the report in about 4 seconds.</p>
+        <details>
+          <summary>Show the evidence</summary>
+          <dl><div><dt>Corpus</dt><dd>CUAD + EDGAR</dd></div><div><dt>Cost per document</dt><dd>≈ €0.023</dd></div></dl>
+          <p>Roughly one claim in eight still lacks a clean source link. It is flagged in the memo, never dropped.</p>
+        </details>
       </div>
-      <div class="rc-flip legal">
-        <div class="rc-inner">
-          <div class="fold-card result-card rc-front">
-            <div class="result-top"><span class="result-vert legal">Legal</span></div>
-            <h3>Legal intelligence engine</h3>
-            <p>Answers questions across a whole contract library with every answer linked to its exact clause and page, and flags unusual or risky clauses so reviewers only look at what needs a second read. Retrieval is tuned on legal language specifically, so clauses that read alike but mean opposite things stop colliding.</p>
-            <div class="rc-hint"><span>Measured</span><b>Recall@3</b></div>
-          </div>
-          <div class="fold-card result-card rc-back">
-            <div class="ev">
-              <div class="ev-head"><b>Evidence</b><span>evidence/eval_runs/2026‑08‑09</span></div>
-              <div class="ev-metric">Recall@3 <em>· higher is better</em></div>
-              <div class="ev-move">
-                <div class="ev-n from"><b>0.71</b><span>baseline</span></div>
-                <div class="ev-arrow"></div>
-                <div class="ev-n to"><b>0.83</b><span>tuned</span></div>
-                <div class="ev-delta">▲ 0.12</div>
-              </div>
-              <div class="ev-facts"><div><span>corpus</span><b>CUAD · EDGAR · EUR‑Lex</b></div><div><span>index</span><b>2,438 docs</b></div><div><span>cost / query</span><b>≈ €0.002</b></div><div><span>ci gate</span><b>≥ 0.80</b></div></div>
-              <p class="ev-note">The load‑bearing null result: a rank‑8 LoRA on the generation side scored 0.81 faithfulness against plain RAG's 0.84 at n = 40 — inside the noise floor. RAG shipped at a quarter of the inference cost, and the work moved to retrieval, where the number above then moved.</p>
-            </div>
-          </div>
-        </div>
-        <button class="rc-toggle" type="button" aria-expanded="false"><span class="lb-a">Evidence</span><span class="lb-b">Back</span><i>→</i></button>
-      </div>
-      <div class="rc-flip fin">
-        <div class="rc-inner">
-          <div class="fold-card result-card rc-front">
-            <div class="result-top"><span class="result-vert fin">Finance</span></div>
-            <h3>Research briefing agent</h3>
-            <p>Assembles a structured briefing from raw sources in seconds. Traced end to end, so every step of the agent’s reasoning is inspectable.</p>
-            <div class="rc-hint"><span>Measured</span><b>Tool-call success</b></div>
-          </div>
-          <div class="fold-card result-card rc-back">
-            <div class="ev">
-              <div class="ev-head"><b>Evidence</b><span>evidence/eval_runs/ · LangSmith traces</span></div>
-              <div class="ev-metric">Tool‑call success <em>· live sources</em></div>
-              <div class="ev-move">
-                <div class="ev-n from"><b>—</b><span>no baseline</span></div>
-                <div class="ev-arrow"></div>
-                <div class="ev-n to"><b>94%</b><span>measured</span></div>
-                <div class="ev-delta">p95 1.8 s</div>
-              </div>
-              <div class="ev-facts"><div><span>tool calls</span><b>10 of 11</b></div><div><span>latency p50</span><b>720 ms</b></div><div><span>tests</span><b>14, all mocked</b></div><div><span>sources</span><b>5 of 6 returned</b></div></div>
-              <p class="ev-note">The remaining 6% is upstream rate limits and transient source failures — handled by degrading to a partial brief with a visible gap list, not eliminated. p95 is reported rather than the mean: a mean of 0.9 s hides a p99 of 14 s, and the p99 is what a user calls broken.</p>
-            </div>
-          </div>
-        </div>
-        <button class="rc-toggle" type="button" aria-expanded="false"><span class="lb-a">Evidence</span><span class="lb-b">Back</span><i>→</i></button>
+      <div class="metric">
+        <div class="label">Unsupported answers, lower is better</div>
+        <div class="num">31%<span>→</span><em>12%</em></div>
       </div>
     </div>
 
-    <div class="results-note reveal">
-      <p><b class="coral-accent">3 reference systems</b> across legal and financial documents — each measured before and after tuning, on public corpora. No client deployments yet.</p>
-      <a href="https://github.com/Dokist-ai/core" class="btn-ghost">See the code and the numbers</a>
+    <div class="row">
+      <div>
+        <h3>Legal intelligence engine</h3>
+        <p>Answers questions across a contract library, each linked to its exact clause and page, and flags risky clauses.</p>
+        <details>
+          <summary>Show the evidence</summary>
+          <dl><div><dt>Corpus</dt><dd>CUAD, EDGAR, EUR‑Lex</dd></div><div><dt>Cost per query</dt><dd>≈ €0.002</dd></div></dl>
+          <p>A fine‑tuned generator scored no better than plain retrieval at n = 40, so we shipped retrieval at a quarter of the cost.</p>
+        </details>
+      </div>
+      <div class="metric">
+        <div class="label">Recall@3, higher is better</div>
+        <div class="num">0.71<span>→</span><em>0.83</em></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <h3>Research briefing agent</h3>
+        <p>Builds a structured briefing from raw sources in seconds, with every step traced.</p>
+        <details>
+          <summary>Show the evidence</summary>
+          <dl><div><dt>Latency p95</dt><dd>1.8 s</dd></div><div><dt>Sources returned</dt><dd>5 of 6</dd></div></dl>
+          <p>The remaining 6% is rate limits and source failures, shown as a visible gap list in the briefing.</p>
+        </details>
+      </div>
+      <div class="metric">
+        <div class="label">Tool-call success on live sources</div>
+        <div class="num"><em>94%</em></div>
+      </div>
+    </div>
+
+    <div class="after">
+      <p class="mute">No client deployments yet. Everything here is open to check.</p>
+      <a class="btn ghost" href="https://github.com/Dokist-ai/core">See the code and numbers</a>
     </div>
   </div>
 </section>
 
-<section id="why" class="alt-bg">
+<section id="demos">
   <div class="wrap">
-    <div class="section-head reveal">
-      <span class="exhibit-index">EXHIBIT C<br>COMPARISON</span>
-      <div class="eyebrow">Why DOKIST</div>
-      <h2>Not a generalist. A specialist.</h2>
-      <p>Enterprise players build horizontal tools for Fortune 500 budgets. This studio builds only for legal and financial documents — including the French- and Arabic-speaking, civil-law markets they don't serve.</p>
+    <div class="head">
+      <h2>See it work.</h2>
+      <p class="mute">Pick a question. Watch it find the clause.</p>
     </div>
-    <div class="compare reveal">
-      <div class="compare-col">
-        <h4>Enterprise legal-AI platforms</h4>
-        <ul class="compare-list">
-          <li>Horizontal products, configured rather than tuned</li>
-          <li>Benchmarks stay internal &mdash; you rarely see the numbers</li>
-          <li>Adapted by configuration, not trained on your corpus</li>
-          <li>Enterprise contracts and multi-month rollouts</li>
-          <li>Optimised for US and UK common-law English</li>
-        </ul>
+    <div class="console" id="console">
+      <div class="c-top"><span>Sample contract: MSA_2024.pdf</span><span>Illustrative</span></div>
+      <div class="c-ask">
+        <button class="chip" type="button" data-k="1" aria-pressed="false">Can either side end it early?</button>
+        <button class="chip" type="button" data-k="2" aria-pressed="false">How long does confidentiality last?</button>
+        <button class="chip" type="button" data-k="3" aria-pressed="false">What is the liability cap for a data breach?</button>
       </div>
-      <div class="compare-col win">
-        <h4>DOKIST</h4>
-        <ul class="compare-list">
-          <li>Built specifically for legal and financial documents</li>
-          <li>Published eval numbers, with the harness and sample sizes</li>
-          <li>Tuned to your documents, not a generic template</li>
-          <li>Freelance-scale pricing, enterprise-level reliability</li>
-          <li>French, Arabic, English — civil and common law</li>
-        </ul>
+      <div class="c-input empty"><span id="typed">Ask a question about this contract</span><i class="caret"></i></div>
+      <div class="c-body">
+        <div class="c-doc">
+          <div class="c-beam" aria-hidden="true"></div>
+          <div class="c-sheet">
+            <div class="cl" id="c31"><b>3.1</b><span>Fees are invoiced monthly in arrears and are payable within thirty (30) days of the invoice date.</span><small>p.6</small></div>
+            <div class="cl" id="c41"><b>4.1</b><span>This Agreement begins on the Effective Date and continues for an initial term of twenty-four (24) months.</span><small>p.11</small></div>
+            <div class="cl" id="c42"><b>4.2</b><span>Either party may terminate this Agreement upon <span class="mk">thirty (30) days written notice</span> if the other party materially breaches any provision and fails to cure such breach within the notice period.</span><small>p.12</small></div>
+            <div class="cl" id="c71"><b>7.1</b><span>Confidential Information shall remain protected for <span class="mk">five (5) years</span> following termination.</span><small>p.14</small></div>
+            <div class="cl" id="c93"><b>9.3</b><span>Each party’s aggregate liability for any data breach shall not exceed <span class="mk">the fees paid in the twelve (12) months</span> preceding the claim.</span><small>p.17</small></div>
+            <div class="cl" id="c112"><b>11.2</b><span>This Agreement is governed by the laws of France.</span><small>p.21</small></div>
+          </div>
+        </div>
+        <div class="c-ans" aria-live="polite">
+          <div class="lab">Answer</div>
+          <div class="txt"></div>
+          <button class="src" type="button" hidden><b></b><span>MSA_2024.pdf · show in document</span></button>
+          <div class="flag" hidden></div>
+        </div>
       </div>
-    </div>
-    <div class="results-note reveal" style="margin-top:34px;">
-      <p style="max-width:74ch;"><b class="coral-accent">On French and Arabic — where we actually are.</b> Every number on this page is measured on English corpora. The French and Arabic work is a documented twelve-session research programme, not a shipped capability: a text-layer inventory of the Bulletin Officiel archive, a five-system Arabic OCR comparison on hand-verified pages, and a public French/Arabic legal retrieval benchmark verified by a jurist. No such benchmark exists today. When it does, the numbers replace this paragraph.</p>
-    </div>
-  </div>
-</section>
-
-<section id="pricing">
-  <div class="wrap">
-    <div class="section-head reveal">
-      <span class="exhibit-index">EXHIBIT D<br>ENGAGEMENT TERMS</span>
-      <div class="eyebrow">Services &amp; Pricing</div>
-      <h2>Three ways to work together</h2>
-    </div>
-    <div class="pricing-grid reveal">
-      <div class="fold-card price-card">
-        <div class="price-tier">Starter</div>
-        <div class="price-amount">€1,500–3,000</div>
-        <div class="price-unit">per project · one-off</div>
-        <ul class="price-list">
-          <li>An assistant that answers questions from your documents</li>
-          <li>Every answer shows where it came from</li>
-          <li>Live and ready to use, with a link you can share</li>
-          <li>A short guide and walkthrough video</li>
-        </ul>
-        <a href="#contact" class="btn-ghost">Start here</a>
-      </div>
-      <div class="fold-card price-card feat">
-        <div class="price-tier">Professional</div>
-        <div class="price-amount">€3,000–8,000</div>
-        <div class="price-unit">per project · full production build</div>
-        <ul class="price-list">
-          <li>Everything in Starter</li>
-          <li>Built to run reliably day to day, not just as a demo</li>
-          <li>We watch performance and catch problems early</li>
-          <li>Multi-step automation — research, drafting, review</li>
-          <li>Tuned specifically to your documents</li>
-        </ul>
-        <a href="#contact" class="btn-coral">Most common</a>
-      </div>
-      <div class="fold-card price-card">
-        <div class="price-tier">Retainer</div>
-        <div class="price-amount">€2,000–4,500<span style="font-size:14px;">/mo</span></div>
-        <div class="price-unit">ongoing engineering partner</div>
-        <ul class="price-list">
-          <li>Everything in Professional</li>
-          <li>A monthly report on how the system is performing</li>
-          <li>Ongoing fixes and improvements as your documents change</li>
-          <li>A quarterly check-in on strategy</li>
-        </ul>
-        <a href="#contact" class="btn-ghost">Talk to us</a>
+      <div class="c-foot">
+        <!-- Replace each href below with the live demo or video URL when it is ready -->
+        <span>Request a demo</span>
+        <a href="mailto:hello@dokist.ai?subject=Demo%3A%20Due%20diligence%20agent">Due diligence agent</a>
+        <a href="mailto:hello@dokist.ai?subject=Demo%3A%20Legal%20intelligence%20engine">Legal intelligence engine</a>
+        <a href="mailto:hello@dokist.ai?subject=Demo%3A%20Research%20briefing%20agent">Research briefing agent</a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="final-cta" id="contact">
+<section id="why">
   <div class="wrap">
-    <div class="eyebrow" style="justify-content:center;">Let's Talk</div>
+    <div class="head"><h2>Not a generalist. A specialist.</h2></div>
+    <div class="compare">
+      <div>
+        <h3>Enterprise legal‑AI platforms</h3>
+        <ul>
+          <li>Configured, not tuned to your corpus</li>
+          <li>Benchmarks stay internal</li>
+          <li>Multi‑month enterprise rollouts</li>
+        </ul>
+      </div>
+      <div class="us">
+        <h3>DOKIST</h3>
+        <ul>
+          <li>Built only for legal and financial documents</li>
+          <li>Published eval numbers and harness</li>
+          <li>Freelance‑scale pricing, enterprise‑level reliability</li>
+        </ul>
+      </div>
+    </div>
+    <p class="honest"><b>French and Arabic are research, not shipped.</b> Every number on this page is measured on English corpora. The French and Arabic work is a documented research programme, and the numbers will replace this note when it ships.</p>
+  </div>
+</section>
+
+<section class="final" id="contact">
+  <div class="wrap">
     <h2>Get answers out of your documents, with a source attached.</h2>
-    <p>Tell us about your documents and what you need to find in them. We'll suggest the right starting point — no jargon required.</p>
-    <p style="margin-top:14px;">Your documents stay yours. Before any work begins we agree in writing where they are stored, which models see them, and who has access — NDA as standard, self-hosted deployment on request.</p>
-    <div class="final-ctas">
-      <a href="mailto:hello@documentlab.ai" class="btn-gold">hello@dokist.ai</a>
-      <a href="#pricing" class="btn-ghost">View pricing</a>
+    <p>We scope every project around your documents and quote a fixed price after a short call. NDA as standard. Self‑hosted deployment on request.</p>
+    <div class="ctas">
+      <a class="btn" href="mailto:hello@dokist.ai">hello@dokist.ai</a>
+      <a class="btn ghost" href="#demos">See the demos</a>
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="wrap">
-    <div class="foot-row">
-<div class="brand"><img class="brand-img" src="logo.png" alt="DOKIST" width="32" height="32" decoding="async" fetchpriority="high"><span>DOKIST</span></div>
-      <div class="foot-links">
-        <a href="#build">Product</a>
-        <a href="#proof">Results</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-    <div class="foot-note"><b>Built with Intention. Shipped with Evidence.</b> — AI engineer. Evaluation-first RAG systems. Certified by DeepLearning.AI and IBM.</div>
+    <a class="brand" href="#top" aria-label="DOKIST">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" fill="#F0DDAD"/><path d="M0 0H64A64 64 0 0 1 0 64Z" fill="#D8B25C"/></svg>
+      DOKIST
+    </a>
+    <nav><a href="#build">Product</a><a href="#proof">Results</a><a href="#demos">Demos</a><a href="#contact">Contact</a></nav>
   </div>
 </footer>
-
 <script>
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- Intersection Observer for reveals ---------- */
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.12});
-  revealEls.forEach(el=>io.observe(el));
-
-  /* ---------- Fan the corpus stack ---------- */
-  const dossierStack = document.getElementById('dossierStack');
-  if(dossierStack){
-    if(reducedMotion){ dossierStack.classList.add('in'); }
-    else { setTimeout(()=>dossierStack.classList.add('in'), 250); }
+(function(){
+  var t=document.querySelector('.torch');
+  if(t && matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+    var x=innerWidth/2, y=innerHeight*.4, raf=0;
+    function draw(){ raf=0; t.style.setProperty('--x',x+'px'); t.style.setProperty('--y',y+'px'); }
+    addEventListener('pointermove',function(e){ x=e.clientX; y=e.clientY; t.classList.add('on'); if(!raf) raf=requestAnimationFrame(draw); },{passive:true});
+    document.documentElement.addEventListener('mouseleave',function(){ t.classList.remove('on'); });
   }
-
-  /* ---------- Hero cursor-reactive glow ---------- */
-  const heroEl = document.querySelector('.hero');
-  if(heroEl && matchMedia('(hover:hover) and (pointer:fine)').matches){
-    /* A high-polling mouse fires mousemove far faster than the screen refreshes.
-       Reading the rect inside the handler forced a layout on EVERY one of those
-       events, and the two custom-property writes invalidated it again — read,
-       write, read, write, hundreds of times a second, all of it discarded before
-       the next paint. Cache the rect, invalidate it only when it can actually
-       change, and coalesce the writes into one rAF: at most one update lands per
-       frame, which is the most the display can show anyway. */
-    let hRect = null, hx = 0, hy = 0, hQueued = false;
-    const hPaint = ()=>{
-      hQueued = false;
-      if(!hRect) hRect = heroEl.getBoundingClientRect();
-      heroEl.style.setProperty('--mx', ((hx - hRect.left) / hRect.width * 100) + '%');
-      heroEl.style.setProperty('--my', ((hy - hRect.top) / hRect.height * 100) + '%');
-    };
-    heroEl.addEventListener('mousemove', (e)=>{
-      hx = e.clientX; hy = e.clientY;
-      if(!hQueued){ hQueued = true; requestAnimationFrame(hPaint); }
-    }, {passive:true});
-    const hInvalidate = ()=>{ hRect = null; };
-    addEventListener('scroll', hInvalidate, {passive:true});
-    addEventListener('resize', hInvalidate, {passive:true});
+  var card=document.querySelector('.answer');
+  if(card) card.addEventListener('pointerenter',function(){
+    card.querySelectorAll('.beam,.mark').forEach(function(n){ n.style.animation='none'; void n.offsetWidth; n.style.animation=''; });
+  });
+})();
+</script>
+<script>
+(function(){
+  var root=document.getElementById('console'); if(!root) return;
+  var D={
+    1:{q:'Can either side end it early?',a:'Yes, on thirty days’ written notice after an uncured material breach.',s:'Section 4.2, page 12',id:'c42',f:'The cure period is shorter than your standard term.'},
+    2:{q:'How long does confidentiality last?',a:'Five years after the agreement ends.',s:'Section 7.1, page 14',id:'c71',f:''},
+    3:{q:'What is the liability cap for a data breach?',a:'Capped at the fees paid in the previous twelve months.',s:'Section 9.3, page 17',id:'c93',f:'No exception for gross negligence.'}
+  };
+  var doc=root.querySelector('.c-doc'), beam=root.querySelector('.c-beam'), typed=root.querySelector('#typed'),
+      inp=root.querySelector('.c-input'), txt=root.querySelector('.c-ans .txt'), src=root.querySelector('.src'),
+      flag=root.querySelector('.flag'), chips=root.querySelectorAll('.chip'), cls=root.querySelectorAll('.cl');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches, tok=0;
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+  function show(id){
+    var el=document.getElementById(id);
+    cls.forEach(function(c){ c.classList.toggle('hit', c===el); });
+    doc.scrollTo({top:Math.max(0, el.offsetTop-60), behavior:reduce?'auto':'smooth'});
   }
-
-  /* ---------- Logo fallback ----------
-     The header logo is an external file (logo.png). If it is missing, renamed or
-     still uploading, draw the mark inline instead so the brand never renders
-     as a broken-image icon. */
-  document.querySelectorAll('.brand .brand-img').forEach((img, i)=>{
-    img.addEventListener('error', ()=>{
-      const sfx = 'fb' + i;
-      const wrap = document.createElement('span');
-      wrap.innerHTML = `<svg class="brand-mark" viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="DOKIST"><defs><linearGradient id="dkB${sfx}" x1="0" y1=".5" x2="1" y2=".5"><stop offset="0" stop-color="#DFC88F"/><stop offset="1" stop-color="#F0DDAD"/></linearGradient><linearGradient id="dkD${sfx}" x1="0" y1=".42" x2="1" y2=".58"><stop offset="0" stop-color="#F1D693"/><stop offset=".55" stop-color="#DDBC6E"/><stop offset="1" stop-color="#CBA54D"/></linearGradient><clipPath id="dkC${sfx}"><rect x="0" y="0" width="58" height="59"/></clipPath></defs><rect x="5" y="5" width="58" height="59" fill="#F3E1B4"/><rect x="0" y="0" width="58" height="59" fill="url(#dkB${sfx})"/><path d="M0 0 H58 A58 58 0 0 1 0 58 Z" fill="url(#dkD${sfx})" clip-path="url(#dkC${sfx})"/></svg>`;
-      img.replaceWith(wrap.firstElementChild);
-    }, {once:true});
-  });
-
-  /* ---------- Count up stats ---------- */
-  document.querySelectorAll('.count').forEach(el=>{
-    const target = parseInt(el.dataset.target, 10);
-    if(reducedMotion){ el.textContent = target; return; }
-    const duration = 1000;
-    const start = performance.now() + 300;
-    function step(now){
-      const p = Math.min(Math.max((now - start) / duration, 0), 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(eased * target);
-      if(p < 1) requestAnimationFrame(step);
+  async function run(k){
+    var my=++tok, d=D[k];
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.k==k ? 'true':'false'); });
+    cls.forEach(function(c){ c.classList.remove('hit'); });
+    txt.textContent=''; src.hidden=true; flag.hidden=true; typed.textContent=''; inp.classList.remove('empty');
+    doc.scrollTo({top:0, behavior:'auto'});
+    for(var i=1;i<=d.q.length;i++){ typed.textContent=d.q.slice(0,i); await wait(24); if(my!==tok) return; }
+    await wait(250); if(my!==tok) return;
+    if(!reduce && beam.animate){
+      await beam.animate([{opacity:1,transform:'translateY(-100%)'},{opacity:1,offset:.85},{opacity:0,transform:'translateY(0)'}],{duration:1200,easing:'linear'}).finished;
+      if(my!==tok) return;
     }
-    requestAnimationFrame(step);
-  });
-
-  /* ---------- Looping corpus counter ---------- */
-  (function(){
-    const counters = document.querySelectorAll('.corpus-num');
-    if(!counters.length) return;
-
-    function loopCounter(el, target, duration){
-      const start = performance.now();
-      function tick(now){
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target).toLocaleString();
-        if(p < 1){
-          requestAnimationFrame(tick);
-        } else {
-          setTimeout(() => {
-            el.classList.add('flash');
-            setTimeout(() => {
-              el.classList.remove('flash');
-              loopCounter(el, target, duration);
-            }, 250);
-          }, 3000);
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-
-    if(reducedMotion){
-      counters.forEach(el => { el.textContent = parseInt(el.dataset.target, 10).toLocaleString(); });
-      return;
-    }
-
-    setTimeout(() => {
-      counters.forEach(el => {
-        const target = parseInt(el.dataset.target, 10);
-        loopCounter(el, target, 1800);
-      });
-    }, 1000);
-  })();
-
-  /* ==========================================================================
-     UNIFIED FRAME SCHEDULER
-     Every cursor- and scroll-reactive effect on this page used to own a private
-     requestAnimationFrame loop — five of them, each running forever at 60fps,
-     each writing CSS variables whether or not anything had changed. That is five
-     independent style-recalculation passes per frame, burning battery on a static
-     page and competing for the same 16ms budget.
-
-     They are now one loop with three properties that matter:
-       · It reads scroll position ONCE per frame and hands the value to every
-         consumer, instead of each effect querying layout independently.
-       · All writes are batched at the end of the frame, so the browser never has
-         to interleave reads and writes (no forced synchronous layout).
-       · It SLEEPS. When every value has settled within epsilon and there has been
-         no input, the loop stops entirely and costs literally nothing until the
-         next scroll or pointer move wakes it.
-
-     No effect is reduced — the sheen, the surge, the spotlight, the parallax and
-     the progress bar all behave exactly as before. They simply share a heartbeat.
-     ========================================================================== */
-  (function(){
-    const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
-    const field = document.getElementById('paperField');
-    const cl    = document.querySelector('.cursor-light');
-    const sc    = document.querySelector('.surface-catch');
-    const bar   = document.querySelector('.scroll-progress span, .scroll-progress');
-    const hdr   = document.querySelector('header');
-    const noScrollTimeline = !(window.CSS && CSS.supports && CSS.supports('animation-timeline: scroll(root block)'));
-
-    /* ---- state ---- */
-    let running = false, idleFrames = 0;
-    let sy = window.scrollY || 0, lastSy = sy;
-    let surge = 0;
-    let ptx = innerWidth / 2, pty = innerHeight / 2;   // raw pointer
-    let plx = ptx, ply = pty;                          // eased spotlight
-    let pmxT = 0, pmyT = 0, pmx = 0, pmy = 0;          // normalised parallax
-    let started = false, condensed = null, lastBar = -1;
-
-    const EPS = 0.0004;
-
-    function wake(){
-      idleFrames = 0;
-      if(!running){ running = true; requestAnimationFrame(frame); }
-    }
-
-    function frame(){
-      /* ---------- READ (once) ---------- */
-      sy = window.scrollY || window.pageYOffset;
-      const dy = sy - lastSy;
-      lastSy = sy;
-
-      /* ---------- COMPUTE ---------- */
-      let moved = false;
-
-      if(!reducedMotion){
-        const target = Math.max(-1, Math.min(1, dy / 38));
-        const nSurge = surge + (target - surge) * 0.12;
-        surge = nSurge * 0.94;
-        if(Math.abs(surge) > EPS) moved = true;
-      }
-
-      if(fine){
-        const nx = plx + (ptx - plx) * 0.08;
-        const ny = ply + (pty - ply) * 0.08;
-        if(Math.abs(nx - plx) > 0.05 || Math.abs(ny - ply) > 0.05) moved = true;
-        plx = nx; ply = ny;
-
-        const mx = pmx + (pmxT - pmx) * 0.04;
-        const my = pmy + (pmyT - pmy) * 0.04;
-        if(Math.abs(mx - pmx) > EPS || Math.abs(my - pmy) > EPS) moved = true;
-        pmx = mx; pmy = my;
-      }
-
-      /* ---------- WRITE (batched) ---------- */
-      if(field){
-        if(!reducedMotion) field.style.setProperty('--surge', surge.toFixed(4));
-        if(fine){
-          field.style.setProperty('--pmx', pmx.toFixed(4));
-          field.style.setProperty('--pmy', pmy.toFixed(4));
-        }
-      }
-      if(fine && cl){
-        cl.style.setProperty('--x', plx.toFixed(1) + 'px');
-        cl.style.setProperty('--y', ply.toFixed(1) + 'px');
-        if(sc){
-          sc.style.setProperty('--x', ptx.toFixed(1) + 'px');
-          sc.style.setProperty('--y', pty.toFixed(1) + 'px');
-        }
-      }
-      if(bar){
-        const max = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-        const v = Math.min(1, sy / max);
-        if(Math.abs(v - lastBar) > 0.0008){
-          bar.style.transform = 'scaleX(' + v.toFixed(4) + ')';
-          lastBar = v; moved = true;
-        }
-      }
-      if(noScrollTimeline && hdr){
-        const c = sy > 340;
-        if(c !== condensed){ hdr.classList.toggle('is-condensed', c); condensed = c; }
-      }
-
-      /* ---------- SLEEP WHEN SETTLED ---------- */
-      idleFrames = moved ? 0 : idleFrames + 1;
-      if(idleFrames > 12){ running = false; return; }
-      requestAnimationFrame(frame);
-    }
-
-    addEventListener('scroll', wake, {passive:true});
-    addEventListener('resize', wake, {passive:true});
-    if(fine){
-      addEventListener('mousemove', e => {
-        ptx = e.clientX; pty = e.clientY;
-        pmxT = (e.clientX / innerWidth  - 0.5) * 2;
-        pmyT = (e.clientY / innerHeight - 0.5) * 2;
-        if(!started && cl){ started = true; cl.classList.add('is-active'); }
-        wake();
-      }, {passive:true});
-    }
-    /* a backgrounded tab should cost nothing at all */
-    document.addEventListener('visibilitychange', () => { if(!document.hidden) wake(); });
-    wake();
-  })();
-
-
-
-
-
-  /* ---------- CARD FLIP ---------- */
-  (function(){
-    /* the layer is promoted for the length of the turn and released after, so a
-       card that is sitting still costs nothing to keep on screen */
-    function turn(card, on){
-      if(!card) return;
-      card.classList.add('is-flipping');
-      card.classList.toggle('is-flipped', on);
-      card.querySelector('.rc-toggle').setAttribute('aria-expanded', on ? 'true' : 'false');
-      const inner = card.querySelector('.rc-inner');
-      const done = e => { if(e.target !== inner) return;
-        card.classList.remove('is-flipping'); inner.removeEventListener('transitionend', done); };
-      inner.addEventListener('transitionend', done);
-      setTimeout(() => card.classList.remove('is-flipping'), 900);   /* belt and braces */
-    }
-    document.addEventListener('click', e => {
-      const btn = e.target.closest && e.target.closest('.rc-toggle');
-      if(btn){ turn(btn.closest('.rc-flip'), !btn.closest('.rc-flip').classList.contains('is-flipped')); return; }
-      /* the whole card is the target. Requiring a hit on a 90px chip is a
-         discoverability failure: people click the card, nothing happens, and
-         they conclude it does not flip. Links and buttons inside still win. */
-      const face = e.target.closest && e.target.closest('.rc-front, .rc-back');
-      if(face && !e.target.closest('a, button')) turn(face.closest('.rc-flip'), face.classList.contains('rc-front'));
-    });
-    addEventListener('keydown', e => {
-      if(e.key !== 'Escape') return;
-      document.querySelectorAll('.rc-flip.is-flipped').forEach(c => turn(c, false));
-    });
-  })();
-
-  /* ---------- AMBIENT ANIMATION GOVERNOR ----------
-     Twelve infinite animations were running for the life of the page, and nine
-     of them belong to the hero — which a reader passes in the first six seconds
-     and never sees again. Worse, most of them animate paint properties:
-     box-shadow (goldPulse, verifyPulse), text-shadow (citePulse), background
-     (hlBreathe), background-position across a whole section (watermarkDrift).
-     A composited transform is free; a repainting shadow is not, and it was being
-     repainted forever, off screen, for nobody.
-
-     This pauses each ambient loop when its own element leaves the viewport and
-     resumes it on the way back. It uses the Web Animations API rather than a CSS
-     class so that scroll-driven reveal animations are never touched — pausing
-     those would freeze the reveals. Runs only in IntersectionObserver callbacks:
-     no polling, no per-frame work. */
-  (function(){
-    const AMBIENT = new Set(['scanSweep','float','hlBreathe','citePulse',
-                             'goldPulse','verifyPulse','watermarkDrift']);
-    function wire(){
-      const byTarget = new Map();
-      document.getAnimations().forEach(a => {
-        if(!AMBIENT.has(a.animationName)) return;
-        const el = a.effect && a.effect.target;
-        if(!el || el.nodeType !== 1) return;                 /* skip pseudo targets */
-        if(!byTarget.has(el)) byTarget.set(el, []);
-        byTarget.get(el).push(a);
-      });
-      if(!byTarget.size) return;
-
-      /* A reader who asked for less motion should get less motion, not the same
-         motion running invisibly. Cancelling (rather than pausing) drops each
-         effect so the element falls back to its static CSS — the hero scan line
-         returns to opacity 0, the pulses to a fixed shadow. */
-      if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-        byTarget.forEach(list => list.forEach(a => { try { a.cancel(); } catch(_){} }));
-        return;
-      }
-
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          const list = byTarget.get(e.target); if(!list) return;
-          list.forEach(a => { try { e.isIntersecting ? a.play() : a.pause(); } catch(_){} });
-        });
-      }, { rootMargin:'120px 0px' });
-      byTarget.forEach((_, el) => io.observe(el));
-      document.addEventListener('visibilitychange', () => {
-        byTarget.forEach(list => list.forEach(a => { try { document.hidden ? a.pause() : a.play(); } catch(_){} }));
-      });
-    }
-    /* wait until the entrance animations have been created and settled */
-    if(document.readyState === 'complete') setTimeout(wire, 1200);
-    else addEventListener('load', () => setTimeout(wire, 1200));
-  })();
-
-  /* ---------- ANCHOR NAVIGATION ----------
-     `scroll-behavior:smooth` hands the duration to the browser, which scales it
-     with distance: a jump from the hero to the footer takes well over a second
-     and the page feels like it is thinking. A fixed 460ms with an ease-in-out
-     covers any distance in the same time, which is what makes navigation feel
-     instant without being a teleport. */
-  (function(){
-    const OFFSET = 88, DUR = 460;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const ease = t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2;
-    document.addEventListener('click', e => {
-      const a = e.target.closest && e.target.closest('a[href^="#"]');
-      if(!a) return;
-      const id = a.getAttribute('href');
-      if(!id || id.length < 2) return;
-      const el = document.querySelector(id);
-      if(!el) return;
-      e.preventDefault();
-      const from = window.scrollY;
-      const to = Math.max(0, el.getBoundingClientRect().top + from - OFFSET);
-      if(reduce || Math.abs(to - from) < 4){ window.scrollTo(0, to); history.pushState(null, '', id); return; }
-      /* the target is re-read each frame: sections reveal as you travel and the
-         document grows underneath you, so a position computed once at click time
-         lands short. ~28 layout reads for one navigation is a fair price for
-         landing on the heading instead of near it. */
-      const t0 = performance.now();
-      (function step(now){
-        const p = Math.min(1, (now - t0) / DUR);
-        const live = Math.max(0, el.getBoundingClientRect().top + window.scrollY - OFFSET);
-        window.scrollTo(0, from + (live - from) * ease(p));
-        if(p < 1) requestAnimationFrame(step); else history.pushState(null, '', id);
-      })(t0);
-    }, { passive:false });
-  })();
-
-  /* ---------- SCAN RESONANCE ----------
-     The beam marks what it crosses. Three rules kept this cheap enough to leave
-     running: positions are measured in DOCUMENT coordinates once (and on resize),
-     so the hot path reads scrollY and never forces layout; the beam's phase comes
-     from the Web Animations API rather than a guessed clock, so the mark is
-     exactly under the line and not near it; and the timer only exists while the
-     beam is visible and the tab is in front. 12Hz, because the head travels
-     ~13px in that time and a highlight does not need frame precision. */
-  (function(){
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const scan = document.querySelector('.ambient-scan');
-    if(!scan) return;
-
-    const CYCLE = 7400, IN = 0.03, OUT = 0.73, SPAN = 0.97;  /* must match @keyframes ambientSweep */
-    let cards = [], timer = null, t0 = performance.now();
-
-    function measure(){
-      cards = Array.prototype.map.call(
-        document.querySelectorAll('.fold-card'),
-        el => { const r = el.getBoundingClientRect();
-                return { el, top:r.top + scrollY, bot:r.bottom + scrollY, lit:false }; });
-    }
-
-    function phase(){
-      if(scan.getAnimations){
-        const a = scan.getAnimations({subtree:true})
-                      .find(a => a.animationName === 'ambientSweep');
-        if(a && a.currentTime != null) return ((a.currentTime % CYCLE) + CYCLE) % CYCLE / CYCLE;
-      }
-      return ((performance.now() - t0) % CYCLE) / CYCLE;   /* fallback */
-    }
-
-    function clear(){ cards.forEach(c => { if(c.lit){ c.lit = false; c.el.classList.remove('is-scanned'); } }); }
-
-    function tick(){
-      const p = phase();
-      if(p < IN || p > OUT){ clear(); return; }            /* retrace + dark beat */
-      const y = (p - IN) / (OUT - IN) * SPAN * innerHeight + scrollY;
-      for(let i = 0; i < cards.length; i++){
-        const c = cards[i], hit = y >= c.top - 30 && y <= c.bot + 30;
-        if(hit !== c.lit){ c.lit = hit; c.el.classList.toggle('is-scanned', hit); }
-      }
-    }
-
-    function start(){ if(!timer){ measure(); timer = setInterval(tick, 80); } }
-    function stop(){ if(timer){ clearInterval(timer); timer = null; clear(); } }
-
-    /* only while the beam is actually on screen and the tab is in front */
-    new MutationObserver(() => scan.classList.contains('past-hero') ? start() : stop())
-      .observe(scan, { attributes:true, attributeFilter:['class'] });
-    document.addEventListener('visibilitychange', () => document.hidden ? stop() : (scan.classList.contains('past-hero') && start()));
-    addEventListener('resize', () => { if(timer) measure(); }, { passive:true });
-    if(scan.classList.contains('past-hero')) start();
-  })();
-
-  /* ---------- Section grading ----------
-     Unchanged in behaviour. Kept on IntersectionObserver, which is the right tool:
-     it reports off the compositor rather than forcing layout reads on scroll. */
-  (function(){
-    const SECTIONS = [
-      ['.hero','sec-hero'], ['#build','sec-build'], ['#proof','sec-proof'],
-      ['#why','sec-why'],   ['#pricing','sec-pricing'], ['#contact','sec-contact']
-    ];
-    const classes = SECTIONS.map(s => s[1]);
-    const nodes = SECTIONS
-      .map(([sel, cls]) => { const el = document.querySelector(sel); return el ? {el, cls} : null; })
-      .filter(Boolean);
-    if(!nodes.length) return;
-
-    const seen = new Map();
-    let pending = false, best = null;
-    const io2 = new IntersectionObserver(entries => {
-      entries.forEach(e => seen.set(e.target, e.intersectionRatio));
-      if(pending) return;
-      pending = true;
-      // collapse bursts of entries into a single class write per frame
-      requestAnimationFrame(() => {
-        pending = false;
-        let pick = null, bestRatio = 0;
-        nodes.forEach(n => {
-          const r = seen.get(n.el) || 0;
-          if(r > bestRatio){ bestRatio = r; pick = n; }
-        });
-        if(pick && pick !== best){
-          best = pick;
-          classes.forEach(c => { if(c !== pick.cls) document.body.classList.remove(c); });
-          document.body.classList.add(pick.cls);
-        }
-      });
-    }, {threshold:[0, .12, .25, .4, .55, .7, .85, 1]});
-    nodes.forEach(n => io2.observe(n.el));
-  })();
-
-  /* ---------- Ambient-scan hero handoff ----------
-     Dedicated observer, deliberately separate from the section grader above:
-     that one waits for the *next* section to outweigh the hero before it
-     switches, which is right for grading paper density but reads as a lag
-     when it's the only thing gating the ambient beam's reveal. This fires
-     the moment the hero itself has mostly scrolled out, no comparison
-     against whatever comes next required. */
-  (function(){
-    const hero = document.querySelector('.hero');
-    const scan = document.querySelector('.ambient-scan');
-    if(!hero || !scan) return;
-    const io3 = new IntersectionObserver(([entry]) => {
-      scan.classList.toggle('past-hero', entry.intersectionRatio < 0.5);
-    }, {threshold:[0, .1, .2, .3, .4, .5, .7, 1]});
-    io3.observe(hero);
-  })();
-
-  /* ---------- Spotlight zone states ----------
-     Previously this bound mouseenter/mouseleave to every <p> and <li> on the page
-     — often 60+ listener pairs, all fighting for the same events. Replaced with
-     two delegated listeners on the document that resolve the zone with closest().
-     Same behaviour, constant memory, no per-element cost. */
-  (function(){
-    if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return;
-    const sc = document.querySelector('.surface-catch');
-    const READ = 'section p, section li';
-    const GLASS = 'header, .fold-card, .btn-gold, .btn-coral, .btn-ghost';
-    let zone = '';
-
-    function setZone(z){
-      if(z === zone) return;
-      zone = z;
-      document.body.classList.toggle('is-reading',  z === 'read');
-      document.body.classList.toggle('is-hot-zone', z === 'glass');
-      if(sc) sc.classList.toggle('is-lit', z === 'glass');
-    }
-
-    document.addEventListener('mouseover', e => {
-      const t = e.target;
-      if(t.closest && t.closest(GLASS)) return setZone('glass');
-      if(t.closest && t.closest(READ))  return setZone('read');
-      setZone('');
-    }, {passive:true});
-
-    document.addEventListener('mouseleave', () => setZone(''), {passive:true});
-  })();
-
+    show(d.id); await wait(600); if(my!==tok) return;
+    var w=d.a.split(' ');
+    for(var j=1;j<=w.length;j++){ txt.textContent=w.slice(0,j).join(' '); await wait(55); if(my!==tok) return; }
+    src.querySelector('b').textContent=d.s; src.dataset.id=d.id; src.hidden=false;
+    if(d.f){ flag.textContent=d.f; flag.hidden=false; }
+  }
+  chips.forEach(function(c){ c.addEventListener('click', function(){ run(c.dataset.k); }); });
+  src.addEventListener('click', function(){ show(src.dataset.id); });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es,o){ if(es[0].isIntersecting){ o.disconnect(); if(!tok) run(1); } },{threshold:.45}).observe(root);
+  }
+})();
 </script>
 </body>
 </html>
