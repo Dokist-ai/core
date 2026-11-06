@@ -9,6 +9,7 @@
 <meta name="description" content="DOKIST builds AI systems that read your contracts and filings and answer with the exact clause and page attached.">
 <link rel="canonical" href="https://dokist.ai/">
 <link rel="icon" href="logo.png" type="image/png">
+<link rel="preload" as="image" href="logo.png" fetchpriority="high">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dokist.ai/">
 <meta property="og:site_name" content="DOKIST">
@@ -21,10 +22,6 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DOKIST — Legal &amp; financial document intelligence">
 <meta name="twitter:image" content="https://dokist.ai/social-preview.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap"></noscript>
 <style>
 :root{
   --bg:#081220; --surface:#0E1D34; --ink:#F4F6FA; --mute:#93A0B8; --line:#26385C;
@@ -34,7 +31,7 @@
 
 *{box-sizing:border-box; margin:0; padding:0;}
 html{scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth;}
-body{background:var(--bg); color:var(--ink); font:400 17px/1.6 'Geist',system-ui,-apple-system,'Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+body{background:var(--bg); color:var(--ink); font:400 17px/1.6 system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden;}
 a{color:inherit;}
 :focus-visible{outline:2px solid var(--gold-hi); outline-offset:3px; border-radius:4px;}
 .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
@@ -74,11 +71,11 @@ header .btn{padding:9px 16px;}
 .a{font-size:20px; line-height:1.4; font-weight:500; letter-spacing:-.01em; margin-bottom:22px;}
 .source{border-left:2px solid var(--gold); padding-left:16px; margin-bottom:22px; font-size:15px; color:var(--mute); line-height:1.6;}
 .source b{display:block; font-weight:500; color:var(--ink); font-size:14px; margin-bottom:4px;}
-.mark{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 100%/0% 100%; color:var(--ink); -webkit-box-decoration-break:clone; box-decoration-break:clone; padding:0 2px; animation:mark .5s 1.5s cubic-bezier(.2,.7,.2,1) forwards;}
+.mark{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 100%/0% 100%; color:var(--ink); -webkit-box-decoration-break:clone; box-decoration-break:clone; padding:0 2px; animation:mark .5s 1s cubic-bezier(.2,.7,.2,1) forwards;}
 @keyframes mark{to{background-size:100% 100%;}}
 
 /* the beam reads the card once; the clause lights up as it passes */
-.beam{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0; transform:translateY(-100%); background:linear-gradient(to bottom,transparent 55%,rgba(241,214,147,.07) 80%,rgba(241,214,147,.22) 100%); border-bottom:2px solid var(--gold-hi); box-shadow:0 10px 24px -6px rgba(241,214,147,.45); animation:beam 1.5s .5s linear forwards;}
+.beam{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0; will-change:transform,opacity; transform:translateY(-100%); background:linear-gradient(to bottom,transparent 55%,rgba(241,214,147,.07) 80%,rgba(241,214,147,.22) 100%); border-bottom:2px solid var(--gold-hi); box-shadow:0 10px 24px -6px rgba(241,214,147,.45); animation:beam 1.2s .15s linear forwards;}
 @keyframes beam{0%{opacity:1; transform:translateY(-100%);} 85%{opacity:1;} 100%{opacity:0; transform:translateY(0);}}
 
 /* dark room, one torch: vignette darkens the edges, the light follows the cursor */
@@ -205,7 +202,7 @@ footer nav{gap:24px; font-size:14px;}
 <header>
   <div class="wrap">
     <a class="brand" href="#top" aria-label="DOKIST">
-      <img src="logo.png" alt="" width="28" height="28" decoding="async">
+      <img src="logo.png" alt="" width="28" height="28" fetchpriority="high">
       DOKIST
     </a>
     <nav>
@@ -399,7 +396,7 @@ footer nav{gap:24px; font-size:14px;}
 <footer>
   <div class="wrap">
     <a class="brand" href="#top" aria-label="DOKIST">
-      <img src="logo.png" alt="" width="28" height="28" decoding="async">
+      <img src="logo.png" alt="" width="28" height="28" loading="lazy" decoding="async">
       DOKIST
     </a>
     <nav><a href="#build">Product</a><a href="#proof">Results</a><a href="#demos">Demos</a><a href="#contact">Contact</a></nav>
