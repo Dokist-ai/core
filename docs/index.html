@@ -155,16 +155,17 @@ footer nav{gap:24px; font-size:14px;}
 .caret{display:inline-block; width:2px; height:1.1em; background:var(--gold); margin-left:2px; vertical-align:-3px; animation:blink 1s steps(2) infinite;}
 @keyframes blink{50%{opacity:0;}}
 .c-body{display:grid; grid-template-columns:1.25fr 1fr; gap:22px; padding:22px;}
-.c-doc{position:relative; height:340px; overflow:hidden; border:1px solid var(--line); border-radius:10px; background:var(--bg);}
+.c-doc{position:relative; height:380px; overflow:hidden; border:1px solid var(--line); border-radius:10px; background:var(--bg);}
 .c-sheet{padding:14px 20px 120px;}
 .cl{display:grid; grid-template-columns:36px 1fr 34px; gap:10px; padding:12px; margin:0 -12px; border-left:2px solid transparent; border-radius:6px; font-size:15px; line-height:1.55; color:var(--mute); transition:background .3s,border-color .3s,color .3s;}
 .cl b{font-weight:500; color:var(--ink);}
 .cl small{font-size:12px; text-align:right; padding-top:3px;}
-.cl.hit{background:rgba(216,178,92,.08); border-left-color:var(--gold); color:var(--ink);}
+.cl.hit{background:rgba(147,160,184,.08); border-left-color:var(--mute); color:var(--ink);}
+.cl.hit.ok{background:rgba(216,178,92,.08); border-left-color:var(--gold);}
 .mk{background:linear-gradient(var(--hl),var(--hl)) no-repeat 0 100%/0% 100%; transition:background-size .8s cubic-bezier(.2,.7,.2,1); padding:0 2px; color:var(--ink);}
-.hit .mk{background-size:100% 100%;}
+.cl.hit.ok .mk{background-size:100% 100%;}
 .c-beam{position:absolute; inset:0; z-index:2; pointer-events:none; opacity:0; background:linear-gradient(to bottom,transparent 60%,rgba(241,214,147,.07) 85%,rgba(241,214,147,.22)); border-bottom:2px solid var(--gold-hi);}
-.c-ans{border:1px solid var(--line); border-radius:10px; padding:22px; display:flex; flex-direction:column; gap:18px;}
+.c-ans{border:1px solid var(--line); border-radius:10px; padding:22px; display:flex; flex-direction:column; gap:14px;}
 .c-ans .lab{font-size:14px; color:var(--mute);}
 .c-ans .txt{font-size:22px; line-height:1.35; font-weight:500; letter-spacing:-.015em; min-height:4.1em;}
 .src{font-family:inherit; text-align:left; cursor:pointer; background:none; border:0; border-left:2px solid var(--gold); padding:2px 0 2px 14px; color:var(--ink); display:grid; gap:2px; transition:opacity .2s;}
@@ -172,6 +173,17 @@ footer nav{gap:24px; font-size:14px;}
 .src b{font-weight:500; font-size:15px;}
 .src span{font-size:13px; color:var(--mute); transition:color .2s;}
 .src:hover span{color:var(--gold-hi);}
+.c-left .lab{font-size:14px; color:var(--mute); margin-bottom:10px;}
+.plab{font-size:14px; color:var(--mute); padding-top:4px;}
+.passages{display:grid; gap:8px;}
+.pr{font-family:inherit; display:flex; justify-content:space-between; align-items:center; gap:12px; width:100%; text-align:left; background:transparent; border:1px solid var(--line); border-left:2px solid var(--line); border-radius:8px; padding:10px 14px; color:var(--mute); font-size:14px; cursor:pointer; opacity:0; transform:translateY(4px); transition:opacity .4s,transform .4s,border-color .2s,color .2s;}
+.pr.in{opacity:1; transform:none;}
+.pr:hover{border-color:var(--gold); color:var(--ink);}
+.pr b{font-weight:500;}
+.pr small{font-size:13px; font-variant-numeric:tabular-nums;}
+.pr.top{border-left-color:var(--gold); color:var(--ink);}
+.pr.top small{color:var(--gold-hi);}
+.ref{font-family:inherit; font-size:12px; font-weight:600; color:var(--btn-ink); background:var(--gold); border:0; border-radius:4px; padding:1px 6px; margin-left:8px; vertical-align:4px; cursor:pointer;}
 .flag{font-size:14px; color:var(--gold-hi); padding-top:14px; border-top:1px solid var(--line);}
 .c-foot{display:flex; flex-wrap:wrap; align-items:center; gap:10px 28px; padding:16px 22px; border-top:1px solid var(--line); font-size:15px;}
 .c-foot span{color:var(--mute);}
@@ -308,7 +320,7 @@ footer nav{gap:24px; font-size:14px;}
       <p class="mute">Pick a question. Watch it find the clause.</p>
     </div>
     <div class="console" id="console">
-      <div class="c-top"><span>Sample contract: MSA_2024.pdf</span><span>Illustrative</span></div>
+      <div class="c-top"><span>Sample library, 128 documents</span><span>Illustrative</span></div>
       <div class="c-ask">
         <button class="chip" type="button" data-k="1" aria-pressed="false">Can either side end it early?</button>
         <button class="chip" type="button" data-k="2" aria-pressed="false">How long does confidentiality last?</button>
@@ -316,6 +328,7 @@ footer nav{gap:24px; font-size:14px;}
       </div>
       <div class="c-input empty"><span id="typed">Ask a question about this contract</span><i class="caret"></i></div>
       <div class="c-body">
+        <div class="c-left"><div class="lab">Source document: MSA_2024.pdf</div>
         <div class="c-doc">
           <div class="c-beam" aria-hidden="true"></div>
           <div class="c-sheet">
@@ -326,12 +339,13 @@ footer nav{gap:24px; font-size:14px;}
             <div class="cl" id="c93"><b>9.3</b><span>Each party’s aggregate liability for any data breach shall not exceed <span class="mk">the fees paid in the twelve (12) months</span> preceding the claim.</span><small>p.17</small></div>
             <div class="cl" id="c112"><b>11.2</b><span>This Agreement is governed by the laws of France.</span><small>p.21</small></div>
           </div>
-        </div>
+        </div></div>
         <div class="c-ans" aria-live="polite">
           <div class="lab">Answer</div>
           <div class="txt"></div>
-          <button class="src" type="button" hidden><b></b><span>MSA_2024.pdf · show in document</span></button>
           <div class="flag" hidden></div>
+          <div class="plab" hidden>Retrieved passages, by relevance</div>
+          <div class="passages"></div>
         </div>
       </div>
       <div class="c-foot">
@@ -409,26 +423,29 @@ footer nav{gap:24px; font-size:14px;}
 <script>
 (function(){
   var root=document.getElementById('console'); if(!root) return;
+  var L={c42:'Section 4.2, page 12',c31:'Section 3.1, page 6',c41:'Section 4.1, page 11',c71:'Section 7.1, page 14',c93:'Section 9.3, page 17',c112:'Section 11.2, page 21'};
   var D={
-    1:{q:'Can either side end it early?',a:'Yes, on thirty days’ written notice after an uncured material breach.',s:'Section 4.2, page 12',id:'c42',f:'The cure period is shorter than your standard term.'},
-    2:{q:'How long does confidentiality last?',a:'Five years after the agreement ends.',s:'Section 7.1, page 14',id:'c71',f:''},
-    3:{q:'What is the liability cap for a data breach?',a:'Capped at the fees paid in the previous twelve months.',s:'Section 9.3, page 17',id:'c93',f:'No exception for gross negligence.'}
+    1:{q:'Can either side end it early?',a:'Yes, on thirty days’ written notice after an uncured material breach.',id:'c42',f:'The cure period is shorter than your standard term.',r:[['c42','0.91'],['c31','0.64'],['c41','0.47']]},
+    2:{q:'How long does confidentiality last?',a:'Five years after the agreement ends.',id:'c71',f:'',r:[['c71','0.93'],['c42','0.48'],['c112','0.29']]},
+    3:{q:'What is the liability cap for a data breach?',a:'Capped at the fees paid in the previous twelve months.',id:'c93',f:'No exception for gross negligence.',r:[['c93','0.90'],['c71','0.51'],['c42','0.33']]}
   };
   var doc=root.querySelector('.c-doc'), beam=root.querySelector('.c-beam'), typed=root.querySelector('#typed'),
-      inp=root.querySelector('.c-input'), txt=root.querySelector('.c-ans .txt'), src=root.querySelector('.src'),
-      flag=root.querySelector('.flag'), chips=root.querySelectorAll('.chip'), cls=root.querySelectorAll('.cl');
-  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches, tok=0;
+      inp=root.querySelector('.c-input'), txt=root.querySelector('.c-ans .txt'), flag=root.querySelector('.flag'),
+      plab=root.querySelector('.plab'), pass=root.querySelector('.passages'),
+      chips=root.querySelectorAll('.chip'), cls=root.querySelectorAll('.cl');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches, tok=0, cur='';
   function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
-  function show(id){
+  function show(id,ok){
     var el=document.getElementById(id);
-    cls.forEach(function(c){ c.classList.toggle('hit', c===el); });
+    cls.forEach(function(c){ c.classList.toggle('hit', c===el); c.classList.toggle('ok', c===el && !!ok); });
     doc.scrollTo({top:Math.max(0, el.offsetTop-60), behavior:reduce?'auto':'smooth'});
   }
   async function run(k){
-    var my=++tok, d=D[k];
+    var my=++tok, d=D[k]; cur=d.id;
     chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.k==k ? 'true':'false'); });
-    cls.forEach(function(c){ c.classList.remove('hit'); });
-    txt.textContent=''; src.hidden=true; flag.hidden=true; typed.textContent=''; inp.classList.remove('empty');
+    cls.forEach(function(c){ c.classList.remove('hit','ok'); });
+    txt.textContent=''; flag.hidden=true; plab.hidden=true; pass.innerHTML='';
+    typed.textContent=''; inp.classList.remove('empty');
     doc.scrollTo({top:0, behavior:'auto'});
     for(var i=1;i<=d.q.length;i++){ typed.textContent=d.q.slice(0,i); await wait(24); if(my!==tok) return; }
     await wait(250); if(my!==tok) return;
@@ -436,14 +453,22 @@ footer nav{gap:24px; font-size:14px;}
       await beam.animate([{opacity:1,transform:'translateY(-100%)'},{opacity:1,offset:.85},{opacity:0,transform:'translateY(0)'}],{duration:1200,easing:'linear'}).finished;
       if(my!==tok) return;
     }
-    show(d.id); await wait(600); if(my!==tok) return;
+    plab.hidden=false;
+    d.r.forEach(function(x,i){
+      var b=document.createElement('button'), s=document.createElement('b'), m=document.createElement('small');
+      b.type='button'; b.className='pr'+(i===0?' top':''); b.dataset.id=x[0];
+      s.textContent=L[x[0]]; m.textContent=(i===0?'Cited ':'')+x[1]; b.appendChild(s); b.appendChild(m); pass.appendChild(b);
+    });
+    for(var j=0;j<pass.children.length;j++){ await wait(170); if(my!==tok) return; void pass.children[j].offsetWidth; pass.children[j].classList.add('in'); }
+    show(d.id,true); await wait(600); if(my!==tok) return;
     var w=d.a.split(' ');
-    for(var j=1;j<=w.length;j++){ txt.textContent=w.slice(0,j).join(' '); await wait(55); if(my!==tok) return; }
-    src.querySelector('b').textContent=d.s; src.dataset.id=d.id; src.hidden=false;
+    for(var n=1;n<=w.length;n++){ txt.textContent=w.slice(0,n).join(' '); await wait(55); if(my!==tok) return; }
+    var ref=document.createElement('button'); ref.type='button'; ref.className='ref'; ref.textContent='1'; ref.setAttribute('aria-label','Show the cited passage'); txt.appendChild(ref);
     if(d.f){ flag.textContent=d.f; flag.hidden=false; }
   }
   chips.forEach(function(c){ c.addEventListener('click', function(){ run(c.dataset.k); }); });
-  src.addEventListener('click', function(){ show(src.dataset.id); });
+  pass.addEventListener('click', function(e){ var b=e.target.closest('.pr'); if(b) show(b.dataset.id, b.dataset.id===cur); });
+  txt.addEventListener('click', function(e){ if(e.target.closest('.ref')) show(cur,true); });
   if('IntersectionObserver' in window){
     new IntersectionObserver(function(es,o){ if(es[0].isIntersecting){ o.disconnect(); if(!tok) run(1); } },{threshold:.45}).observe(root);
   }
