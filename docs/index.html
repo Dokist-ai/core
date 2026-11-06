@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#081220">
+<meta name="color-scheme" content="dark">
 <title>DOKIST — Legal &amp; financial document intelligence</title>
 <meta name="description" content="DOKIST builds AI systems that read your contracts and filings and answer with the exact clause and page attached.">
 <link rel="canonical" href="https://dokist.ai/">
@@ -21,7 +23,8 @@
 <meta name="twitter:image" content="https://dokist.ai/social-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap"></noscript>
 <style>
 :root{
   --bg:#081220; --surface:#0E1D34; --ink:#F4F6FA; --mute:#93A0B8; --line:#26385C;
@@ -79,12 +82,9 @@ header .btn{padding:9px 16px;}
 @keyframes beam{0%{opacity:1; transform:translateY(-100%);} 85%{opacity:1;} 100%{opacity:0; transform:translateY(0);}}
 
 /* dark room, one torch: vignette darkens the edges, the light follows the cursor */
-body::before{content:''; position:fixed; inset:0; z-index:55; pointer-events:none; background:radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(3,8,16,.55) 100%);}
-.torch{position:fixed; left:0; top:0; width:0; height:0; z-index:60; pointer-events:none; opacity:0; transition:opacity .8s ease; transform:translate3d(var(--x,50vw),var(--y,40vh),0);}
+body::before{content:''; position:fixed; inset:0; z-index:55; pointer-events:none; contain:strict; background:radial-gradient(ellipse at 50% 40%,transparent 40%,rgba(3,8,16,.55) 100%);}
+.torch{position:fixed; left:0; top:0; width:900px; height:900px; margin:-450px 0 0 -450px; z-index:60; pointer-events:none; opacity:0; contain:strict; will-change:transform,opacity; transition:opacity .8s ease; transform:translate3d(50vw,40vh,0); background:radial-gradient(circle at center,rgba(216,178,92,.11),rgba(216,178,92,.04) 38%,transparent 68%);}
 .torch.on{opacity:1;}
-.torch::before,.torch::after{content:''; position:absolute; border-radius:50%;}
-.torch::before{width:900px; height:900px; margin:-450px 0 0 -450px; background:radial-gradient(circle at center,rgba(216,178,92,.10),rgba(216,178,92,.035) 38%,transparent 68%);}
-.torch::after{width:1300px; height:1300px; margin:-650px 0 0 -650px; background:radial-gradient(circle at center,rgba(244,246,250,.05),transparent 62%); mix-blend-mode:overlay;}
 
 
 section{padding:96px 0; border-top:1px solid var(--line);}
@@ -205,7 +205,7 @@ footer nav{gap:24px; font-size:14px;}
 <header>
   <div class="wrap">
     <a class="brand" href="#top" aria-label="DOKIST">
-      <img src="logo.png" alt="" width="28" height="28">
+      <img src="logo.png" alt="" width="28" height="28" decoding="async">
       DOKIST
     </a>
     <nav>
@@ -399,7 +399,7 @@ footer nav{gap:24px; font-size:14px;}
 <footer>
   <div class="wrap">
     <a class="brand" href="#top" aria-label="DOKIST">
-      <img src="logo.png" alt="" width="28" height="28">
+      <img src="logo.png" alt="" width="28" height="28" decoding="async">
       DOKIST
     </a>
     <nav><a href="#build">Product</a><a href="#proof">Results</a><a href="#demos">Demos</a><a href="#contact">Contact</a></nav>
@@ -410,7 +410,7 @@ footer nav{gap:24px; font-size:14px;}
   var t=document.querySelector('.torch');
   if(t && matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches){
     var x=innerWidth/2, y=innerHeight*.4, raf=0;
-    function draw(){ raf=0; t.style.setProperty('--x',x+'px'); t.style.setProperty('--y',y+'px'); }
+    function draw(){ raf=0; t.style.transform='translate3d('+x+'px,'+y+'px,0)'; }
     addEventListener('pointermove',function(e){ x=e.clientX; y=e.clientY; t.classList.add('on'); if(!raf) raf=requestAnimationFrame(draw); },{passive:true});
     document.documentElement.addEventListener('mouseleave',function(){ t.classList.remove('on'); });
   }
