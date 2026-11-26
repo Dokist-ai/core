@@ -1,26 +1,26 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/logo.png">
-    <img src="assets/logo.png" alt="Dokist" width="80"/>
+    <img src="assets/logo.png" alt="Hyperdocto" width="80"/>
   </picture>
 </p>
 <p align="center">
-  <img src="https://img.shields.io/badge/license-proprietary-0c1a2e?style=flat-square" alt="License: Proprietary"/>
-  <img src="https://img.shields.io/badge/python-3.11+-0c1a2e?style=flat-square" alt="Python 3.11+"/>
-  <img src="https://img.shields.io/github/repo-size/Dokist-ai/core?color=0c1a2e&style=flat-square" alt="Repo size"/>
-  <img src="https://img.shields.io/github/languages/top/Dokist-ai/core?color=0c1a2e&style=flat-square" alt="Top language"/>
-  <img src="https://img.shields.io/badge/docker-ready-0c1a2e?style=flat-square&logo=docker" alt="Docker"/>
-  <img src="https://img.shields.io/badge/evaluation-RAGAS-C8960C?style=flat-square" alt="Evaluated with RAGAS"/>
-  <img src="https://img.shields.io/badge/corpus-EN%20%C2%B7%20AR%20%C2%B7%20FR-0c1a2e?style=flat-square" alt="Corpus languages: English, Arabic, French"/>
-  <img src="https://img.shields.io/badge/rust-memory--safe-0c1a2e?style=flat-square&logo=rust" alt="Rust"/>
+  <img src="https://img.shields.io/badge/license-proprietary-13100D?style=flat-square&labelColor=3A2314" alt="License: Proprietary"/>
+  <img src="https://img.shields.io/badge/python-3.11+-13100D?style=flat-square&labelColor=3A2314" alt="Python 3.11+"/>
+  <img src="https://img.shields.io/github/repo-size/Dokist-ai/core?color=13100D&labelColor=3A2314&style=flat-square" alt="Repo size"/>
+  <img src="https://img.shields.io/github/languages/top/Dokist-ai/core?color=13100D&labelColor=3A2314&style=flat-square" alt="Top language"/>
+  <img src="https://img.shields.io/badge/docker-ready-13100D?style=flat-square&labelColor=3A2314&logo=docker" alt="Docker"/>
+  <img src="https://img.shields.io/badge/evaluation-RAGAS-FF6A00?style=flat-square&labelColor=13100D" alt="Evaluated with RAGAS"/>
+  <img src="https://img.shields.io/badge/corpus-EN%20%C2%B7%20AR%20%C2%B7%20FR-13100D?style=flat-square&labelColor=3A2314" alt="Corpus languages: English, Arabic, French"/>
+  <img src="https://img.shields.io/badge/rust-memory--safe-13100D?style=flat-square&labelColor=3A2314&logo=rust" alt="Rust"/>
 </p>
 
-# DOKIST
+# Hyperdocto
 
 **Reference demos and evaluation methodology for legal & financial document intelligence. Production systems are private.** 
 Three systems, one mission, every claim traced to a raw run in `evidence/`.
 
-> **These are public reference systems, not client deployments.** The repository showcases DOKIST's architecture, evaluation methodology, and demonstrations. Production implementations, proprietary workflows, prompts, datasets, and infrastructure are maintained separately in private repositories. Built on public corpora (CUAD, EDGAR, EUR-Lex) and benchmarked before and after tuning. Sample sizes, definitions and caveats: **[docs/METHODOLOGY.md](docs/METHODOLOGY.md)**
+> **These are public reference systems, not client deployments.** The repository showcases Hyperdocto's architecture, evaluation methodology, and demonstrations. Production implementations, proprietary workflows, prompts, datasets, and infrastructure are maintained separately in private repositories. Built on public corpora (CUAD, EDGAR, EUR-Lex) and benchmarked before and after tuning. Sample sizes, definitions and caveats: **[docs/METHODOLOGY.md](docs/METHODOLOGY.md)**
 
 ---
 
@@ -52,7 +52,7 @@ Three systems, one mission, every claim traced to a raw run in `evidence/`.
 
 <br>
 
-> **Why DOKIST is built this way.** Measure the failure mode first, then design the system around it. Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — DOKIST splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
+> **Why Hyperdocto is built this way.** Measure the failure mode first, then design the system around it. Most RAG demos collapse retrieval, generation, and orchestration into a single number that hides what broke — Hyperdocto splits them into three controlled experiments, then composes them through MCP so each result is a tool the next can call. Three demos would be three demos; one architecture calling another through a standard protocol is a system you can extend.
 
 <br>
 
@@ -99,8 +99,8 @@ flowchart LR
     B -->|Retrieval| C[(Chroma / Pinecone)]
     B -->|Generation| D[LLM]
     A -->|Tool calls| E[Research Briefing Agent]
-    style A fill:#C8960C,stroke:#0c1a2e,color:#fff
-    style B fill:#0c1a2e,stroke:#C8960C,color:#fff
+    style A fill:#FF6A00,stroke:#3A2314,color:#0A0604
+    style B fill:#13100D,stroke:#FF6A00,color:#FFF3E8
 ```
 
 ---
@@ -219,8 +219,8 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 ## Cite this work
 
 ```bibtex
-@software{dokist_legal_rag_2026,
-  author = {Dokist},
+@software{hyperdocto_legal_rag_2026,
+  author = {Hyperdocto},
   title = {Legal Intelligence Engine: RAG Systems for Legal and Financial Documents},
   url = {https://dokist-ai.github.io/core/},
   year = {2026}
@@ -231,9 +231,9 @@ Every system folder carries `src/`, `tests/`, `adr/`, and `evidence/` — the la
 
 ## Contact
 
-[LinkedIn](https://www.linkedin.com/in/x-y-1a4795300/) · [DOKIST](https://dokist-ai.github.io/core/) · [GitHub](https://github.com/Dokist-ai/core)
+[LinkedIn](https://www.linkedin.com/in/x-y-1a4795300/) · [Hyperdocto](https://hyperdocto.ai/) · [GitHub](https://github.com/Dokist-ai/core)
 
-**Proprietary repository.** © 2026 DOKIST. All rights reserved.
+**Proprietary repository.** © 2026 Hyperdocto. All rights reserved.
 
 ---
 
